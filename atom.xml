@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jasonhu02.github.io/"/>
-  <updated>2020-02-19T11:41:58.024Z</updated>
+  <updated>2020-02-19T20:13:12.844Z</updated>
   <id>https://jasonhu02.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>LEARNING ROBUST REPRESENTATIONS VIA MULTIVIEW INFORMATION BOTTLENECK**  通过多视角信息瓶颈来学习鲁棒性表征——ICLR2020</title>
+    <title>LEARNING ROBUST REPRESENTATIONS VIA MULTIVIEW INFORMATION BOTTLENEC-ICLR2020论文解读</title>
     <link href="https://jasonhu02.github.io/2020/01/22/information-bottleneck-paper/"/>
     <id>https://jasonhu02.github.io/2020/01/22/information-bottleneck-paper/</id>
     <published>2020-01-22T04:32:09.000Z</published>
-    <updated>2020-02-19T11:41:58.024Z</updated>
+    <updated>2020-02-19T20:13:12.844Z</updated>
     
     <summary type="html">
     
@@ -38,7 +38,7 @@
       <category term="科研" scheme="https://jasonhu02.github.io/categories/%E7%A7%91%E7%A0%94/"/>
     
     
-      <category term="信息瓶颈" scheme="https://jasonhu02.github.io/tags/%E4%BF%A1%E6%81%AF%E7%93%B6%E9%A2%88/"/>
+      <category term="information bottleneck" scheme="https://jasonhu02.github.io/tags/information-bottleneck/"/>
     
   </entry>
   
@@ -47,7 +47,7 @@
     <link href="https://jasonhu02.github.io/2020/01/12/meta-learning/"/>
     <id>https://jasonhu02.github.io/2020/01/12/meta-learning/</id>
     <published>2020-01-12T08:16:16.000Z</published>
-    <updated>2020-02-19T19:44:00.648Z</updated>
+    <updated>2020-02-19T20:12:41.579Z</updated>
     
     <summary type="html">
     

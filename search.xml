@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title>LEARNING ROBUST REPRESENTATIONS VIA MULTIVIEW INFORMATION BOTTLENECK**  通过多视角信息瓶颈来学习鲁棒性表征——ICLR2020</title>
+      <title>LEARNING ROBUST REPRESENTATIONS VIA MULTIVIEW INFORMATION BOTTLENEC-ICLR2020论文解读</title>
       <link href="/2020/01/22/information-bottleneck-paper/"/>
       <url>/2020/01/22/information-bottleneck-paper/</url>
       
@@ -20,7 +20,7 @@
       
         <tags>
             
-            <tag> 信息瓶颈 </tag>
+            <tag> information bottleneck </tag>
             
         </tags>
       
