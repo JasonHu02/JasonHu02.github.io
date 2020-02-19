@@ -44,32 +44,6 @@
   
   <entry>
     <title>Meta-learning tutorial</title>
-    <link href="https://jasonhu02.github.io/2020/01/14/meta-learning2/"/>
-    <id>https://jasonhu02.github.io/2020/01/14/meta-learning2/</id>
-    <published>2020-01-14T08:16:16.000Z</published>
-    <updated>2020-02-19T19:43:54.502Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;乘着假期期间，把meta-learning部分的内容全部过一遍。把最近的工作做一些简单的总结，顺便做了一份tutorial方便更多的同学对这个领域quickview。以及提供一部分代码进行实践，深入了解目前元学习领域解决的各种问题。以及非常流行的MAML和Reptile两种
-        
-      
-    
-    </summary>
-    
-      <category term="科研" scheme="https://jasonhu02.github.io/categories/%E7%A7%91%E7%A0%94/"/>
-    
-    
-      <category term="meta-learning" scheme="https://jasonhu02.github.io/tags/meta-learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Meta-learning tutorial</title>
     <link href="https://jasonhu02.github.io/2020/01/12/meta-learning/"/>
     <id>https://jasonhu02.github.io/2020/01/12/meta-learning/</id>
     <published>2020-01-12T08:16:16.000Z</published>
