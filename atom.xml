@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Zhe Hu&#39;s Blog</title>
+  
+  <subtitle>Jason Hu</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://jasonhu02.github.io/"/>
+  <updated>2020-02-19T11:41:58.024Z</updated>
+  <id>https://jasonhu02.github.io/</id>
+  
+  <author>
+    <name>胡哲</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>LEARNING ROBUST REPRESENTATIONS VIA MULTIVIEW INFORMATION BOTTLENECK**  通过多视角信息瓶颈来学习鲁棒性表征——ICLR2020</title>
+    <link href="https://jasonhu02.github.io/2020/01/22/information-bottleneck-paper/"/>
+    <id>https://jasonhu02.github.io/2020/01/22/information-bottleneck-paper/</id>
+    <published>2020-01-22T04:32:09.000Z</published>
+    <updated>2020-02-19T11:41:58.024Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;本文是对于信息瓶颈方法的原始公式应用于在学习时可以使用任务特定标签的监督设置中。提出了通过利用muilt-view的方式
+        
+      
+    
+    </summary>
+    
+      <category term="科研" scheme="https://jasonhu02.github.io/categories/%E7%A7%91%E7%A0%94/"/>
+    
+    
+      <category term="信息瓶颈" scheme="https://jasonhu02.github.io/tags/%E4%BF%A1%E6%81%AF%E7%93%B6%E9%A2%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>二零一七年终总结</title>
+    <link href="https://jasonhu02.github.io/2018/01/22/2017-conclusion/"/>
+    <id>https://jasonhu02.github.io/2018/01/22/2017-conclusion/</id>
+    <published>2018-01-22T04:32:09.000Z</published>
+    <updated>2019-09-25T14:13:10.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;div align=&quot;middle&quot;&gt;&lt;iframe frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=&quot;330&quot; height=&quot;86&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="随笔" scheme="https://jasonhu02.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="随笔" scheme="https://jasonhu02.github.io/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
+  
+</feed>
