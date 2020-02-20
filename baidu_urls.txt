@@ -1,3 +1,3 @@
 https://jasonhu02.github.io/2020/01/22/information-bottleneck-paper/
+https://jasonhu02.github.io/2020/01/16/transfer-learning/
 https://jasonhu02.github.io/2020/01/12/meta-learning/
-https://jasonhu02.github.io/2018/01/22/2017-conclusion/
