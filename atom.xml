@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Zhe Hu&#39;s Blog</title>
   
-  <subtitle>Hu Zhe</subtitle>
+  <subtitle>Welcome to Hu Zhe&#39;s Blog</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jasonhu02.github.io/"/>
-  <updated>2020-02-20T17:44:47.230Z</updated>
+  <updated>2020-02-20T18:25:47.551Z</updated>
   <id>https://jasonhu02.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>LEARNING ROBUST REPRESENTATIONS VIA MULTIVIEW INFORMATION BOTTLENEC-ICLR2020论文解读</title>
-    <link href="https://jasonhu02.github.io/2020/01/22/information-bottleneck-paper/"/>
-    <id>https://jasonhu02.github.io/2020/01/22/information-bottleneck-paper/</id>
-    <published>2020-01-22T04:32:09.000Z</published>
-    <updated>2020-02-20T17:44:47.230Z</updated>
+    <title>VAE-GAN的一些理解</title>
+    <link href="https://jasonhu02.github.io/2020/02/02/vae-gan/"/>
+    <id>https://jasonhu02.github.io/2020/02/02/vae-gan/</id>
+    <published>2020-02-02T11:12:20.000Z</published>
+    <updated>2020-02-20T18:25:47.551Z</updated>
     
     <summary type="html">
     
@@ -29,7 +29,8 @@
       
         
         
-          &lt;p&gt;本文是对于信息瓶颈方法的原始公式应用于在学习时可以使用任务特定标签的监督设置中。提出了通过利用muilt-view的方式
+          &lt;p&gt;CVAE-GAN这篇论文有一些不错的insight可以拿过来使用。&lt;/p&gt;
+&lt;p&gt;VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差和均值。根据方差和均值得到一个正态分布，从这个分布中采样一个z，该正态分布与标准正态分布之间有一个转换关系，$z=uz&lt;em
         
       
     
@@ -38,7 +39,33 @@
       <category term="科研" scheme="https://jasonhu02.github.io/categories/%E7%A7%91%E7%A0%94/"/>
     
     
-      <category term="information bottleneck" scheme="https://jasonhu02.github.io/tags/information-bottleneck/"/>
+      <category term="representation-learning" scheme="https://jasonhu02.github.io/tags/representation-learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ICLR2020论文解读__Learning robust representations via multi-view information</title>
+    <link href="https://jasonhu02.github.io/2020/01/22/information-bottleneck-paper/"/>
+    <id>https://jasonhu02.github.io/2020/01/22/information-bottleneck-paper/</id>
+    <published>2020-01-22T04:32:09.000Z</published>
+    <updated>2020-02-20T18:24:01.814Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;本文是对于信息瓶颈方法的原始公式应用于在学习时可以使用任务特定标签的监督设置中。提出了通过利用multi-view的方式
+        
+      
+    
+    </summary>
+    
+      <category term="科研" scheme="https://jasonhu02.github.io/categories/%E7%A7%91%E7%A0%94/"/>
+    
+    
+      <category term="representation-learning" scheme="https://jasonhu02.github.io/tags/representation-learning/"/>
     
   </entry>
   
