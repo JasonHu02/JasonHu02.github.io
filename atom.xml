@@ -70,6 +70,59 @@
   </entry>
   
   <entry>
+    <title>pytorch-多GPU操作的方法</title>
+    <link href="https://jasonhu02.github.io/2020/01/19/pytorch-parallel/"/>
+    <id>https://jasonhu02.github.io/2020/01/19/pytorch-parallel/</id>
+    <published>2020-01-19T06:42:16.000Z</published>
+    <updated>2020-02-22T17:42:14.476Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h5 id=&quot;完整的步骤：&quot;&gt;&lt;a href=&quot;#完整的步骤：&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="编程" scheme="https://jasonhu02.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+      <category term="pytorch" scheme="https://jasonhu02.github.io/tags/pytorch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pytorch-data处理的方法</title>
+    <link href="https://jasonhu02.github.io/2020/01/18/pytorch-data/"/>
+    <id>https://jasonhu02.github.io/2020/01/18/pytorch-data/</id>
+    <published>2020-01-18T09:21:22.000Z</published>
+    <updated>2020-02-22T17:44:38.444Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;pytorch对数据处理的一些基本用法总结：&lt;/p&gt;
+&lt;p&gt;为了更好地分配数据，通常在训练中会用到pytorch的几个库，&lt;code&gt;torchvision.transforms&lt;/code&gt;
+        
+      
+    
+    </summary>
+    
+      <category term="编程" scheme="https://jasonhu02.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+      <category term="pytorch" scheme="https://jasonhu02.github.io/tags/pytorch/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Transfer-learning tutorial</title>
     <link href="https://jasonhu02.github.io/2020/01/16/transfer-learning/"/>
     <id>https://jasonhu02.github.io/2020/01/16/transfer-learning/</id>

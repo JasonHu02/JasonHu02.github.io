@@ -1,4 +1,6 @@
 https://jasonhu02.github.io/2020/02/02/vae-gan/
 https://jasonhu02.github.io/2020/01/22/information-bottleneck-paper/
+https://jasonhu02.github.io/2020/01/19/pytorch-parallel/
+https://jasonhu02.github.io/2020/01/18/pytorch-data/
 https://jasonhu02.github.io/2020/01/16/transfer-learning/
 https://jasonhu02.github.io/2020/01/12/meta-learning/
