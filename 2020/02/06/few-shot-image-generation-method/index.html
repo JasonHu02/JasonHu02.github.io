@@ -4,11 +4,11 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="ICLR2020论文解读__Learning robust representations via multi-view information, SJTU NLP DeepLearning Thinklab 胡哲 huzhe 计算机视觉 深度学习">
+    <meta name="keywords" content="Few shot learning 少样本图像生成任务, SJTU NLP DeepLearning Thinklab 胡哲 huzhe 计算机视觉 深度学习">
     <meta name="baidu-site-verification" content>
     <meta name="google-site-verification" content>
     <meta name="360-site-verification" content>
-    <meta name="description" content="本文是对于信息瓶颈方法的原始公式应用于在学习时可以使用任务特定标签的监督设置中。提出了通过利用multi-view的方式 提供一种实体的两类视图，可以将方法扩展到无监督的设置。本文通过理论分析得到了多视图的定义。还通过利用标准数据增强技术将">
+    <meta name="description" content="Background：few-shot learning问题简单来说，就是通过减少学习的次数来获得有用的知识。我们以传统的image classification为例，对于传统的问题，我们经过大量的样本对模型进行训练从而增强它的泛化能力。也">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +16,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>ICLR2020论文解读__Learning robust representations via multi-view information | Zhe Hu&#39;s Blog</title>
+    <title>Few shot learning 少样本图像生成任务 | Zhe Hu&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -242,13 +242,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/ib.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/few-shot.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        ICLR2020论文解读__Learning robust representations via multi-view information
+                        Few shot learning 少样本图像生成任务
                     </div>
                 </div>
             </div>
@@ -359,8 +359,8 @@
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/representation-learning/" target="_blank">
-                            <span class="chip bg-color">representation-learning</span>
+                        <a href="/tags/meta-learning/" target="_blank">
+                            <span class="chip bg-color">meta-learning</span>
                         </a>
                         
                     </div>
@@ -383,7 +383,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-01-22
+                    2020-02-06
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -397,14 +397,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.6k
+                    947
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    4 分
                 </div>
                 
                 
@@ -420,99 +420,93 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>本文是对于信息瓶颈方法的原始公式应用于在学习时可以使用任务特定标签的监督设置中。提出了通过利用multi-view的方式 提供一种实体的两类视图，可以将方法扩展到无监督的设置。本文通过理论分析得到了多视图的定义。还通过利用标准数据增强技术将理论扩展到单视图，比传统的无监督学习的方法相比，有更好的泛化能力。并在数据集Sketchy和MIR-flickr上进行了实验。</p>
-<p><img src="image/image-20200217022428246.png" alt="image-20200217022428246"></p>
-<p>表示了x和z之间的互信息分成三部份，<strong>第一部分表示为x和z之间的互信息在没有预测为y的情况下</strong>；第二部分<strong>x，y之间的互信息，是一个常数，该常数由原始观测值标签的信息来决定</strong>；减去<strong>第三部分，表示x编码为z丢失的和y有关的互信息</strong>。第二部分和第三部分的区别就是考虑了z情况下的x，y互信息，包含于没有考虑x，y情况下的，所以减去。</p>
-<h4 id="理论"><a href="#理论" class="headerlink" title="理论:"></a>理论:</h4><p>其中涉及到了几个定理和推论，文中均给出了详尽的证明，涉及到大量的信息论和概率的知识，必须借助维基百科()加上自己的手推才能完全理解本文的思路。在此直接列出所有结论。</p>
-<p>定义1，充分性：</p>
-<img src="image/image-20200217143840828.png" alt="image-20200217143840828" style="zoom: 50%;">
+                <h4 id="Background："><a href="#Background：" class="headerlink" title="Background："></a>Background：</h4><p>few-shot learning问题简单来说，就是通过减少学习的次数来获得有用的知识。我们以传统的image classification为例，对于传统的问题，我们经过大量的样本对模型进行训练从而增强它的泛化能力。也就是给machine看了很多张图片，让它区分开不同类别图片的区别。这和人学习很不一样，人只需要非常少的图片就可以区分图片里的是猫还是狗。few–shot learning就是给少量的训练样本，也能够具有比较好的泛化能力。如何达到呢？这类问题我们使用解决meta-learning的方式去处理。可以参见<a href="https://jasonhu02.github.io/2020/01/12/meta-learning/">meta-learning tutorial</a>中给出的数学定义。</p>
+<p>这里用通俗的话来讲，过去的机器学习只是教会了机器分类猫和狗(CNN结构的参数 $\theta$ )，meta-learning教会了机器如何分类，这是一个更大框架的参数 $\phi$ 。这样相当于训练了多个 $\theta$ ，然后根据 $\theta$ 的训练情况，得到最好的 $\phi$ (可以认为 $\phi$ 控制 $\theta$  , $\phi=f(\theta)$ )，这就是完整训练的过程。将得到的参数 $\phi$ 去测试集上测试，给几张原来没看过的image，丢到网络里面训练，网络生成的 $\theta$ 同时会受到 $\phi$ 的控制， ==可以发现可以很快的区分原来没有学习过的image。== 并且能够正确的识别出他们的label。</p>
+<p>MAML和Reptiles都是解决上述问题比较好的方法。现在把meta-learning的问题用来解决生成问题。通常来说 生成image有三种方法：pixelCNN，VAE和GAN。VAE曾经在以前的文章中介绍过，实质上是衡量的是真实样本和生成样本的KL-divergence。VAE仍然有很多问题需要解决 ，而GAN有更好的生成特性。</p>
+<h4 id="Method："><a href="#Method：" class="headerlink" title="Method："></a>Method：</h4><p>本文使用latent vector作为input，使用reptile的网络架构，将GAN的generator来生成逼真的图像。GAN由generator和discriminator组成。基本思想通俗来说，用Reptiles的方式来训练Generator和Discriminator，得到的 $\phi_{\mathcal{d}}$ 和 $\phi_{\mathcal{g}}$, $W_{d}$ 和$W_{g}$，使用Wasserstein GP loss进行训练，先进行内层循环K次，得到最佳的 $W_{d}$ 和 $W_{g}$ 。通过$\phi_{\mathcal{d}}-W_{d}$ 和 $\phi_{\mathcal{g}}-W_{g}$ 来更新参数。其loss function为<br>$$<br>\text {minimize} \sum_{T}\left(\Phi_{d}-W_{d \tau}\right)+\left(\Phi_{g}-W_{g \tau}\right)<br>$$<br>训练的流程如下：</p>
+<img src="few shot image generation method/image-20200223142531081.png" alt="image-20200223142531081" style="zoom:33%;">
 
-<p>z对y充分定义为，I(x;y|z)在z条件下的y对x的互信息为0. 由该定义可以推出如下结论:<br>$$<br>I(\mathbf{x} ; \mathbf{y} | \mathbf{z})=0 \Longleftrightarrow I(\mathbf{x} ; \mathbf{y})=I(\mathbf{y} ; \mathbf{z})<br>$$<br>命题2.1：</p>
-<p><img src="image/image-20200217150059055.png" alt="image-20200217150059055"></p>
-<p>定义2，冗余性</p>
-<p><img src="image/image-20200217150236253.png" alt="image-20200217150236253"></p>
-<p>推论1：</p>
-<p><img src="image/image-20200217150331149.png" alt="image-20200217150331149"></p>
-<p>附录部分给出了非常详尽的证明，对任何理解上不到位的地方都可以去看数学推导。</p>
-<h4 id="Related-Work："><a href="#Related-Work：" class="headerlink" title="Related Work："></a>Related Work：</h4><img src="image/image-20200217142805245.png" alt="image-20200217142805245" style="zoom: 50%;">
+<h4 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment:"></a>Experiment:</h4><p>构造一个ResNetGenerator和ResNetDiscriminator。再分别构造inner_loop和meta_training_loop</p>
+<p>核心代码如下：</p>
+<p>inner_loop:</p>
+<pre class="line-numbers language-python"><code class="language-python">    <span class="token keyword">def</span> <span class="token function">inner_loop</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> real_batch<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>meta_g<span class="token punctuation">.</span>train<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        fake_batch <span class="token operator">=</span> self<span class="token punctuation">.</span>meta_g<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>normal<span class="token punctuation">(</span>size<span class="token operator">=</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>batch_size<span class="token punctuation">,</span> self<span class="token punctuation">.</span>z_shape<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>float<span class="token punctuation">,</span> device<span class="token operator">=</span>device<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        training_batch <span class="token operator">=</span> torch<span class="token punctuation">.</span>cat<span class="token punctuation">(</span><span class="token punctuation">[</span>real_batch<span class="token punctuation">,</span> fake_batch<span class="token punctuation">]</span><span class="token punctuation">)</span>
 
-<p>为了比较和其他模型的区别，文中这个图对作者使用的情况进行了详细的解释说明。infomax最大化互信息，来实现无监督学习。理想情况下，良好的表示形式将最大程度地提供有关标签的信息，同时保留来自观察结果的最少信息。也就是图中平行四边形左上方的顶点。从图中可以看到MIB模型是最接近最优解的，本文是第一篇明确指出在多视角无监督学习中丢弃冗余信息的一篇文章。</p>
-<h4 id="实施方法"><a href="#实施方法" class="headerlink" title="实施方法:"></a>实施方法:</h4><p>论文的核心思想在这个图上：</p>
-<img src="image/image-20200217024601501.png" alt="image-20200217024601501" style="zoom: 33%;">
+        <span class="token comment" spellcheck="true"># Training discriminator</span>
+        gradient_penalty <span class="token operator">=</span> calc_gradient_penalty<span class="token punctuation">(</span>self<span class="token punctuation">.</span>meta_d<span class="token punctuation">,</span> real_batch<span class="token punctuation">,</span> fake_batch<span class="token punctuation">)</span>
+        discriminator_pred <span class="token operator">=</span> self<span class="token punctuation">.</span>meta_d<span class="token punctuation">(</span>training_batch<span class="token punctuation">)</span>
+        discriminator_loss <span class="token operator">=</span> wassertein_loss<span class="token punctuation">(</span>discriminator_pred<span class="token punctuation">,</span> self<span class="token punctuation">.</span>discriminator_targets<span class="token punctuation">)</span>
+        discriminator_loss <span class="token operator">+=</span> gradient_penalty
 
-<p>在v1和v2两个视图上，分别得到编码得到z1和z2，通过比较两者的分布之间的平均KL散度，以及z1和z2之间的互信息来更新loss。</p>
-<p>它的loss为全文核心：</p>
-<p><img src="image/image-20200217024749741.png" alt="image-20200217024749741"></p>
-<p>散度减去互信息，其表达了用冗余信息减去预测y充分性下的z1和z2的互信息，我们使得在z1|v1和z2|v2下的的KL散度最大化，即v1，v2呈现不同的视角使其给的信息更加无关，而最大化z1和z2之间的互信息，使得z1和z2的信息更加相关。这样的目的都是消除两个变量之间的相关性，也就是信息瓶颈的意思，让最有用的信息通过去，留下对预测没用的多余信息。本文的意图就是想方设法的使得两个不同分布的数据集关联度尽可能小，简单来讲就是让互信息尽可能小。</p>
-<p>最后作者将MIB方法在Sketchy和Flickr数据集上与先前的多视图算法做比较。Sketchy数据集包含来自125个类别的12,500张图像和75,471张手绘草图，是两种信息量上差别很大的图。MIR-Flicker则是通过图像和文字结合，提供两种视角。最后的效果如图所示：分别在Sketchy和Flickr上的效果如下：</p>
-<p>可以看到mv-infomax的实力也非常不错，所以文章主要就是和它在做对比。</p>
-<img src="image/image-20200217030932182.png" alt="image-20200217030932182" style="zoom:33%;">
+        self<span class="token punctuation">.</span>meta_d_optim<span class="token punctuation">.</span>zero_grad<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        discriminator_loss<span class="token punctuation">.</span>backward<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>meta_d_optim<span class="token punctuation">.</span>step<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-<img src="image/image-20200217025835301.png" alt="image-20200217025835301" style="zoom:33%;">
+        <span class="token comment" spellcheck="true"># Training generator</span>
+        output <span class="token operator">=</span> self<span class="token punctuation">.</span>meta_d<span class="token punctuation">(</span>self<span class="token punctuation">.</span>meta_g<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>normal<span class="token punctuation">(</span>size<span class="token operator">=</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>batch_size<span class="token punctuation">,</span> self<span class="token punctuation">.</span>z_shape<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span>float<span class="token punctuation">,</span> device<span class="token operator">=</span>device<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        generator_loss <span class="token operator">=</span> wassertein_loss<span class="token punctuation">(</span>output<span class="token punctuation">,</span> self<span class="token punctuation">.</span>generator_targets<span class="token punctuation">)</span>
 
-<p>我特地去view了代码，发现代码实现的方法非常简单，说明该方法从某一些理论性的角度解决了模型鲁棒性的问题，训练起来速度很快，有一定的参考价值。且论文作者丝毫不避讳地把实验中所有数据全部公开在论文附录里，看来是对论文地实验效果非常有信心，有足够地把握给读者看。总之，可以借鉴地点非常多。之后工作可以围绕他的思路做一些扩展了。</p>
-<p>核心代码在这里：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">for</span> epoch <span class="token keyword">in</span> tqdm<span class="token punctuation">(</span>range<span class="token punctuation">(</span>epochs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">for</span> v_1<span class="token punctuation">,</span> v_2<span class="token punctuation">,</span> _ <span class="token keyword">in</span> train_loader<span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>meta_g_optim<span class="token punctuation">.</span>zero_grad<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        generator_loss<span class="token punctuation">.</span>backward<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>meta_g_optim<span class="token punctuation">.</span>step<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-        <span class="token keyword">if</span> cuda<span class="token punctuation">:</span>
-            v_1 <span class="token operator">=</span> v_1<span class="token punctuation">.</span>cuda<span class="token punctuation">(</span><span class="token punctuation">)</span>
-            v_2 <span class="token operator">=</span> v_2<span class="token punctuation">.</span>cuda<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> discriminator_loss<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> generator_loss<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>meta_training_loop:</p>
+<pre class="line-numbers language-python"><code class="language-python">    <span class="token keyword">def</span> <span class="token function">meta_training_loop</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
 
-        <span class="token comment" spellcheck="true"># Encode a batch of data</span>
-        p_z_1_given_v_1 <span class="token operator">=</span> encoder_v_1<span class="token punctuation">(</span>v_1<span class="token punctuation">)</span>
-        p_z_2_given_v_2 <span class="token operator">=</span> encoder_v_2<span class="token punctuation">(</span>v_2<span class="token punctuation">)</span>
+        data<span class="token punctuation">,</span> task <span class="token operator">=</span> self<span class="token punctuation">.</span>env<span class="token punctuation">.</span>sample_training_task<span class="token punctuation">(</span>self<span class="token punctuation">.</span>batch_size<span class="token punctuation">)</span>
+        data <span class="token operator">=</span> normalize_data<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+        real_batch <span class="token operator">=</span> data<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span>
 
-        <span class="token comment" spellcheck="true"># Sample from the posteriors with reparametrization</span>
-        z_1 <span class="token operator">=</span> p_z_1_given_v_1<span class="token punctuation">.</span>rsample<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        z_2 <span class="token operator">=</span> p_z_2_given_v_2<span class="token punctuation">.</span>rsample<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        discriminator_total_loss <span class="token operator">=</span> <span class="token number">0</span>
+        generator_total_loss <span class="token operator">=</span> <span class="token number">0</span>
 
-        <span class="token comment" spellcheck="true"># Mutual information estimation</span>
-        mi_gradient<span class="token punctuation">,</span> mi_estimation <span class="token operator">=</span> mi_estimator<span class="token punctuation">(</span>z_1<span class="token punctuation">,</span>z_2<span class="token punctuation">)</span>
-        mi_gradient <span class="token operator">=</span> mi_gradient<span class="token punctuation">.</span>mean<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        mi_estimation <span class="token operator">=</span> mi_estimation<span class="token punctuation">.</span>mean<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> _ <span class="token keyword">in</span> range<span class="token punctuation">(</span>self<span class="token punctuation">.</span>inner_epochs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            disc_loss<span class="token punctuation">,</span> gen_loss <span class="token operator">=</span> self<span class="token punctuation">.</span>inner_loop<span class="token punctuation">(</span>real_batch<span class="token punctuation">)</span>
+            discriminator_total_loss <span class="token operator">+=</span> disc_loss
+            generator_total_loss <span class="token operator">+=</span> gen_loss
 
-        <span class="token comment" spellcheck="true"># Symmetrized Kullback-Leibler divergence</span>
-        kl_1_2 <span class="token operator">=</span> p_z_1_given_v_1<span class="token punctuation">.</span>log_prob<span class="token punctuation">(</span>z_1<span class="token punctuation">)</span> <span class="token operator">-</span> p_z_2_given_v_2<span class="token punctuation">.</span>log_prob<span class="token punctuation">(</span>z_1<span class="token punctuation">)</span>
-        kl_2_1 <span class="token operator">=</span> p_z_2_given_v_2<span class="token punctuation">.</span>log_prob<span class="token punctuation">(</span>z_2<span class="token punctuation">)</span> <span class="token operator">-</span> p_z_1_given_v_1<span class="token punctuation">.</span>log_prob<span class="token punctuation">(</span>z_2<span class="token punctuation">)</span>
-        skl <span class="token operator">=</span> <span class="token punctuation">(</span>kl_1_2 <span class="token operator">+</span> kl_2_1<span class="token punctuation">)</span><span class="token punctuation">.</span>mean<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">.</span>
-
-        <span class="token comment" spellcheck="true"># Update the value of beta according to the policy</span>
-        beta <span class="token operator">=</span> beta_scheduler<span class="token punctuation">(</span>iterations<span class="token punctuation">)</span>
-        iterations <span class="token operator">+=</span><span class="token number">1</span>
-
-        <span class="token comment" spellcheck="true"># Computing the loss function</span>
-        loss <span class="token operator">=</span> <span class="token operator">-</span> mi_gradient <span class="token operator">+</span> beta <span class="token operator">*</span> skl
-
-        <span class="token comment" spellcheck="true"># Logging</span>
-        mi_over_time<span class="token punctuation">.</span>append<span class="token punctuation">(</span>mi_estimation<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        skl_over_time<span class="token punctuation">.</span>append<span class="token punctuation">(</span>skl<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-        <span class="token comment" spellcheck="true"># Backward pass and update</span>
-        opt<span class="token punctuation">.</span>zero_grad<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        loss<span class="token punctuation">.</span>backward<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        opt<span class="token punctuation">.</span>step<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>writer<span class="token punctuation">.</span>add_scalar<span class="token punctuation">(</span><span class="token string">'Training_discriminator_loss'</span><span class="token punctuation">,</span> discriminator_total_loss<span class="token punctuation">,</span> self<span class="token punctuation">.</span>eps<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>writer<span class="token punctuation">.</span>add_scalar<span class="token punctuation">(</span><span class="token string">'Training_generator_loss'</span><span class="token punctuation">,</span> generator_total_loss<span class="token punctuation">,</span> self<span class="token punctuation">.</span>eps<span class="token punctuation">)</span>
 
 
-    <span class="token comment" spellcheck="true"># Plot the loss components every 5 epochs</span>
-    <span class="token keyword">if</span> epoch <span class="token operator">%</span> plot_every <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
-        f<span class="token punctuation">,</span> ax <span class="token operator">=</span> plt<span class="token punctuation">.</span>subplots<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span> figsize<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        ax<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>set_title<span class="token punctuation">(</span><span class="token string">'$I(z_1;z_2)$'</span><span class="token punctuation">)</span>
-        ax<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>set_title<span class="token punctuation">(</span><span class="token string">'$D_{SKL}(p(z_1|v_1)||p(z_2|v_2))$'</span><span class="token punctuation">)</span>
-        ax<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>set_yscale<span class="token punctuation">(</span><span class="token string">'log'</span><span class="token punctuation">)</span>
-        ax<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>plot<span class="token punctuation">(</span>mi_over_time<span class="token punctuation">,</span> <span class="token string">'.'</span><span class="token punctuation">,</span> alpha<span class="token operator">=</span><span class="token number">0.1</span><span class="token punctuation">)</span>
-        ax<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>plot<span class="token punctuation">(</span>skl_over_time<span class="token punctuation">,</span> <span class="token string">'.r'</span><span class="token punctuation">,</span> alpha<span class="token operator">=</span><span class="token number">0.1</span><span class="token punctuation">)</span>
-        ax<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>set_ylim<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">)</span>
-        ax<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>set_ylim<span class="token punctuation">(</span><span class="token number">1e</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'epochs:{},Train_D_loss:{},Train_G_loss:{}'</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>self<span class="token punctuation">.</span>eps<span class="token punctuation">,</span>discriminator_total_loss<span class="token punctuation">,</span>generator_total_loss<span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-        f<span class="token punctuation">.</span>suptitle<span class="token punctuation">(</span><span class="token string">'Epoch: %d'</span><span class="token operator">%</span>epoch<span class="token punctuation">,</span> fontsize<span class="token operator">=</span><span class="token number">15</span><span class="token punctuation">)</span>
-        plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+         <span class="token comment" spellcheck="true"># Updating both generator and dicriminator</span>
+        <span class="token keyword">for</span> p<span class="token punctuation">,</span> meta_p <span class="token keyword">in</span> zip<span class="token punctuation">(</span>self<span class="token punctuation">.</span>g<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>self<span class="token punctuation">.</span>meta_g<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            diff <span class="token operator">=</span> p <span class="token operator">-</span> meta_p<span class="token punctuation">.</span>cpu<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            p<span class="token punctuation">.</span>grad <span class="token operator">=</span> diff
 
-        <span class="token comment" spellcheck="true"># Compute train and test_accuracy of a logistic regression</span>
-        train_accuracy<span class="token punctuation">,</span> test_accuracy <span class="token operator">=</span> evaluate<span class="token punctuation">(</span>encoder<span class="token operator">=</span>encoder_v_1<span class="token punctuation">,</span> train_on<span class="token operator">=</span>train_subset<span class="token punctuation">,</span> test_on<span class="token operator">=</span>test_set<span class="token punctuation">,</span> cuda<span class="token operator">=</span>cuda<span class="token punctuation">)</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Train Accuracy: %f'</span><span class="token operator">%</span> train_accuracy<span class="token punctuation">)</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Test Accuracy: %f'</span><span class="token operator">%</span> test_accuracy<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="点评："><a href="#点评：" class="headerlink" title="点评："></a>点评：</h4><p>这是一篇很好的多视角表示学习论文，具有新的见解。learn variable z_1和z_2，它们是一致的，包含视角不变信息，但应尽可能丢弃特定于视角的信息。<br>本文依赖于相互信息估计，并且无需重构。在先前的一些工作中（例如Aaron van den Oord等人2018）中提到，重建损失会引入偏见，对学习的表征产生负面影响。与现有的尝试最大化学习的表示和视图之间的相互信息的多视图表示学习方法相比，本文明确定义了多余的信息，我们应该尝试抛弃这些多余的信息，并弄清楚如何获得足够的学习的表示用于输出。作者还得出了一些现有的（多视图）表示学习方法与他们提出的方法之间的明确联系。</p>
+        self<span class="token punctuation">.</span>g_optim<span class="token punctuation">.</span>step<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">for</span> p<span class="token punctuation">,</span> meta_p <span class="token keyword">in</span> zip<span class="token punctuation">(</span>self<span class="token punctuation">.</span>d<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>meta_d<span class="token punctuation">.</span>parameters<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            diff <span class="token operator">=</span> p <span class="token operator">-</span> meta_p<span class="token punctuation">.</span>cpu<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            p<span class="token punctuation">.</span>grad <span class="token operator">=</span> diff
+        self<span class="token punctuation">.</span>d_optim<span class="token punctuation">.</span>step<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>可以看到meta_training_loop调用了inner_loop，计算了p - meta_p和p - meta_p的loss，并进行了更新。</p>
+<p>真实的training过程</p>
+<pre class="line-numbers language-python"><code class="language-python">    <span class="token keyword">def</span> <span class="token function">training</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">while</span> self<span class="token punctuation">.</span>eps <span class="token operator">&lt;=</span> <span class="token number">10000</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>reset_meta_model<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>meta_training_loop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>eps <span class="token operator">+=</span> <span class="token number">1</span>
+
+            <span class="token comment" spellcheck="true"># Validation run every 10000 training loop</span>
+            <span class="token keyword">if</span> self<span class="token punctuation">.</span>eps <span class="token operator">%</span> <span class="token number">100</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+                self<span class="token punctuation">.</span>reset_meta_model<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                gan_score<span class="token operator">=</span>self<span class="token punctuation">.</span>validation_run<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                self<span class="token punctuation">.</span>gan_score_total<span class="token punctuation">.</span>append<span class="token punctuation">(</span>gan_score<span class="token punctuation">)</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"valscore_total:{}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>self<span class="token punctuation">.</span>gan_score_total<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                self<span class="token punctuation">.</span>checkpoint_model<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#            self.eps += 1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="Result："><a href="#Result：" class="headerlink" title="Result："></a>Result：</h4><p>最后生成的效果非常好。Mnist上的测试结果：</p>
+<img src="few shot image generation method/image-20200223144618093.png" alt="image-20200223144618093" style="zoom:50%;">
+
+<p>Omniglot上的测试结果：</p>
+<img src="few shot image generation method/image-20200223144638634.png" alt="image-20200223144638634" style="zoom:50%;">
+
 
             </div>
             <hr />
@@ -547,9 +541,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《ICLR2020论文解读__Learning robust representations via multi-view information》
+                    《Few shot learning 少样本图像生成任务》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/01/22/information-bottleneck-paper/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/02/06/few-shot-image-generation-method/" property="cc:attributionName"
                rel="cc:attributionURL">
                 胡哲
             </a> 采用
@@ -590,7 +584,7 @@
         repo: 'JasonHu02.github.io/issues/1',
         owner: 'JasonHu02',
         admin: "JasonHu02",
-        id: '2020/01/22/information-bottleneck-paper/',
+        id: '2020/02/06/few-shot-image-generation-method/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -611,9 +605,59 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/02/06/few-shot-image-generation-method/">
+                    <div class="card-image">
+                        
+                        <img src="/medias/featureimages/few-shot.jpg" class="responsive-img" alt="Few shot learning 少样本图像生成任务">
+                        
+                        <span class="card-title">Few shot learning 少样本图像生成任务</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            本项目结合meta-learning的方法reptiles使用GAN的框架解决few-shot learning问题.
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-06
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/科研/" class="post-category" target="_blank">
+                                    科研
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/meta-learning/" target="_blank">
+                        <span class="chip bg-color">meta-learning</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2020/02/02/vae-gan/">
                     <div class="card-image">
@@ -630,9 +674,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-02
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-02
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -650,54 +694,6 @@
                     
                     <a href="/tags/representation-learning/" target="_blank">
                         <span class="chip bg-color">representation-learning</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/01/19/pytorch-parallel/">
-                    <div class="card-image">
-                        
-                        <img src="/medias/featureimages/data_parallel.jpg" class="responsive-img" alt="pytorch-多GPU操作的方法">
-                        
-                        <span class="card-title">pytorch-多GPU操作的方法</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            本文总结了深度学习中多GPU使用的方法
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-01-19
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/编程/" class="post-category" target="_blank">
-                                    编程
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/pytorch/" target="_blank">
-                        <span class="chip bg-color">pytorch</span>
                     </a>
                     
                 </div>

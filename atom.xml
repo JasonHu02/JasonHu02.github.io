@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jasonhu02.github.io/"/>
-  <updated>2020-02-20T18:25:47.551Z</updated>
+  <updated>2020-02-24T16:52:50.712Z</updated>
   <id>https://jasonhu02.github.io/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Few shot learning 少样本图像生成任务</title>
+    <link href="https://jasonhu02.github.io/2020/02/06/few-shot-image-generation-method/"/>
+    <id>https://jasonhu02.github.io/2020/02/06/few-shot-image-generation-method/</id>
+    <published>2020-02-06T06:23:56.000Z</published>
+    <updated>2020-02-24T16:52:50.712Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;Background：&quot;&gt;&lt;a href=&quot;#Background：&quot; class=&quot;headerlink&quot; title=&quot;Background：&quot;&gt;&lt;/a&gt;Background：&lt;/h4&gt;&lt;p&gt;few-shot
+        
+      
+    
+    </summary>
+    
+      <category term="科研" scheme="https://jasonhu02.github.io/categories/%E7%A7%91%E7%A0%94/"/>
+    
+    
+      <category term="meta-learning" scheme="https://jasonhu02.github.io/tags/meta-learning/"/>
+    
+  </entry>
+  
+  <entry>
     <title>VAE-GAN的一些理解</title>
     <link href="https://jasonhu02.github.io/2020/02/02/vae-gan/"/>
     <id>https://jasonhu02.github.io/2020/02/02/vae-gan/</id>
     <published>2020-02-02T11:12:20.000Z</published>
-    <updated>2020-02-20T18:25:47.551Z</updated>
+    <updated>2020-02-22T07:32:54.504Z</updated>
     
     <summary type="html">
     
@@ -74,7 +100,7 @@
     <link href="https://jasonhu02.github.io/2020/01/19/pytorch-parallel/"/>
     <id>https://jasonhu02.github.io/2020/01/19/pytorch-parallel/</id>
     <published>2020-01-19T06:42:16.000Z</published>
-    <updated>2020-02-22T17:42:14.476Z</updated>
+    <updated>2020-02-22T17:44:42.486Z</updated>
     
     <summary type="html">
     
