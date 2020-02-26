@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jasonhu02.github.io/"/>
-  <updated>2020-02-24T16:52:50.712Z</updated>
+  <updated>2020-02-26T10:06:05.728Z</updated>
   <id>https://jasonhu02.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>RNN，LSTM算法图解</title>
+    <link href="https://jasonhu02.github.io/2020/02/08/lstm-and-rnn/"/>
+    <id>https://jasonhu02.github.io/2020/02/08/lstm-and-rnn/</id>
+    <published>2020-02-08T09:32:09.000Z</published>
+    <updated>2020-02-26T10:06:05.728Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;RNN的工作原理：&quot;&gt;&lt;a href=&quot;#RNN的工作原理：&quot; class=&quot;headerlink&quot; title=&quot;RNN的工作原理：&quot;&gt;&lt;/a&gt;RNN的工作原理：&lt;/h4&gt;&lt;p&gt;RNN可以被认为是一种有记忆力的neural
+        
+      
+    
+    </summary>
+    
+      <category term="算法" scheme="https://jasonhu02.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="LSTM" scheme="https://jasonhu02.github.io/tags/LSTM/"/>
+    
+  </entry>
   
   <entry>
     <title>Few shot learning 少样本图像生成任务</title>

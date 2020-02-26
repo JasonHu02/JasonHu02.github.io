@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jasonhu02.github.io/2020/02/08/lstm-and-rnn/</loc>
+    
+    <lastmod>2020-02-26T10:06:05.728Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jasonhu02.github.io/2020/02/06/few-shot-image-generation-method/</loc>
     
     <lastmod>2020-02-24T16:52:50.712Z</lastmod>
