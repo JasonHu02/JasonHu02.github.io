@@ -79,6 +79,31 @@
     
     
     <entry>
+      <title>VAE的一些理解</title>
+      <link href="/2020/02/02/shen-ru-li-jie-vae/"/>
+      <url>/2020/02/02/shen-ru-li-jie-vae/</url>
+      
+        <content type="html"><![CDATA[<p>仔细去看了ICML2014的文章Auto-Encoding Variational Bayes，想重新把VAE在理论上推导一遍。</p><p>先了解auto-encoder的组成。 q(z) 是标准正态分布, p(z|x), q(x|z) 是条件正态分布，分别对应编码器、解码器。</p><p>这里通过直接对联合分布进行近似的方式，简明快捷地给出了 VAE 的理论框架。 出发点依然没变，这里再重述一下。首先我们有一批数据样本 {<em>x</em>1,…,<em>x</em>n}，其整体用 <em>x</em> 来描述，我们希望<strong>借助隐变量</strong> <strong><em>z</em></strong> <strong>描述</strong> <strong><em>x</em></strong> <strong>的分布</strong> $p(x)$：<br>$$<br>p(x)=\int p(x | z) p(z) d z, \quad p(x, z)=p(x | z) p(z)<br>$$</p><p>$$<br>KL(p(x, z) | q(x, z))=\iint p(x, z) \ln \frac{p(x, z)}{q(x, z)} d z d x<br>$$</p><p>这样（理论上）我们既描述了 <em>p</em>(<em>x</em>)，又得到了生成模型 <em>p</em>(<em>x</em>|<em>z</em>)，一举两得。</p><p>KL 散度是我们的终极目标，因为我们希望两个分布越接近越好，所以 KL 散度越小越好。由于我们手头上只有 <em>x</em> 的样本，因此利用 <em>p</em>(<em>x</em>,<em>z</em>)=<em>p</em>(<em>x</em>)<em>p</em>(<em>z</em>|<em>x</em>) 对上式进行改写：<br>$$<br>\begin{aligned} K L(p(x, z) | q(x, z)) &amp;=\int p(x)\left[\int p(z | x) \ln \frac{p(x, z)}{q(x, z)} d z\right] d x \\ &amp;=\mathbb{E}_{x \sim p(x)}\left[\int p(z | x) \ln \frac{p(z | x) p(x)}{q(x, z)} d z\right] \end{aligned}<br>$$<br>这样一来利用 (4) 式，把各个 <em>xi</em> 代入就可以进行计算了，这个式子还可以进一步简化，因为：<br>$$<br>\ln \frac{p(z | x) p(x)}{q(x, z)}=\ln \frac{p(z | x)}{q(x, z)}+\ln p(x)<br>$$<br>而<br>$$<br>\begin{aligned} \mathbb{E}_{x \sim p(x)}\left[\int p(z | x) \ln p(x) d z\right] &amp;=\mathbb{E}_{x \sim p(x)}\left[\ln p(x) \int p(z | x) d z\right] \\ &amp;=\mathbb{E}_{x \sim p(x)}[\ln p(x)] \end{aligned}<br>$$<br> 注意这里的 <em>p</em>(<em>x</em>) 是根据样本 <em>x</em>1,<em>x</em>2,…,<em>x</em>n 确定的关于 <em>x</em> 的先验分布（更常见的写法是 <em>p̃</em>(<em>x</em>)），尽管我们不一定能准确写出它的形式，但它是确定的、存在的，因此这一项只是一个常数，所以可以写出：<br>$$<br>\mathcal{L}=K L(p(x, z) | q(x, z))-constant=\mathbb{E}_{x \sim p(x)}\left[\int p(z | x) \ln \frac{p(z | x)}{q(x, z)} d z\right]<br>$$<br> 目前最小化 KL(<em>p</em>(<em>x</em>,<em>z</em>)‖<em>q</em>(<em>x</em>,<em>z</em>)) 也就等价于最小化 L。注意减去的常数一般是负数（概率小于 1，取对数就小于 0），而 KL 散度本来就非负，非负数减去一个负数，结果会是一个正数，所以 L 恒大于一个某个正数。 </p><p>到这里，我们回顾初衷——为了得到生成模型，所以我们把 <em>q</em>(<em>x</em>,<em>z</em>) 写成 <em>q</em>(<em>x</em>|<em>z</em>)<em>q</em>(<em>z</em>)，于是就有：<br>$$<br>\begin{aligned} \mathcal{L} &amp;=\mathbb{E}_{x \sim p(x)}\left[\int p(z | x) \ln \frac{p(z | x)}{q(x | z) q(z)} d z\right] \\ &amp;=\mathbb{E}_{x \sim p(x)}\left[-\int p(z | x) \ln q(x | z) d z+\int p(z | x) \ln \frac{p(z | x)}{q(z)} d z\right] \end{aligned}<br>$$<br> 再简明一点，那就是：<br>$$<br>\begin{aligned} \mathcal{L} &amp;=\mathbb{E}_{x \sim p(x)}\left[\mathbb{E}_{z \sim p(z | x)}[-\ln q(x | z)]+\mathbb{E}_{z \sim p(z | x)}\left[\ln \frac{p(z | x)}{q(z)}\right]\right] \\ &amp;=\mathbb{E}_{x \sim p(x)}\left[\mathbb{E}_{z \sim p(z | x)}[-\ln q(x | z)]+K L(p(z | x) | q(z))\right] \end{aligned}<br>$$<br>看，括号内的不就是 VAE 的损失函数吗？只不过我们换了个符号而已。我们就是要想办法找到适当的 <em>q</em>(<em>x</em>|<em>z</em>) 和 <em>q</em>(<em>z</em>) 使得 L 最小化。 </p><p>简单来说，由于直接描述复杂分布是难以做到的，<strong>所以我们通过引入隐变量来将它变成条件分布的叠加</strong>。而这时候我们对隐变量的分布和条件分布都可以做适当的简化（比如都假设为正态分布），并且在条件分布的参数可以跟深度学习模型结合起来（用深度学习来算隐变量的参数），至此，“深度概率图模型”就可见一斑了。 </p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 科研 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> representation-learning </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ICLR2020论文解读__Learning robust representations via multi-view information</title>
       <link href="/2020/01/22/information-bottleneck-paper/"/>
       <url>/2020/01/22/information-bottleneck-paper/</url>

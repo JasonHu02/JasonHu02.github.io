@@ -1,6 +1,7 @@
 https://jasonhu02.github.io/2020/02/08/lstm-and-rnn/
 https://jasonhu02.github.io/2020/02/06/few-shot-image-generation-method/
 https://jasonhu02.github.io/2020/02/02/vae-gan/
+https://jasonhu02.github.io/2020/02/02/shen-ru-li-jie-vae/
 https://jasonhu02.github.io/2020/01/22/information-bottleneck-paper/
 https://jasonhu02.github.io/2020/01/19/pytorch-parallel/
 https://jasonhu02.github.io/2020/01/18/pytorch-data/

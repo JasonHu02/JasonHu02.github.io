@@ -4,11 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="RNN，LSTM算法图解, SJTU NLP DeepLearning Thinklab 胡哲 huzhe 计算机视觉 深度学习">
+    <meta name="keywords" content="VAE的一些理解, SJTU NLP DeepLearning Thinklab 胡哲 huzhe 计算机视觉 深度学习">
     <meta name="baidu-site-verification" content>
     <meta name="google-site-verification" content>
     <meta name="360-site-verification" content>
-    <meta name="description" content="RNN的工作原理：RNN可以被认为是一种有记忆力的neural network。在RNN里面，每一次hidden layer的neuron产生output的时候，这个output会被存到memory里面。当下次又有input的时候，需要和上">
+    <meta name="description" content="仔细去看了ICML2014的文章Auto-Encoding Variational Bayes，想重新把VAE在理论上推导一遍。
+先了解auto-encoder的组成。 q(z) 是标准正态分布, p(z|x), q(x|z) 是条件正态分">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>RNN，LSTM算法图解 | Zhe Hu&#39;s Blog</title>
+    <title>VAE的一些理解 | Zhe Hu&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -242,13 +243,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/LSTM.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/vae-deep.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        RNN，LSTM算法图解
+                        VAE的一些理解
                     </div>
                 </div>
             </div>
@@ -359,8 +360,8 @@
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/LSTM/" target="_blank">
-                            <span class="chip bg-color">LSTM</span>
+                        <a href="/tags/representation-learning/" target="_blank">
+                            <span class="chip bg-color">representation-learning</span>
                         </a>
                         
                     </div>
@@ -371,8 +372,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                        <a href="/categories/算法/" class="post-category" target="_blank">
-                            算法
+                        <a href="/categories/科研/" class="post-category" target="_blank">
+                            科研
                         </a>
                         
                     </div>
@@ -383,7 +384,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-02-08
+                    2020-02-02
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -397,7 +398,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    1k
                 </div>
                 
 
@@ -420,77 +421,14 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="RNN的工作原理："><a href="#RNN的工作原理：" class="headerlink" title="RNN的工作原理："></a>RNN的工作原理：</h4><p>RNN可以被认为是一种有记忆力的neural network。在RNN里面，每一次hidden layer的neuron产生output的时候，这个output会被存到memory里面。当下次又有input的时候，需要和上一次的memory结合起来使用。对它来说除了$x_1,x_2$以外，这些存在memory里的值$a_1,a_2$也会影响它的output。</p>
-<img src="LSTM-and-RNN/image-20200226154228719.png" alt="image-20200226154228719" style="zoom: 25%;">
-
-<p>如上图所示, 用Recurrent Neural Network处理slot filling这件事，就像是这样，使用者说：“arrive Taipei on November 2nd”，arrive就变成了一个vector丢到neural network里面去，neural network的hidden layer的output写成$a^1$($a^1$是一排neural的output，是一个vector)，$a^1$产生$y^1$,$y^1$就是“arrive”属于每一个slot filling的几率。接下来$a^1$会被存到memory里面去，”Taipei会变为input”，这个hidden layer会同时考虑“Taipei”这个input和存在memory里面的$a^1$,得到$a^2$，根据$a^2$得到$y^2$，$y^2$是属于每一个slot filling的几率。以此类推($a^3$得到$y^2$)。</p>
-<p>通过这样的方式，RNN就有了推断一句话意思的能力，他不仅仅看到了taibei这个词，也记住了arrive这个词，就可以做自动化做更多的事情。</p>
-<h4 id="LSTM的网络架构："><a href="#LSTM的网络架构：" class="headerlink" title="LSTM的网络架构："></a>LSTM的网络架构：</h4><img src="LSTM-and-RNN/image-20200226154152676.png" alt="image-20200226154152676" style="zoom:25%;">
-
-<p>LSTM的网络架构，相比之下复杂了很多，有四个input，一个output，这构成了这个神经网络。分别是一个是想要存进memory的值，input-gate, forget-gate, output-gate，以及output。这个值输出，那么必须保证input_gate打开，forget_gate不会忘掉，且output_gate开启，而这三个值都会由neural network学到是1还是0. </p>
-<p>我们看一下下面这个已经赋值好的权重的神经网络的输入和输出情况。</p>
-<img src="LSTM-and-RNN/image-20200226174241356.png" alt="image-20200226174241356" style="zoom:25%;">
-
-<p>input的三维vector乘以linear transform以后所得到的结果($x_1$,$x_2$,$x_3$乘以权重再加上bias)，这些权重和bias是哪些值是通过train data用GD学到的。 假设我已经知道这些值是多少了，那用这样的输入会得到什么样的输出。那我们就实际的运算一下。其中绿色的就是bias，</p>
-<p>在实际运算之前，我们先根据它的input，参数分析下可能会得到的结果。底下这个外界传入的cell，$x_1$乘以1，其他的vector乘以0，所以就直接把$x_1$当做输入。在input gate时，$x_2$乘以100，bias乘以-10(假设$x_2$是没有值的话，通常input gate是关闭的(bias等于-10)因为-10通过sigmoid函数之后会接近0，所以就代表是关闭的，若$x_2$的值大于1的话，结果会是一个正值，代表input gate会被打开) 。forget gate通常会被打开的，因为他的bias等于10(它平常会一直记得东西)，只有当$x_2$的值为一个很大的负值时，才会把forget gate关起来。output gate平常是被关闭的，因为bias是一个很大的负值，若$x_3$有一个很大的正值的话，压过bias把output打开。</p>
-<h4 id="LSTM的原理："><a href="#LSTM的原理：" class="headerlink" title="LSTM的原理："></a>LSTM的原理：</h4><img src="LSTM-and-RNN/image-20200226174701864.png" alt="image-20200226174701864" style="zoom:33%;">
-
-<p>现在的input($x_1,x_2$)会乘以不同的weight当做LSTM不同的输入(假设我们这个hidden layer只有两个neuron，但实际上是有很多的neuron)。input($x_1,x_2$)会乘以不同的weight会去操控output gate，乘以不同的weight操控input gate，乘以不同的weight当做底下的input，乘以不同的weight当做forget gate。第二个LSTM也是一样的。所以LSTM是有四个input跟一个output，对于LSTM来说，这四个input是不一样的。在原来的neural network里是一个input一个output。在LSTM里面它需要四个input，它才能产生一个output。</p>
-<p>LSTM的最终形态：</p>
-<img src="LSTM-and-RNN/image-20200226174805623.png" alt="image-20200226174805623" style="zoom:33%;">
-
-<p>其代码实现如下：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token comment" spellcheck="true">#single lstm cell</span>
-<span class="token keyword">def</span> <span class="token function">lstm_cell</span><span class="token punctuation">(</span>batch_dataset<span class="token punctuation">,</span> prev_activation_matrix<span class="token punctuation">,</span> prev_cell_matrix<span class="token punctuation">,</span> parameters<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true">#get parameters</span>
-    fgw <span class="token operator">=</span> parameters<span class="token punctuation">[</span><span class="token string">'fgw'</span><span class="token punctuation">]</span>
-    igw <span class="token operator">=</span> parameters<span class="token punctuation">[</span><span class="token string">'igw'</span><span class="token punctuation">]</span>
-    ogw <span class="token operator">=</span> parameters<span class="token punctuation">[</span><span class="token string">'ogw'</span><span class="token punctuation">]</span>
-    ggw <span class="token operator">=</span> parameters<span class="token punctuation">[</span><span class="token string">'ggw'</span><span class="token punctuation">]</span>
-
-    <span class="token comment" spellcheck="true">#concat batch data and prev_activation matrix</span>
-    concat_dataset <span class="token operator">=</span> np<span class="token punctuation">.</span>concatenate<span class="token punctuation">(</span><span class="token punctuation">(</span>batch_dataset<span class="token punctuation">,</span>prev_activation_matrix<span class="token punctuation">)</span><span class="token punctuation">,</span>axis<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#forget gate activations</span>
-    fa <span class="token operator">=</span> np<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>concat_dataset<span class="token punctuation">,</span>fgw<span class="token punctuation">)</span>
-    fa <span class="token operator">=</span> sigmoid<span class="token punctuation">(</span>fa<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#input gate activations</span>
-    ia <span class="token operator">=</span> np<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>concat_dataset<span class="token punctuation">,</span>igw<span class="token punctuation">)</span>
-    ia <span class="token operator">=</span> sigmoid<span class="token punctuation">(</span>ia<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#output gate activations</span>
-    oa <span class="token operator">=</span> np<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>concat_dataset<span class="token punctuation">,</span>ogw<span class="token punctuation">)</span>
-    oa <span class="token operator">=</span> sigmoid<span class="token punctuation">(</span>oa<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#gate gate activations</span>
-    ga <span class="token operator">=</span> np<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>concat_dataset<span class="token punctuation">,</span>ggw<span class="token punctuation">)</span>
-    ga <span class="token operator">=</span> tanh_activation<span class="token punctuation">(</span>ga<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#new cell memory matrix</span>
-    cell_memory_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>multiply<span class="token punctuation">(</span>fa<span class="token punctuation">,</span>prev_cell_matrix<span class="token punctuation">)</span> <span class="token operator">+</span> np<span class="token punctuation">.</span>multiply<span class="token punctuation">(</span>ia<span class="token punctuation">,</span>ga<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#current activation matrix</span>
-    activation_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>multiply<span class="token punctuation">(</span>oa<span class="token punctuation">,</span> tanh_activation<span class="token punctuation">(</span>cell_memory_matrix<span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#lets store the activations to be used in back prop</span>
-    lstm_activations <span class="token operator">=</span> dict<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    lstm_activations<span class="token punctuation">[</span><span class="token string">'fa'</span><span class="token punctuation">]</span> <span class="token operator">=</span> fa
-    lstm_activations<span class="token punctuation">[</span><span class="token string">'ia'</span><span class="token punctuation">]</span> <span class="token operator">=</span> ia
-    lstm_activations<span class="token punctuation">[</span><span class="token string">'oa'</span><span class="token punctuation">]</span> <span class="token operator">=</span> oa
-    lstm_activations<span class="token punctuation">[</span><span class="token string">'ga'</span><span class="token punctuation">]</span> <span class="token operator">=</span> ga
-
-    <span class="token keyword">return</span> lstm_activations<span class="token punctuation">,</span>cell_memory_matrix<span class="token punctuation">,</span>activation_matrix<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">output_cell</span><span class="token punctuation">(</span>activation_matrix<span class="token punctuation">,</span>parameters<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true">#get hidden to output parameters</span>
-    how <span class="token operator">=</span> parameters<span class="token punctuation">[</span><span class="token string">'how'</span><span class="token punctuation">]</span>
-
-    <span class="token comment" spellcheck="true">#get outputs </span>
-    output_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>activation_matrix<span class="token punctuation">,</span>how<span class="token punctuation">)</span>
-    output_matrix <span class="token operator">=</span> softmax<span class="token punctuation">(</span>output_matrix<span class="token punctuation">)</span>
-
-    <span class="token keyword">return</span> output_matrix<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><a href="https://www.youtube.com/watch?v=xCGidAeyS4M" target="_blank" rel="noopener">主要参考了台大李宏毅老师的youtube视频课程。</a></p>
+                <p>仔细去看了ICML2014的文章Auto-Encoding Variational Bayes，想重新把VAE在理论上推导一遍。</p>
+<p>先了解auto-encoder的组成。 q(z) 是标准正态分布, p(z|x), q(x|z) 是条件正态分布，分别对应编码器、解码器。</p>
+<p>这里通过直接对联合分布进行近似的方式，简明快捷地给出了 VAE 的理论框架。 出发点依然没变，这里再重述一下。首先我们有一批数据样本 {<em>x</em>1,…,<em>x</em>n}，其整体用 <em>x</em> 来描述，我们希望<strong>借助隐变量</strong> <strong><em>z</em></strong> <strong>描述</strong> <strong><em>x</em></strong> <strong>的分布</strong> $p(x)$：<br>$$<br>p(x)=\int p(x | z) p(z) d z, \quad p(x, z)=p(x | z) p(z)<br>$$</p>
+<p>$$<br>KL(p(x, z) | q(x, z))=\iint p(x, z) \ln \frac{p(x, z)}{q(x, z)} d z d x<br>$$</p>
+<p>这样（理论上）我们既描述了 <em>p</em>(<em>x</em>)，又得到了生成模型 <em>p</em>(<em>x</em>|<em>z</em>)，一举两得。</p>
+<p>KL 散度是我们的终极目标，因为我们希望两个分布越接近越好，所以 KL 散度越小越好。由于我们手头上只有 <em>x</em> 的样本，因此利用 <em>p</em>(<em>x</em>,<em>z</em>)=<em>p</em>(<em>x</em>)<em>p</em>(<em>z</em>|<em>x</em>) 对上式进行改写：<br>$$<br>\begin{aligned} K L(p(x, z) | q(x, z)) &amp;=\int p(x)\left[\int p(z | x) \ln \frac{p(x, z)}{q(x, z)} d z\right] d x \\ &amp;=\mathbb{E}_{x \sim p(x)}\left[\int p(z | x) \ln \frac{p(z | x) p(x)}{q(x, z)} d z\right] \end{aligned}<br>$$<br>这样一来利用 (4) 式，把各个 <em>xi</em> 代入就可以进行计算了，这个式子还可以进一步简化，因为：<br>$$<br>\ln \frac{p(z | x) p(x)}{q(x, z)}=\ln \frac{p(z | x)}{q(x, z)}+\ln p(x)<br>$$<br>而<br>$$<br>\begin{aligned} \mathbb{E}_{x \sim p(x)}\left[\int p(z | x) \ln p(x) d z\right] &amp;=\mathbb{E}_{x \sim p(x)}\left[\ln p(x) \int p(z | x) d z\right] \\ &amp;=\mathbb{E}_{x \sim p(x)}[\ln p(x)] \end{aligned}<br>$$<br> 注意这里的 <em>p</em>(<em>x</em>) 是根据样本 <em>x</em>1,<em>x</em>2,…,<em>x</em>n 确定的关于 <em>x</em> 的先验分布（更常见的写法是 <em>p̃</em>(<em>x</em>)），尽管我们不一定能准确写出它的形式，但它是确定的、存在的，因此这一项只是一个常数，所以可以写出：<br>$$<br>\mathcal{L}=K L(p(x, z) | q(x, z))-constant=\mathbb{E}_{x \sim p(x)}\left[\int p(z | x) \ln \frac{p(z | x)}{q(x, z)} d z\right]<br>$$<br> 目前最小化 KL(<em>p</em>(<em>x</em>,<em>z</em>)‖<em>q</em>(<em>x</em>,<em>z</em>)) 也就等价于最小化 L。注意减去的常数一般是负数（概率小于 1，取对数就小于 0），而 KL 散度本来就非负，非负数减去一个负数，结果会是一个正数，所以 L 恒大于一个某个正数。 </p>
+<p>到这里，我们回顾初衷——为了得到生成模型，所以我们把 <em>q</em>(<em>x</em>,<em>z</em>) 写成 <em>q</em>(<em>x</em>|<em>z</em>)<em>q</em>(<em>z</em>)，于是就有：<br>$$<br>\begin{aligned} \mathcal{L} &amp;=\mathbb{E}_{x \sim p(x)}\left[\int p(z | x) \ln \frac{p(z | x)}{q(x | z) q(z)} d z\right] \\ &amp;=\mathbb{E}_{x \sim p(x)}\left[-\int p(z | x) \ln q(x | z) d z+\int p(z | x) \ln \frac{p(z | x)}{q(z)} d z\right] \end{aligned}<br>$$<br> 再简明一点，那就是：<br>$$<br>\begin{aligned} \mathcal{L} &amp;=\mathbb{E}_{x \sim p(x)}\left[\mathbb{E}_{z \sim p(z | x)}[-\ln q(x | z)]+\mathbb{E}_{z \sim p(z | x)}\left[\ln \frac{p(z | x)}{q(z)}\right]\right] \\ &amp;=\mathbb{E}_{x \sim p(x)}\left[\mathbb{E}_{z \sim p(z | x)}[-\ln q(x | z)]+K L(p(z | x) | q(z))\right] \end{aligned}<br>$$<br>看，括号内的不就是 VAE 的损失函数吗？只不过我们换了个符号而已。我们就是要想办法找到适当的 <em>q</em>(<em>x</em>|<em>z</em>) 和 <em>q</em>(<em>z</em>) 使得 L 最小化。 </p>
+<p>简单来说，由于直接描述复杂分布是难以做到的，<strong>所以我们通过引入隐变量来将它变成条件分布的叠加</strong>。而这时候我们对隐变量的分布和条件分布都可以做适当的简化（比如都假设为正态分布），并且在条件分布的参数可以跟深度学习模型结合起来（用深度学习来算隐变量的参数），至此，“深度概率图模型”就可见一斑了。 </p>
 
             </div>
             <hr />
@@ -525,9 +463,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《RNN，LSTM算法图解》
+                    《VAE的一些理解》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/02/08/lstm-and-rnn/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/02/02/shen-ru-li-jie-vae/" property="cc:attributionName"
                rel="cc:attributionURL">
                 胡哲
             </a> 采用
@@ -568,7 +506,7 @@
         repo: 'JasonHu02.github.io/issues/1',
         owner: 'JasonHu02',
         admin: "JasonHu02",
-        id: '2020/02/08/lstm-and-rnn/',
+        id: '2020/02/02/shen-ru-li-jie-vae/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -589,47 +527,45 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/02/08/lstm-and-rnn/">
+                <a href="/2020/02/02/vae-gan/">
                     <div class="card-image">
                         
-                        <img src="/medias/featureimages/LSTM.jpg" class="responsive-img" alt="RNN，LSTM算法图解">
+                        <img src="/medias/featureimages/vae-gan.jpg" class="responsive-img" alt="VAE-GAN的一些理解">
                         
-                        <span class="card-title">RNN，LSTM算法图解</span>
+                        <span class="card-title">VAE-GAN的一些理解</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            主要介绍了RNN和LSTM网络的一些基本结构和原理。
+                            本文对VAE和GAN两种进行了一些探讨, 以及两者之间可能的结合点
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-08
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-02
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/算法/" class="post-category" target="_blank">
-                                    算法
+                            <a href="/categories/科研/" class="post-category" target="_blank">
+                                    科研
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/LSTM/" target="_blank">
-                        <span class="chip bg-color">LSTM</span>
+                    <a href="/tags/representation-learning/" target="_blank">
+                        <span class="chip bg-color">representation-learning</span>
                     </a>
                     
                 </div>
@@ -643,23 +579,23 @@
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/02/06/few-shot-image-generation-method/">
+                <a href="/2020/01/22/information-bottleneck-paper/">
                     <div class="card-image">
                         
-                        <img src="/medias/featureimages/few-shot.jpg" class="responsive-img" alt="Few shot learning 少样本图像生成任务">
+                        <img src="/medias/featureimages/ib.jpg" class="responsive-img" alt="ICLR2020论文解读__Learning robust representations via multi-view information">
                         
-                        <span class="card-title">Few shot learning 少样本图像生成任务</span>
+                        <span class="card-title">ICLR2020论文解读__Learning robust representations via multi-view information</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            本项目结合meta-learning的方法reptiles使用GAN的框架解决few-shot learning问题.
+                            本文是对于信息瓶颈方法的原始公式应用于在学习时可以使用任务特定标签的监督设置中。提出了通过利用muilt-view的方式提供一种实体的两类视图，可以将方法扩展到无监督的情况下.
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-06
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-01-22
                             </span>
                         <span class="publish-author">
                             
@@ -676,8 +612,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/meta-learning/" target="_blank">
-                        <span class="chip bg-color">meta-learning</span>
+                    <a href="/tags/representation-learning/" target="_blank">
+                        <span class="chip bg-color">representation-learning</span>
                     </a>
                     
                 </div>
