@@ -2,6 +2,48 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jasonhu02.github.io/2020/01/19/pytorch-parallel/</loc>
+    
+    <lastmod>2020-04-18T16:53:04.358Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jasonhu02.github.io/2020/03/17/leetcode/</loc>
+    
+    <lastmod>2020-04-18T16:33:46.837Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jasonhu02.github.io/2020/02/02/vae-gan/</loc>
+    
+    <lastmod>2020-04-18T16:31:12.650Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jasonhu02.github.io/2020/01/18/pytorch-data/</loc>
+    
+    <lastmod>2020-04-18T16:31:03.022Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jasonhu02.github.io/2020/02/06/few-shot-image-generation-method/</loc>
+    
+    <lastmod>2020-04-18T16:30:40.104Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jasonhu02.github.io/2020/01/22/information-bottleneck-paper/</loc>
+    
+    <lastmod>2020-04-18T16:29:59.316Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jasonhu02.github.io/2020/02/02/shen-ru-li-jie-vae/</loc>
     
     <lastmod>2020-03-01T07:42:25.327Z</lastmod>
@@ -12,41 +54,6 @@
     <loc>https://jasonhu02.github.io/2020/02/08/lstm-and-rnn/</loc>
     
     <lastmod>2020-02-26T10:06:05.728Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jasonhu02.github.io/2020/02/06/few-shot-image-generation-method/</loc>
-    
-    <lastmod>2020-02-24T16:52:50.712Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jasonhu02.github.io/2020/01/19/pytorch-parallel/</loc>
-    
-    <lastmod>2020-02-22T17:44:42.486Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jasonhu02.github.io/2020/01/18/pytorch-data/</loc>
-    
-    <lastmod>2020-02-22T17:44:38.444Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jasonhu02.github.io/2020/02/02/vae-gan/</loc>
-    
-    <lastmod>2020-02-22T07:32:54.504Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jasonhu02.github.io/2020/01/22/information-bottleneck-paper/</loc>
-    
-    <lastmod>2020-02-20T18:24:01.814Z</lastmod>
     
   </url>
   

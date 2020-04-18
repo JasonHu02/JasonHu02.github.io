@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jasonhu02.github.io/"/>
-  <updated>2020-02-26T10:06:05.728Z</updated>
+  <updated>2020-04-18T16:33:46.837Z</updated>
   <id>https://jasonhu02.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>动态规划简单归纳</title>
+    <link href="https://jasonhu02.github.io/2020/03/17/leetcode/"/>
+    <id>https://jasonhu02.github.io/2020/03/17/leetcode/</id>
+    <published>2020-03-17T06:32:09.000Z</published>
+    <updated>2020-04-18T16:33:46.837Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;动态规划题主要的思路步骤就是: 将问题做拆解，找到问题之间具体的联系；状态定义；递推方程推导；实现。&lt;/p&gt;
+&lt;p&gt;这里还是拿 Quora 上面的例子来讲解，“1+1+1+1+1+1+1+1” 得出答案是 8，那么如何快速计算 “1+
+        
+      
+    
+    </summary>
+    
+      <category term="leetcode" scheme="https://jasonhu02.github.io/categories/leetcode/"/>
+    
+    
+      <category term="dynamic programming" scheme="https://jasonhu02.github.io/tags/dynamic-programming/"/>
+    
+  </entry>
   
   <entry>
     <title>RNN，LSTM算法图解</title>
@@ -47,7 +74,7 @@
     <link href="https://jasonhu02.github.io/2020/02/06/few-shot-image-generation-method/"/>
     <id>https://jasonhu02.github.io/2020/02/06/few-shot-image-generation-method/</id>
     <published>2020-02-06T06:23:56.000Z</published>
-    <updated>2020-02-24T16:52:50.712Z</updated>
+    <updated>2020-04-18T16:30:40.104Z</updated>
     
     <summary type="html">
     
@@ -73,7 +100,7 @@
     <link href="https://jasonhu02.github.io/2020/02/02/vae-gan/"/>
     <id>https://jasonhu02.github.io/2020/02/02/vae-gan/</id>
     <published>2020-02-02T11:12:20.000Z</published>
-    <updated>2020-02-22T07:32:54.504Z</updated>
+    <updated>2020-04-18T16:31:12.650Z</updated>
     
     <summary type="html">
     
@@ -126,8 +153,8 @@
     <title>ICLR2020论文解读__Learning robust representations via multi-view information</title>
     <link href="https://jasonhu02.github.io/2020/01/22/information-bottleneck-paper/"/>
     <id>https://jasonhu02.github.io/2020/01/22/information-bottleneck-paper/</id>
-    <published>2020-01-22T04:32:09.000Z</published>
-    <updated>2020-02-20T18:24:01.814Z</updated>
+    <published>2020-01-22T04:22:12.000Z</published>
+    <updated>2020-04-18T16:29:59.316Z</updated>
     
     <summary type="html">
     
@@ -153,7 +180,7 @@
     <link href="https://jasonhu02.github.io/2020/01/19/pytorch-parallel/"/>
     <id>https://jasonhu02.github.io/2020/01/19/pytorch-parallel/</id>
     <published>2020-01-19T06:42:16.000Z</published>
-    <updated>2020-02-22T17:44:42.486Z</updated>
+    <updated>2020-04-18T16:53:04.358Z</updated>
     
     <summary type="html">
     
@@ -161,7 +188,8 @@
       
         
         
-          &lt;h5 id=&quot;完整的步骤：&quot;&gt;&lt;a href=&quot;#完整的步骤：&quot; class=&quot;headerlink&quot;
+          &lt;h5 id=&quot;完整的步骤：&quot;&gt;&lt;a href=&quot;#完整的步骤：&quot; class=&quot;headerlink&quot; title=&quot;完整的步骤：&quot;&gt;&lt;/a&gt;完整的步骤：&lt;/h5&gt;&lt;ol&gt;
+&lt;li&gt;设定好&lt;code&gt;os.environment(&amp;quot;
         
       
     
@@ -179,7 +207,7 @@
     <link href="https://jasonhu02.github.io/2020/01/18/pytorch-data/"/>
     <id>https://jasonhu02.github.io/2020/01/18/pytorch-data/</id>
     <published>2020-01-18T09:21:22.000Z</published>
-    <updated>2020-02-22T17:44:38.444Z</updated>
+    <updated>2020-04-18T16:31:03.022Z</updated>
     
     <summary type="html">
     

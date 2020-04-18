@@ -152,7 +152,7 @@ mark {
 
 .card {
     border-radius: 10px;
-    box-shadow: 0 15px 35px rgba(50, 50, 93, .1), 0 5px 15px rgba(0, 0, 0, .07) !important;
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.1), 0 5px 15px rgba(255, 255, 255, 0.07) !important;
 }
 
 .card .card-image img {
@@ -164,12 +164,12 @@ mark {
 }
 
 .bg-color {
-    background-image: #fafafa 0%;
+    background-image: #ffffff 50%;
     opacity: 0.5;
 }
 
 .text-color {
-    color: #0f9d58 !important;
+    color: #ffffff !important;
 }
 
 .white-color {

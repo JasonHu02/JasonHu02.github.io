@@ -4,11 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Meta-learning tutorial, SJTU NLP DeepLearning Thinklab 胡哲 huzhe 计算机视觉 深度学习">
+    <meta name="keywords" content="动态规划简单归纳, SJTU NLP DeepLearning Thinklab 胡哲 huzhe 计算机视觉 深度学习">
     <meta name="baidu-site-verification" content>
     <meta name="google-site-verification" content>
     <meta name="360-site-verification" content>
-    <meta name="description" content="乘着假期期间，把meta-learning部分的内容全部过一遍。把最近的工作做一些简单的总结，顺便做了一份tutorial方便更多的同学对这个领域quickview。以及提供一部分代码进行实践，深入了解目前元学习领域解决的各种问题。以及非常">
+    <meta name="description" content="动态规划题主要的思路步骤就是: 将问题做拆解，找到问题之间具体的联系；状态定义；递推方程推导；实现。
+这里还是拿 Quora 上面的例子来讲解，“1+1+1+1+1+1+1+1” 得出答案是 8，那么如何快速计算 “1+ 1+1+1+1+1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Meta-learning tutorial | Zhe Hu&#39;s Blog</title>
+    <title>动态规划简单归纳 | Zhe Hu&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -242,13 +243,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/maml.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/leetcode.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Meta-learning tutorial
+                        动态规划简单归纳
                     </div>
                 </div>
             </div>
@@ -270,8 +271,8 @@
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/meta-learning/" target="_blank">
-                            <span class="chip bg-color">meta-learning</span>
+                        <a href="/tags/dynamic-programming/" target="_blank">
+                            <span class="chip bg-color">dynamic programming</span>
                         </a>
                         
                     </div>
@@ -282,8 +283,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                        <a href="/categories/科研/" class="post-category" target="_blank">
-                            科研
+                        <a href="/categories/leetcode/" class="post-category" target="_blank">
+                            leetcode
                         </a>
                         
                     </div>
@@ -294,7 +295,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-01-12
+                    2020-03-17
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -308,14 +309,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2k
+                    949
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    8 分
+                    3 分
                 </div>
                 
                 
@@ -331,77 +332,122 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>乘着假期期间，把meta-learning部分的内容全部过一遍。把最近的工作做一些简单的总结，顺便做了一份tutorial方便更多的同学对这个领域quickview。以及提供一部分代码进行实践，深入了解目前元学习领域解决的各种问题。以及非常流行的MAML和Reptile两种模型无关的元学习方法。并尝试从理论上对元学习模型进行解释，learn to learn对于few-shot，zero-shot，one-shot learning都有很好的应用，同时需要掌握的概念有迁移学习和表示学习的概念，了解神经网络学习的主要特征有哪些。本tutorial的参考资料都列到了最后的附录中。</p>
-<h4 id="Meta-learning的两类观点"><a href="#Meta-learning的两类观点" class="headerlink" title="Meta-learning的两类观点"></a>Meta-learning的两类观点</h4><ul>
-<li>一种是Mechanistic view: 可以读取整个数据集并预测新数据点的深度神经网络模型。训练该网络使用一个元数据集，该元数据集本身包含许多数据集，每个数据集用于不同的任务。此观点使实现meta-learning算法更加容易。</li>
-<li>另一种是Probabilistic view：从一组（元训练meta-training）任务中提取先验信息，从而高效地学习新任务学习新任务时, 使用此先验和（小）训练集来推断最有可能的后验参数。此观点使理解元学习算法更加容易。</li>
+                <p>动态规划题主要的思路步骤就是: 将问题做拆解，找到问题之间具体的联系；状态定义；递推方程推导；实现。</p>
+<p>这里还是拿 Quora 上面的例子来讲解，“1+1+1+1+1+1+1+1” 得出答案是 8，那么如何快速计算 “1+ 1+1+1+1+1+1+1+1”，我们首先可以对这个大的问题进行拆解，这里我说的大问题是 9 个 1 相加，这个问题可以拆解成 1 + “8 个 1 相加的答案”，8 个 1 相加继续拆，可以拆解成 1 + “7 个 1 相加的答案”，… 1 + “0 个 1 相加的答案”，到这里，<strong>第一个步骤</strong> 已经完成。【初始化定义为1，后面的都是+1】</p>
+<p>定义好了状态，递推方程就变得非常简单，就是 <code>dp[i] = dp[i - 1] + 1</code>，这里的 <code>dp[i]</code> 记录的是当前问题的答案，也就是当前的状态，<code>dp[i - 1]</code> 记录的是之前相邻的问题的答案，也就是之前的状态，它们之间通过 +1 来实现状态的变更。</p>
+<p>最后一步就是实现了，有了状态表示和递推方程，实现这一步上需要重点考虑的其实是初始化，就是用什么样的数据结构，根据问题的要求需要做那些初始值的设定。</p>
+<pre class="line-numbers language-C++"><code class="language-C++">public int dpExample(int n) {
+    int[] dp = new int[n + 1];  // 多开一位用来存放 0 个 1 相加的结果
+
+    dp[0] = 0;      // 0 个 1 相加等于 0
+
+    for (int i = 1; i <= n; ++i) {
+        dp[i] = dp[i - 1] + 1;
+    }
+
+    return dp[n];
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>你可以看到，动态规划这四个步骤其实是相互递进的，状态的定义离不开问题的拆解，递推方程的推导离不开状态的定义，最后的实现代码的核心其实就是递推方程，这中间如果有一个步骤卡壳了则会导致问题无法解决，当问题的复杂程度增加的时候，这里面的思维复杂程度会上升。</p>
+<h5 id="Leetcode70：爬楼梯："><a href="#Leetcode70：爬楼梯：" class="headerlink" title="Leetcode70：爬楼梯："></a>Leetcode70：爬楼梯：</h5><p>假设你正在爬楼梯。需要 <em>n</em> 阶你才能到达楼顶。每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？注意：给定 <em>n</em> 是一个正整数。</p>
+<pre><code>输入：2
+输出：2
+解释： 有两种方法可以爬到楼顶。
+
+1. 1 阶 + 1 阶
+2. 2 阶</code></pre><pre><code>输入：3
+输出：3
+解释： 有三种方法可以爬到楼顶。
+
+1. 1 阶 + 1 阶 + 1 阶
+2. 1 阶 + 2 阶
+3. 2 阶 + 1 阶</code></pre><p><strong>问题拆解</strong>：</p>
+<p>我们到达第 n 个楼梯可以从第 n – 1 个楼梯和第 n – 2 个楼梯到达，因此第 n 个问题可以拆解成第 n – 1 个问题和第 n – 2 个问题，第 n – 1 个问题和第 n – 2 个问题又可以继续往下拆，直到第 0 个问题，也就是第 0 个楼梯 (起点)</p>
+<p><strong>状态定义</strong></p>
+<p>“问题拆解” 中已经提到了，第 n 个楼梯会和第 n – 1 和第 n – 2 个楼梯有关联，那么具体的联系是什么呢？你可以这样思考，第 n – 1 个问题里面的答案其实是从起点到达第 n – 1 个楼梯的路径总数，n – 2 同理，从第 n – 1 个楼梯可以到达第 n 个楼梯，从第 n – 2 也可以，并且路径没有重复，因此我们可以把第 i 个状态定义为 “<strong>从起点到达第 i 个楼梯的路径总数</strong>”，状态之间的联系其实是相加的关系。</p>
+<p><strong>递推方程</strong></p>
+<p>“状态定义” 中我们已经定义好了状态，也知道第 i 个状态可以由第 i – 1 个状态和第 i – 2 个状态通过相加得到，因此递推方程就出来了 <code>dp[i] = dp[i - 1] + dp[i - 2]</code></p>
+<p><strong>实现</strong></p>
+<p>你其实可以从递推方程看到，我们需要有一个初始值来方便我们计算，起始位置不需要移动 <code>dp[0] = 0</code>，第 1 层楼梯只能从起始位置到达，因此 <code>dp[1] = 1</code>，第 2 层楼梯可以从起始位置和第 1 层楼梯到达，因此 <code>dp[2] = 2</code>，有了这些初始值，后面就可以通过这几个初始值进行递推得到。</p>
+<pre><code></code></pre><h5 id="LeetCode-第-120-号问题：三角形最小路径和。"><a href="#LeetCode-第-120-号问题：三角形最小路径和。" class="headerlink" title="LeetCode 第 120 号问题：三角形最小路径和。"></a>LeetCode 第 120 号问题：三角形最小路径和。</h5><p>给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。</p>
+<p>例如，给定三角形：</p>
+<pre><code>[
+     [2],
+    [3,4],
+   [6,5,7],
+  [4,1,8,3]
+]</code></pre><ul>
+<li>问题拆解：</li>
 </ul>
-<h4 id="元学习的数学定义"><a href="#元学习的数学定义" class="headerlink" title="元学习的数学定义"></a>元学习的数学定义</h4><p>通过学习一类任务，得到一个通用的参数$\theta ^*$,通过固定参数$\theta$ ，在每个训练集的任务上用该task运用该task可以得到$\phi$的训练参数。</p>
-<h5 id="监督学习："><a href="#监督学习：" class="headerlink" title="监督学习："></a>监督学习：</h5><p>目标是:$\arg \max _{\phi} \log p(\phi | D)$ ，其中$\mathcal{D}=\left\{\left(x_{1}, y_{1}\right), \ldots,\left(x_{k}, y_{k}\right)\right\}$ </p>
-<p>其中，xi表示input，比如image，而y表示label。</p>
-<p>$=\arg \max \log p(D | \phi)+\log p(\phi)$</p>
-<p>$=\arg \max \sum_{i} \log p\left(y_{i} | x_{i}, \phi\right)+\log p(\phi)$</p>
-<p>上式可以理解为寻找最大的$\phi$ , 使得学习出来的输出和真实的输出在相似度(极大似然)上最大。其中$\log p(\phi)$ 可以理解为在训练过程中加的正则项，为了防止训练的时候出现过拟合。</p>
-<p>对于监督学习来说，存在的问题是</p>
+<p>这里的总问题是求出最小的路径和，路径是这里的分析重点，路径是由一个个元素组成的，和之前爬楼梯那道题目类似，<code>[i][j]</code> 位置的元素，经过这个元素的路径肯定也会经过 <code>[i - 1][j]</code> 或者 <code>[i - 1][j - 1]</code>，因此经过一个元素的路径和可以通过这个元素上面的一个或者两个元素的路径和得到。</p>
 <ul>
-<li><p>如果想训练出一个非常强大的模型需要大量的数据，</p>
+<li><p>状态定义</p>
+<p>状态的定义一般会和问题需要求解的答案联系在一起，这里其实有两种方式，一种是考虑路径从上到下，另外一种是考虑路径从下到上，因为元素的值是不变的，所以路径的方向不同也不会影响最后求得的路径和，如果是从上到下，你会发现，在考虑下面元素的时候，起始元素的路径只会从<code>[i - 1][j]</code> 获得，每行当中的最后一个元素的路径只会从 <code>[i - 1][j - 1]</code> 获得，中间二者都可，这样不太好实现，因此这里考虑从下到上的方式，状态的定义就变成了 “<strong>最后一行元素到当前元素的最小路径和</strong>”，对于 <code>[0][0]</code> 这个元素来说，最后状态表示的就是我们的最终答案。</p>
 </li>
-<li><p>对于一些任务来说label data 非常有限</p>
+<li><p>递推方程</p>
+<p>“状态定义” 中我们已经定义好了状态，递推方程就出来了</p>
+<pre><code>dp[i][j] = Math.min(dp[i + 1][j], dp[i + 1][j + 1]) + triangle[i][j]</code></pre><p>实现</p>
+<p>这里初始化时，我们需要将最后一行的元素填入状态数组中，然后就是按照前面分析的策略，从下到上计算即可</p>
 </li>
 </ul>
-<h5 id="元学习"><a href="#元学习" class="headerlink" title="元学习"></a>元学习</h5><p>实际上，我们可以将数据集分成多个dataset，其中每一个dataset含有不同张图片，我们把这个新的dataset称作是meta-train数据集。</p>
-<p><img src="\image\图片1.png" alt="图片1" style="zoom: 50%;"><img src="meta-learning/image-20200220032921498.png" alt="image-20200220032921498"></p>
-<p>这样就是在每一个Di上都可以学习到需要的参数，最后综合在不同的dataset上学习到的参数作为$\phi$使得其最大。数学上的定义就是：</p>
-<p>$\arg \max _{\phi} \log p\left(\phi | \mathcal{D}, \mathcal{D}_{\text {meta-train }}\right)$</p>
-<p>meta-learning的问题就建立在这样的数据集的基础上，其中$\mathcal{D}=\left\{\left(x_{1}, y_{1}\right), \ldots,\left(x_{k}, y_{k}\right)\right\}$ $\mathcal{D}_{\text {meta-train }}=\left\{\mathcal{D}_{1}, \ldots, \mathcal{D}_{n}\right\}$ ，$\mathcal{D}_{i}=\left\{\left(x_{1}^{i}, y_{1}^{i}\right), \ldots,\left(x_{k}^{i}, y_{k}^{i}\right)\right\}$ .</p>
-<p>因此, 假定$\phi \perp \mathcal{D}_{\text {meta-train }} | \theta$, 表示$ \phi$ 与 $\mathcal{D}_{meta-train}$ 和 $\theta $ 是独立无关的, 可以推导出下面的式子 </p>
-<p>$\log p\left(\phi | \mathcal{D}, \mathcal{D}_{\mathrm{meta}-\mathrm{train}}\right)=\log \int_{\Theta} p(\phi | \mathcal{D}, \theta) p\left(\theta | \mathcal{D}_{\mathrm{meta}-\mathrm{train}}\right) d \theta$  </p>
-<p> $\approx \log p\left(\phi | \mathcal{D}, \theta^{\star}\right)+\log p\left(\theta^{\star} | \mathcal{D}_{\text {meta-train }}\right)$ </p>
-<p>第二行是找到一个平均值$\theta^{\star}$对积分做一个平均得到。其中，第二项中不包含变量$\phi$，为常数项，因此最后问题就变成了：</p>
-<p>$\arg \max _{\phi} \log p\left(\phi | \mathcal{D}, \mathcal{D}_{\text {meta-train }}\right) \approx \arg \max _{\phi} \log p\left(\phi | \mathcal{D}, \theta^{\star}\right)$ </p>
-<p>数学定义完全可以看明白。上式称为是<strong>元学习(meta-learning)需要解决的问题</strong>。要先找到一个$\theta^{*}$ ，再找到最好的$\phi$ 使得能够得到最大的p。</p>
-<h5 id="元学习解决思路及术语介绍："><a href="#元学习解决思路及术语介绍：" class="headerlink" title="元学习解决思路及术语介绍："></a>元学习解决思路及术语介绍：</h5><p>要想使得上式能够得到求解，我们看一下如何进行完整的optimization 过程。优化问题可以分为两部分：</p>
+<pre class="line-numbers language-C++"><code class="language-C++">public int minimumTotal(List<List<Integer>> triangle) {
+    int n = triangle.size();
+
+    int[][] dp = new int[n][n];
+
+    List<Integer> lastRow = triangle.get(n - 1);
+
+    for (int i = 0; i < n; ++i) {
+        dp[n - 1][i] = lastRow.get(i);
+    }
+
+    for (int i = n - 2; i >= 0; --i) {
+        List<Integer> row = triangle.get(i);
+        for (int j = 0; j < i + 1; ++j) {
+            dp[i][j] = Math.min(dp[i + 1][j], dp[i + 1][j + 1]) + row.get(j);
+        }
+    }
+
+    return dp[0][0];
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>LeetCode 第 53 号问题：最大子序和。 </p>
+<p>给定一个整数数组 <em>nums</em> ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。</p>
+<pre><code>输入: [-2,1,-3,4,-1,2,1,-5,4],
+输出: 6
+解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。</code></pre><p> 问题拆解： </p>
+<p>问题的核心是子数组，子数组可以看作是一段区间，因此可以由起始点和终止点确定一个子数组，两个点中，我们先确定一个点，然后去找另一个点，比如说，如果我们确定一个子数组的截止元素在 i 这个位置，这个时候我们需要思考的问题是 “<strong>以 i 结尾的所有子数组中，和最大的是多少？</strong>”，然后我们去试着拆解，这里其实只有两种情况：</p>
+<p>  i 这个位置的元素自成一个子数组;</p>
+<p>  i 位置的元素的值 + <strong>以 i – 1 结尾的所有子数组中的子数组和最大的值</strong></p>
+<p>你可以看到，我们把第 i 个问题拆成了第 i – 1 个问题，之间的联系也变得清晰</p>
 <ul>
-<li><p>1.第一部分：meta-learning，即$\theta^{\star}=\arg \max _{\theta} \log p\left(\theta | \mathcal{D}_{\text {meta-train }}\right)$ </p>
+<li><p>状态定义</p>
+<p>通过上面的分析，其实状态已经有了，<code>dp[i]</code> 就是 “<strong>以 i 结尾的所有子数组的最大值</strong>”</p>
 </li>
-<li><p>2.第二部分：adaptation. 即 $\phi^{\star}=\arg \max _{\phi} \log p\left(\phi | \mathcal{D}^{\operatorname{tr}}, \theta^{\star}\right)$ </p>
+<li><p>递推方程</p>
+<p>拆解问题的时候也提到了，有两种情况，即当前元素自成一个子数组，另外可以考虑前一个状态的答案，于是就有了。</p>
 </li>
-</ul>
-<p>我们将meta-train数据集进行完整的划分：</p>
-<p>$\begin{array}{l}{\mathcal{D}_{\text {meta-train }}=\left\{\left(\mathcal{D}_{1}^{\text {tr }}, \mathcal{D}_{1}^{\text {ts }}\right), \ldots,\left(\mathcal{D}_{n}^{\text {tr }}, \mathcal{D}_{n}^{\text {ts }}\right)\right\}} \\ {D_{i}^{\text {tr }}=\left\{\left(x_{1}^{i}, y_{1}^{i}\right), \ldots,\left(x_{k}^{i}, y_{k}^{i}\right)\right\}} \\ {\mathcal{D}_{i}^{\text {ts }}=\left\{\left(x_{1}^{i}, y_{1}^{i}\right), \ldots,\left(x_{l}^{i}, y_{l}^{i}\right)\right\}}\end{array}$ </p>
-<p>因此，可以将$\phi^{\star}=\arg \max _{\phi} \log p\left(\phi | \mathcal{D}^{\operatorname{tr}}, \theta^{\star}\right)$ 进行训练，得到的参数$\phi$ 即可以表示$\phi^{\star}=f_{\theta^{\star}}\left(\mathcal{D}^{\mathrm{tr}}\right)$ 下的$\theta$ ，通过进行更新参数$\theta$ ，验证在$D^{tr}$得到结果。</p>
-<p>以上可以认为是一个完整的训练过程，其训练$\theta$ 优化数学表达为：</p>
-<p>$\theta^{\star}=\max _{\theta} \sum_{i=1}^{n} \log p\left(\phi_{i} | \mathcal{D}_{\mathcal{i}}^{(\mathrm{ts})}\right)$ </p>
-<p>where $\phi_{i}= f_{\theta}(D_{i}^{tr})$</p>
-<p>要在训练集上最优，使得$\phi=f_{\theta}\left(\mathcal{D}^{\mathrm{tr}}\right)$ 学习到的$\theta$。</p>
-<p>总结来说， 直观上$\phi$ 是在训练任务$D^{tr}$ 中学习得到的通用的经验，我们称它为$f_{\theta}(D_{i}^{tr})$ , 下标表示含有$\theta$ 这个参数，最终目的是要使得在$D_{i}^{ts}$ 上学习到最好的结果——p最大。这样就完成了在少样本测试的情况下给出了最好的分类性能。实现了meta-learning的目的。</p>
-<p>对于数据集中的训练集和测试集，需要重新定义如下图：</p>
-<p><img src="meta-learning/image-20200220032944265.png" alt="image-20200220032944265"></p>
-<p>note：meta-learning的范式也有一些与其非常相关的问题，比如多任务学习(multi-task learning)，或者超参数优化和automl问题。</p>
-<h5 id="元学习常用的几类方法："><a href="#元学习常用的几类方法：" class="headerlink" title="元学习常用的几类方法："></a>元学习常用的几类方法：</h5><p>有四类方法，并不打算过多地展开讲，可以参见我另外一篇博客中使用模型无关的思想做了图像生成的工作，可以说对maml的理解比较深入了。也确实明白这是一个非常不错的工作。这里参考了ICML2019 tutorial的分类，也可以参考 <a href="https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html" target="_blank" rel="noopener">https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html</a> 的分类，主流方法还是MAML的各种改进。</p>
-<h6 id="1-Black-box-adaptation"><a href="#1-Black-box-adaptation" class="headerlink" title="1.Black-box adaptation"></a>1.Black-box adaptation</h6><p><img src="meta-learning/image-20200220033004659.png" alt="image-20200220033004659"></p>
-<h6 id="2-Opamizaaon-based-inference"><a href="#2-Opamizaaon-based-inference" class="headerlink" title="2.Opamizaaon-based inference"></a>2.Opamizaaon-based inference</h6><p>其中，最经典的莫过于MAML。</p>
-<p>其思路可以直接用下图表示，即让这个loss最小。深入的理解，需要从论文出发。</p>
-<p><img src="meta-learning/image-20200220033024315.png" alt="image-20200220033024315"></p>
-<p><img src="\image\2020-02-16_00-46-53.jpg" alt="2020-02-16_00-46-53" style="zoom: 50%;"><img src="meta-learning/image-20200220033039938.png" alt="image-20200220033039938"></p>
-<h6 id="3-Non-parametric-methods"><a href="#3-Non-parametric-methods" class="headerlink" title="3.Non-parametric methods"></a>3.Non-parametric methods</h6><p><img src="meta-learning/image-20200220033058725.png" alt="image-20200220033058725"></p>
-<h6 id="4-Bayesian-meta-learning"><a href="#4-Bayesian-meta-learning" class="headerlink" title="4.Bayesian meta-learning"></a>4.Bayesian meta-learning</h6><p><img src="meta-learning/image-20200220033114720.png" alt="image-20200220033114720"></p>
-<h5 id="元学习的应用："><a href="#元学习的应用：" class="headerlink" title="元学习的应用："></a>元学习的应用：</h5><p>参考ICML2019tutorial，在语言和图像上都有应用，包括现在比较火的reinforcement learning以及robtic learning。</p>
-<img src="meta-learning/image-20200220033126015.png" alt="image-20200220033126015" style="zoom:50%;">
+<li><p>实现 </p>
+<p>题目要求子数组不能为空，因此一开始需要初始化，也就是 <code>dp[0] = array[0]</code>，保证最后答案的可靠性，另外我们需要用一个变量记录最后的答案，因为子数组有可能以数组中任意一个元素结尾</p>
+<pre class="line-numbers language-C++"><code class="language-C++">public int maxSubArray(int[] nums) {
+   if (nums == null || nums.length == 0) {
+       return 0;
+   }
 
+   int n = nums.length;
 
+   int[] dp = new int[n];
 
-<p><img src="meta-learning/image-20200220033139928.png" alt="image-20200220033139928">：</p>
-<p>上述应用还是在比较传统的领域，实际上，更多的工作开始围绕着强化学习展开，由于强化学习方面的了解的不够深入，今后会继续了解imitation learning相关的工作成果。</p>
-<p>很喜欢这个图：元学习的终极目标，作为本篇文章的结尾！</p>
-<p><img src="meta-learning/image-20200220033150499.png" alt="image-20200220033150499"></p>
-<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><ul>
-<li>ICML2019tutorial上的，Chelsea Finn和Sergey Levine做的lecuture。 <a href="https://sites.google.com/view/icml19metalearning" target="_blank" rel="noopener">https://sites.google.com/view/icml19metalearning</a> (google site)  <a href="https://youtube.videoken.com/embed/DijI4XrhqNo" target="_blank" rel="noopener">https://youtube.videoken.com/embed/DijI4XrhqNo</a> </li>
-<li>hungyi-Lee，台大，<a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses/ML_2019/Lecture/Meta1%20(v6).pptx" target="_blank" rel="noopener">http://speech.ee.ntu.edu.tw/~tlkagk/courses/ML_2019/Lecture/Meta1%20(v6).pptx</a> ppt, <a href="https://www.youtube.com/watch?v=EkAqYbpCYAc&amp;list=PLJV_el3uVTsOK_ZK5L0Iv_EQoL1JefRL4&amp;index=33&amp;t=0s" target="_blank" rel="noopener">https://www.youtube.com/watch?v=EkAqYbpCYAc&amp;list=PLJV_el3uVTsOK_ZK5L0Iv_EQoL1JefRL4&amp;index=33&amp;t=0s</a> (video)</li>
-<li>meta-learning比较好的overview: <a href="https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html" target="_blank" rel="noopener">https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html</a> </li>
-<li>meta-transfer-learning:  <a href="https://yyliu.net/files/meta-transfer-learning-slides.pdf" target="_blank" rel="noopener">https://yyliu.net/files/meta-transfer-learning-slides.pdf</a> (slides) <a href="https://github.com/yaoyao-liu/meta-transfer-learning" target="_blank" rel="noopener">https://github.com/yaoyao-liu/meta-transfer-learning</a> (code)</li>
-<li>few-shot image generation with reptile: <a href="https://github.com/LuEE-C/FIGR" target="_blank" rel="noopener">https://github.com/LuEE-C/FIGR</a> (code) <a href="https://arxiv.org/abs/1901.02199" target="_blank" rel="noopener">https://arxiv.org/abs/1901.02199</a> (paper)</li>
-<li>meta-transfer-learning-gan:  <a href="https://yyliu.net/files/meta-transfer-learning-slides.pdf" target="_blank" rel="noopener">https://yyliu.net/files/meta-transfer-learning-slides.pdf</a> (pdf) <a href="https://arxiv.org/pdf/1812.02391" target="_blank" rel="noopener">https://arxiv.org/pdf/1812.02391</a> (paper)</li>
+   dp[0] = nums[0];
+
+   int result = dp[0];
+
+   for (int i = 1; i < n; ++i) {
+       dp[i] = Math.max(dp[i - 1], 0) + nums[i];
+       result = Math.max(result, dp[i]);
+   }
+
+   return result;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 
             </div>
@@ -437,9 +483,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《Meta-learning tutorial》
+                    《动态规划简单归纳》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/01/12/meta-learning/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/03/17/leetcode/" property="cc:attributionName"
                rel="cc:attributionURL">
                 胡哲
             </a> 采用
@@ -480,7 +526,7 @@
         repo: 'JasonHu02.github.io/issues/1',
         owner: 'JasonHu02',
         admin: "JasonHu02",
-        id: '2020/01/12/meta-learning/',
+        id: '2020/03/17/leetcode/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -501,82 +547,35 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/01/16/transfer-learning/">
+                <a href="/2020/03/17/leetcode/">
                     <div class="card-image">
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Transfer-learning tutorial">
+                        <img src="/medias/featureimages/leetcode.jpg" class="responsive-img" alt="动态规划简单归纳">
                         
-                        <span class="card-title">Transfer-learning tutorial</span>
+                        <span class="card-title">动态规划简单归纳</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            本文从迁移学习的数学定义出发，对迁移学习做了一个总体的回顾，通过这篇博客可以对迁移学习有一个大致的认识。
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-01-16
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/科研/" class="post-category" target="_blank">
-                                    科研
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/transfer-learning/" target="_blank">
-                        <span class="chip bg-color">transfer-learning</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="fa fa-dot-circle-o"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/01/12/meta-learning/">
-                    <div class="card-image">
-                        
-                        <img src="/medias/featureimages/maml.jpg" class="responsive-img" alt="Meta-learning tutorial">
-                        
-                        <span class="card-title">Meta-learning tutorial</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            本文理论上对元学习进行了解释和实现方法和元学习的一系列引用场景
+                            动态规划作为leetcode常见题型的一些归纳.
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-01-12
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-03-17
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/科研/" class="post-category" target="_blank">
-                                    科研
+                            <a href="/categories/leetcode/" class="post-category" target="_blank">
+                                    leetcode
                                 </a>
                             
                             
@@ -587,8 +586,56 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/meta-learning/" target="_blank">
-                        <span class="chip bg-color">meta-learning</span>
+                    <a href="/tags/dynamic-programming/" target="_blank">
+                        <span class="chip bg-color">dynamic programming</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/02/08/lstm-and-rnn/">
+                    <div class="card-image">
+                        
+                        <img src="/medias/featureimages/LSTM.jpg" class="responsive-img" alt="RNN，LSTM算法图解">
+                        
+                        <span class="card-title">RNN，LSTM算法图解</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            主要介绍了RNN和LSTM网络的一些基本结构和原理。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-08
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/算法/" class="post-category" target="_blank">
+                                    算法
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/LSTM/" target="_blank">
+                        <span class="chip bg-color">LSTM</span>
                     </a>
                     
                 </div>
