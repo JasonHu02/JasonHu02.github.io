@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jasonhu02.github.io/2020/02/06/few-shot-image-generation-method/</loc>
+    
+    <lastmod>2020-04-18T17:06:56.300Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jasonhu02.github.io/2020/01/19/pytorch-parallel/</loc>
     
     <lastmod>2020-04-18T16:53:04.358Z</lastmod>
@@ -26,13 +33,6 @@
     <loc>https://jasonhu02.github.io/2020/01/18/pytorch-data/</loc>
     
     <lastmod>2020-04-18T16:31:03.022Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jasonhu02.github.io/2020/02/06/few-shot-image-generation-method/</loc>
-    
-    <lastmod>2020-04-18T16:30:40.104Z</lastmod>
     
   </url>
   
@@ -93,7 +93,7 @@
   </url>
   
   <url>
-    <loc>https://jasonhu02.github.io/categories/index.html</loc>
+    <loc>https://jasonhu02.github.io/contact/index.html</loc>
     
     <lastmod>2019-09-25T14:13:10.000Z</lastmod>
     
@@ -107,7 +107,7 @@
   </url>
   
   <url>
-    <loc>https://jasonhu02.github.io/contact/index.html</loc>
+    <loc>https://jasonhu02.github.io/categories/index.html</loc>
     
     <lastmod>2019-09-25T14:13:10.000Z</lastmod>
     

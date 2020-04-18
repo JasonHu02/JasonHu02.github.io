@@ -41,7 +41,7 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-duotone-dark.css" type="text/css">
 <link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 <body>
@@ -351,56 +351,10 @@
 <img src="LSTM-and-RNN/image-20200226174805623.png" alt="image-20200226174805623" style="zoom:33%;">
 
 <p>其代码实现如下：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token comment" spellcheck="true">#single lstm cell</span>
-<span class="token keyword">def</span> <span class="token function">lstm_cell</span><span class="token punctuation">(</span>batch_dataset<span class="token punctuation">,</span> prev_activation_matrix<span class="token punctuation">,</span> prev_cell_matrix<span class="token punctuation">,</span> parameters<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true">#get parameters</span>
-    fgw <span class="token operator">=</span> parameters<span class="token punctuation">[</span><span class="token string">'fgw'</span><span class="token punctuation">]</span>
-    igw <span class="token operator">=</span> parameters<span class="token punctuation">[</span><span class="token string">'igw'</span><span class="token punctuation">]</span>
-    ogw <span class="token operator">=</span> parameters<span class="token punctuation">[</span><span class="token string">'ogw'</span><span class="token punctuation">]</span>
-    ggw <span class="token operator">=</span> parameters<span class="token punctuation">[</span><span class="token string">'ggw'</span><span class="token punctuation">]</span>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#single lstm cell</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lstm_cell</span><span class="params">(batch_dataset, prev_activation_matrix, prev_cell_matrix, parameters)</span>:</span></span><br><span class="line">    <span class="comment">#get parameters</span></span><br><span class="line">    fgw = parameters[<span class="string">'fgw'</span>]</span><br><span class="line">    igw = parameters[<span class="string">'igw'</span>]</span><br><span class="line">    ogw = parameters[<span class="string">'ogw'</span>]</span><br><span class="line">    ggw = parameters[<span class="string">'ggw'</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#concat batch data and prev_activation matrix</span></span><br><span class="line">    concat_dataset = np.concatenate((batch_dataset,prev_activation_matrix),axis=<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#forget gate activations</span></span><br><span class="line">    fa = np.matmul(concat_dataset,fgw)</span><br><span class="line">    fa = sigmoid(fa)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#input gate activations</span></span><br><span class="line">    ia = np.matmul(concat_dataset,igw)</span><br><span class="line">    ia = sigmoid(ia)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#output gate activations</span></span><br><span class="line">    oa = np.matmul(concat_dataset,ogw)</span><br><span class="line">    oa = sigmoid(oa)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#gate gate activations</span></span><br><span class="line">    ga = np.matmul(concat_dataset,ggw)</span><br><span class="line">    ga = tanh_activation(ga)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#new cell memory matrix</span></span><br><span class="line">    cell_memory_matrix = np.multiply(fa,prev_cell_matrix) + np.multiply(ia,ga)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#current activation matrix</span></span><br><span class="line">    activation_matrix = np.multiply(oa, tanh_activation(cell_memory_matrix))</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#lets store the activations to be used in back prop</span></span><br><span class="line">    lstm_activations = dict()</span><br><span class="line">    lstm_activations[<span class="string">'fa'</span>] = fa</span><br><span class="line">    lstm_activations[<span class="string">'ia'</span>] = ia</span><br><span class="line">    lstm_activations[<span class="string">'oa'</span>] = oa</span><br><span class="line">    lstm_activations[<span class="string">'ga'</span>] = ga</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> lstm_activations,cell_memory_matrix,activation_matrix</span><br></pre></td></tr></table></figure>
 
-    <span class="token comment" spellcheck="true">#concat batch data and prev_activation matrix</span>
-    concat_dataset <span class="token operator">=</span> np<span class="token punctuation">.</span>concatenate<span class="token punctuation">(</span><span class="token punctuation">(</span>batch_dataset<span class="token punctuation">,</span>prev_activation_matrix<span class="token punctuation">)</span><span class="token punctuation">,</span>axis<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">output_cell</span><span class="params">(activation_matrix,parameters)</span>:</span></span><br><span class="line">    <span class="comment">#get hidden to output parameters</span></span><br><span class="line">    how = parameters[<span class="string">'how'</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#get outputs </span></span><br><span class="line">    output_matrix = np.matmul(activation_matrix,how)</span><br><span class="line">    output_matrix = softmax(output_matrix)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> output_matrix</span><br></pre></td></tr></table></figure>
 
-    <span class="token comment" spellcheck="true">#forget gate activations</span>
-    fa <span class="token operator">=</span> np<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>concat_dataset<span class="token punctuation">,</span>fgw<span class="token punctuation">)</span>
-    fa <span class="token operator">=</span> sigmoid<span class="token punctuation">(</span>fa<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#input gate activations</span>
-    ia <span class="token operator">=</span> np<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>concat_dataset<span class="token punctuation">,</span>igw<span class="token punctuation">)</span>
-    ia <span class="token operator">=</span> sigmoid<span class="token punctuation">(</span>ia<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#output gate activations</span>
-    oa <span class="token operator">=</span> np<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>concat_dataset<span class="token punctuation">,</span>ogw<span class="token punctuation">)</span>
-    oa <span class="token operator">=</span> sigmoid<span class="token punctuation">(</span>oa<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#gate gate activations</span>
-    ga <span class="token operator">=</span> np<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>concat_dataset<span class="token punctuation">,</span>ggw<span class="token punctuation">)</span>
-    ga <span class="token operator">=</span> tanh_activation<span class="token punctuation">(</span>ga<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#new cell memory matrix</span>
-    cell_memory_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>multiply<span class="token punctuation">(</span>fa<span class="token punctuation">,</span>prev_cell_matrix<span class="token punctuation">)</span> <span class="token operator">+</span> np<span class="token punctuation">.</span>multiply<span class="token punctuation">(</span>ia<span class="token punctuation">,</span>ga<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#current activation matrix</span>
-    activation_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>multiply<span class="token punctuation">(</span>oa<span class="token punctuation">,</span> tanh_activation<span class="token punctuation">(</span>cell_memory_matrix<span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#lets store the activations to be used in back prop</span>
-    lstm_activations <span class="token operator">=</span> dict<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    lstm_activations<span class="token punctuation">[</span><span class="token string">'fa'</span><span class="token punctuation">]</span> <span class="token operator">=</span> fa
-    lstm_activations<span class="token punctuation">[</span><span class="token string">'ia'</span><span class="token punctuation">]</span> <span class="token operator">=</span> ia
-    lstm_activations<span class="token punctuation">[</span><span class="token string">'oa'</span><span class="token punctuation">]</span> <span class="token operator">=</span> oa
-    lstm_activations<span class="token punctuation">[</span><span class="token string">'ga'</span><span class="token punctuation">]</span> <span class="token operator">=</span> ga
-
-    <span class="token keyword">return</span> lstm_activations<span class="token punctuation">,</span>cell_memory_matrix<span class="token punctuation">,</span>activation_matrix<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">output_cell</span><span class="token punctuation">(</span>activation_matrix<span class="token punctuation">,</span>parameters<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true">#get hidden to output parameters</span>
-    how <span class="token operator">=</span> parameters<span class="token punctuation">[</span><span class="token string">'how'</span><span class="token punctuation">]</span>
-
-    <span class="token comment" spellcheck="true">#get outputs </span>
-    output_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>activation_matrix<span class="token punctuation">,</span>how<span class="token punctuation">)</span>
-    output_matrix <span class="token operator">=</span> softmax<span class="token punctuation">(</span>output_matrix<span class="token punctuation">)</span>
-
-    <span class="token keyword">return</span> output_matrix<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><a href="https://www.youtube.com/watch?v=xCGidAeyS4M" target="_blank" rel="noopener">主要参考了台大李宏毅老师的youtube视频课程。</a></p>
 
             </div>
@@ -655,7 +609,7 @@
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">12k</span>
+            <span class="white-color">13.3k</span>
             
 
             <br>

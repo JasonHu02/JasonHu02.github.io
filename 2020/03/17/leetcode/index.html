@@ -42,7 +42,7 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-duotone-dark.css" type="text/css">
 <link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 <body>
@@ -309,14 +309,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    949
+                    2.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    8 分
                 </div>
                 
                 
@@ -336,31 +336,15 @@
 <p>这里还是拿 Quora 上面的例子来讲解，“1+1+1+1+1+1+1+1” 得出答案是 8，那么如何快速计算 “1+ 1+1+1+1+1+1+1+1”，我们首先可以对这个大的问题进行拆解，这里我说的大问题是 9 个 1 相加，这个问题可以拆解成 1 + “8 个 1 相加的答案”，8 个 1 相加继续拆，可以拆解成 1 + “7 个 1 相加的答案”，… 1 + “0 个 1 相加的答案”，到这里，<strong>第一个步骤</strong> 已经完成。【初始化定义为1，后面的都是+1】</p>
 <p>定义好了状态，递推方程就变得非常简单，就是 <code>dp[i] = dp[i - 1] + 1</code>，这里的 <code>dp[i]</code> 记录的是当前问题的答案，也就是当前的状态，<code>dp[i - 1]</code> 记录的是之前相邻的问题的答案，也就是之前的状态，它们之间通过 +1 来实现状态的变更。</p>
 <p>最后一步就是实现了，有了状态表示和递推方程，实现这一步上需要重点考虑的其实是初始化，就是用什么样的数据结构，根据问题的要求需要做那些初始值的设定。</p>
-<pre class="line-numbers language-C++"><code class="language-C++">public int dpExample(int n) {
-    int[] dp = new int[n + 1];  // 多开一位用来存放 0 个 1 相加的结果
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">dpExample</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];  <span class="comment">// 多开一位用来存放 0 个 1 相加的结果</span></span><br><span class="line"></span><br><span class="line">    dp[<span class="number">0</span>] = <span class="number">0</span>;      <span class="comment">// 0 个 1 相加等于 0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        dp[i] = dp[i - <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> dp[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    dp[0] = 0;      // 0 个 1 相加等于 0
-
-    for (int i = 1; i <= n; ++i) {
-        dp[i] = dp[i - 1] + 1;
-    }
-
-    return dp[n];
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>你可以看到，动态规划这四个步骤其实是相互递进的，状态的定义离不开问题的拆解，递推方程的推导离不开状态的定义，最后的实现代码的核心其实就是递推方程，这中间如果有一个步骤卡壳了则会导致问题无法解决，当问题的复杂程度增加的时候，这里面的思维复杂程度会上升。</p>
 <h5 id="Leetcode70：爬楼梯："><a href="#Leetcode70：爬楼梯：" class="headerlink" title="Leetcode70：爬楼梯："></a>Leetcode70：爬楼梯：</h5><p>假设你正在爬楼梯。需要 <em>n</em> 阶你才能到达楼顶。每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？注意：给定 <em>n</em> 是一个正整数。</p>
-<pre><code>输入：2
-输出：2
-解释： 有两种方法可以爬到楼顶。
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：2</span><br><span class="line">输出：2</span><br><span class="line">解释： 有两种方法可以爬到楼顶。</span><br><span class="line"></span><br><span class="line">1. 1 阶 + 1 阶</span><br><span class="line">2. 2 阶</span><br></pre></td></tr></table></figure>
 
-1. 1 阶 + 1 阶
-2. 2 阶</code></pre><pre><code>输入：3
-输出：3
-解释： 有三种方法可以爬到楼顶。
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：3</span><br><span class="line">输出：3</span><br><span class="line">解释： 有三种方法可以爬到楼顶。</span><br><span class="line"></span><br><span class="line">1. 1 阶 + 1 阶 + 1 阶</span><br><span class="line">2. 1 阶 + 2 阶</span><br><span class="line">3. 2 阶 + 1 阶</span><br></pre></td></tr></table></figure>
 
-1. 1 阶 + 1 阶 + 1 阶
-2. 1 阶 + 2 阶
-3. 2 阶 + 1 阶</code></pre><p><strong>问题拆解</strong>：</p>
+<p><strong>问题拆解</strong>：</p>
 <p>我们到达第 n 个楼梯可以从第 n – 1 个楼梯和第 n – 2 个楼梯到达，因此第 n 个问题可以拆解成第 n – 1 个问题和第 n – 2 个问题，第 n – 1 个问题和第 n – 2 个问题又可以继续往下拆，直到第 0 个问题，也就是第 0 个楼梯 (起点)</p>
 <p><strong>状态定义</strong></p>
 <p>“问题拆解” 中已经提到了，第 n 个楼梯会和第 n – 1 和第 n – 2 个楼梯有关联，那么具体的联系是什么呢？你可以这样思考，第 n – 1 个问题里面的答案其实是从起点到达第 n – 1 个楼梯的路径总数，n – 2 同理，从第 n – 1 个楼梯可以到达第 n 个楼梯，从第 n – 2 也可以，并且路径没有重复，因此我们可以把第 i 个状态定义为 “<strong>从起点到达第 i 个楼梯的路径总数</strong>”，状态之间的联系其实是相加的关系。</p>
@@ -368,14 +352,13 @@
 <p>“状态定义” 中我们已经定义好了状态，也知道第 i 个状态可以由第 i – 1 个状态和第 i – 2 个状态通过相加得到，因此递推方程就出来了 <code>dp[i] = dp[i - 1] + dp[i - 2]</code></p>
 <p><strong>实现</strong></p>
 <p>你其实可以从递推方程看到，我们需要有一个初始值来方便我们计算，起始位置不需要移动 <code>dp[0] = 0</code>，第 1 层楼梯只能从起始位置到达，因此 <code>dp[1] = 1</code>，第 2 层楼梯可以从起始位置和第 1 层楼梯到达，因此 <code>dp[2] = 2</code>，有了这些初始值，后面就可以通过这几个初始值进行递推得到。</p>
-<pre><code></code></pre><h5 id="LeetCode-第-120-号问题：三角形最小路径和。"><a href="#LeetCode-第-120-号问题：三角形最小路径和。" class="headerlink" title="LeetCode 第 120 号问题：三角形最小路径和。"></a>LeetCode 第 120 号问题：三角形最小路径和。</h5><p>给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="LeetCode-第-120-号问题：三角形最小路径和。"><a href="#LeetCode-第-120-号问题：三角形最小路径和。" class="headerlink" title="LeetCode 第 120 号问题：三角形最小路径和。"></a>LeetCode 第 120 号问题：三角形最小路径和。</h5><p>给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。</p>
 <p>例如，给定三角形：</p>
-<pre><code>[
-     [2],
-    [3,4],
-   [6,5,7],
-  [4,1,8,3]
-]</code></pre><ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">     [2],</span><br><span class="line">    [3,4],</span><br><span class="line">   [6,5,7],</span><br><span class="line">  [4,1,8,3]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ul>
 <li>问题拆解：</li>
 </ul>
 <p>这里的总问题是求出最小的路径和，路径是这里的分析重点，路径是由一个个元素组成的，和之前爬楼梯那道题目类似，<code>[i][j]</code> 位置的元素，经过这个元素的路径肯定也会经过 <code>[i - 1][j]</code> 或者 <code>[i - 1][j - 1]</code>，因此经过一个元素的路径和可以通过这个元素上面的一个或者两个元素的路径和得到。</p>
@@ -385,35 +368,19 @@
 </li>
 <li><p>递推方程</p>
 <p>“状态定义” 中我们已经定义好了状态，递推方程就出来了</p>
-<pre><code>dp[i][j] = Math.min(dp[i + 1][j], dp[i + 1][j + 1]) + triangle[i][j]</code></pre><p>实现</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dp[i][j] = Math.min(dp[i + 1][j], dp[i + 1][j + 1]) + triangle[i][j]</span><br></pre></td></tr></table></figure>
+
+<p>实现</p>
 <p>这里初始化时，我们需要将最后一行的元素填入状态数组中，然后就是按照前面分析的策略，从下到上计算即可</p>
 </li>
 </ul>
-<pre class="line-numbers language-C++"><code class="language-C++">public int minimumTotal(List<List<Integer>> triangle) {
-    int n = triangle.size();
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minimumTotal</span><span class="params">(List&lt;List&lt;Integer&gt;&gt; triangle)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = triangle.size();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n][n];</span><br><span class="line"></span><br><span class="line">    List&lt;Integer&gt; lastRow = triangle.get(n - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">        dp[n - <span class="number">1</span>][i] = lastRow.get(i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = n - <span class="number">2</span>; i &gt;= <span class="number">0</span>; --i) &#123;</span><br><span class="line">        List&lt;Integer&gt; row = triangle.get(i);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i + <span class="number">1</span>; ++j) &#123;</span><br><span class="line">            dp[i][j] = Math.min(dp[i + <span class="number">1</span>][j], dp[i + <span class="number">1</span>][j + <span class="number">1</span>]) + row.get(j);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> dp[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    int[][] dp = new int[n][n];
-
-    List<Integer> lastRow = triangle.get(n - 1);
-
-    for (int i = 0; i < n; ++i) {
-        dp[n - 1][i] = lastRow.get(i);
-    }
-
-    for (int i = n - 2; i >= 0; --i) {
-        List<Integer> row = triangle.get(i);
-        for (int j = 0; j < i + 1; ++j) {
-            dp[i][j] = Math.min(dp[i + 1][j], dp[i + 1][j + 1]) + row.get(j);
-        }
-    }
-
-    return dp[0][0];
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>LeetCode 第 53 号问题：最大子序和。 </p>
 <p>给定一个整数数组 <em>nums</em> ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。</p>
-<pre><code>输入: [-2,1,-3,4,-1,2,1,-5,4],
-输出: 6
-解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。</code></pre><p> 问题拆解： </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入: [-2,1,-3,4,-1,2,1,-5,4],</span><br><span class="line">输出: 6</span><br><span class="line">解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。</span><br></pre></td></tr></table></figure>
+
+<p> 问题拆解： </p>
 <p>问题的核心是子数组，子数组可以看作是一段区间，因此可以由起始点和终止点确定一个子数组，两个点中，我们先确定一个点，然后去找另一个点，比如说，如果我们确定一个子数组的截止元素在 i 这个位置，这个时候我们需要思考的问题是 “<strong>以 i 结尾的所有子数组中，和最大的是多少？</strong>”，然后我们去试着拆解，这里其实只有两种情况：</p>
 <p>  i 这个位置的元素自成一个子数组;</p>
 <p>  i 位置的元素的值 + <strong>以 i – 1 结尾的所有子数组中的子数组和最大的值</strong></p>
@@ -427,26 +394,8 @@
 </li>
 <li><p>实现 </p>
 <p>题目要求子数组不能为空，因此一开始需要初始化，也就是 <code>dp[0] = array[0]</code>，保证最后答案的可靠性，另外我们需要用一个变量记录最后的答案，因为子数组有可能以数组中任意一个元素结尾</p>
-<pre class="line-numbers language-C++"><code class="language-C++">public int maxSubArray(int[] nums) {
-   if (nums == null || nums.length == 0) {
-       return 0;
-   }
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (nums == null || nums.length == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> n = nums.length;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line"></span><br><span class="line">    dp[<span class="number">0</span>] = nums[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> result = dp[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">        dp[i] = Math.max(dp[i - <span class="number">1</span>], <span class="number">0</span>) + nums[i];</span><br><span class="line">        result = Math.max(result, dp[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-   int n = nums.length;
-
-   int[] dp = new int[n];
-
-   dp[0] = nums[0];
-
-   int result = dp[0];
-
-   for (int i = 1; i < n; ++i) {
-       dp[i] = Math.max(dp[i - 1], 0) + nums[i];
-       result = Math.max(result, dp[i]);
-   }
-
-   return result;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 </ul>
 
@@ -704,7 +653,7 @@
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">12k</span>
+            <span class="white-color">13.3k</span>
             
 
             <br>
