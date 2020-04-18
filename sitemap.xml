@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jasonhu02.github.io/2020/02/08/lstm-and-rnn/</loc>
+    
+    <lastmod>2020-04-18T17:25:20.486Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jasonhu02.github.io/2020/02/06/few-shot-image-generation-method/</loc>
     
     <lastmod>2020-04-18T17:06:56.300Z</lastmod>
@@ -47,13 +54,6 @@
     <loc>https://jasonhu02.github.io/2020/02/02/shen-ru-li-jie-vae/</loc>
     
     <lastmod>2020-03-01T07:42:25.327Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jasonhu02.github.io/2020/02/08/lstm-and-rnn/</loc>
-    
-    <lastmod>2020-02-26T10:06:05.728Z</lastmod>
     
   </url>
   
