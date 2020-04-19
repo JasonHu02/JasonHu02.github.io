@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>leetcode题解</title>
+      <link href="/2020/04/19/leetcode-1/"/>
+      <url>/2020/04/19/leetcode-1/</url>
+      
+        <content type="html"><![CDATA[<p>最小的K个数</p><p>剑指offer的面试题</p><p>输入整数数组 <code>arr</code> ，找出其中最小的 <code>k</code> 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。 </p><p><strong>示例 1：</strong></p><pre><code>输入：arr = [3,2,1], k = 2输出：[1,2] 或者 [2,1]</code></pre><p><strong>示例 2：</strong></p><pre><code>输入：arr = [0,1,2,1], k = 1输出：[0]</code></pre><p><strong>限制：</strong></p><ul><li><code>0 &lt;= k &lt;= arr.length &lt;= 10000</code></li><li><code>0 &lt;= arr[i] &lt;= 10000</code></li></ul><p>非常简单让人想到的方法就是排序，从小到大排好序之后，然后直接返回前k个元素，此题求解。</p><p>实际代码也很简单：</p><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>    <span class="token keyword">def</span> <span class="token function">getLeastNumbers</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> arr<span class="token punctuation">,</span> k<span class="token punctuation">:</span>int<span class="token punctuation">)</span> <span class="token punctuation">:</span>        a<span class="token operator">=</span>arr<span class="token punctuation">.</span>sort<span class="token punctuation">(</span><span class="token punctuation">)</span>        <span class="token keyword">return</span> arr<span class="token punctuation">[</span><span class="token punctuation">:</span>k<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>list.sort() 方法排序时直接修改原列表，返回None；  sorted() 使用的范围更为广泛，但是如果不需要保留原列表。</p><p>函数形式如下：</p><pre class="line-numbers language-python"><code class="language-python">sorted<span class="token punctuation">(</span>iterable<span class="token punctuation">[</span><span class="token punctuation">,</span> key<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">,</span> reverse<span class="token punctuation">]</span><span class="token punctuation">)</span> list<span class="token punctuation">.</span>sort<span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">,</span> key<span class="token operator">=</span>None<span class="token punctuation">,</span> reverse<span class="token operator">=</span>None<span class="token punctuation">)</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><ul><li><p>key 是带一个参数的<strong>函数</strong>，返回一个值用来排序，默认为 None。这个函数只调用一次，所以fast。</p></li><li><p>reverse 表示排序结果是否反转</p><p>  另外就是一种新方法可以用来了解Top-K算法的一种高级用法。改进的快速排序方法， <strong>BFPRT算法</strong>。</p><p>  在BFPTR算法中，仅仅是改变了快速排序<strong>Partion</strong>中的<strong>pivot</strong>值的选取，在快速排序中，我们始终选择第一个元素或者最后一个元素作为<strong>pivot</strong>，而在BFPTR算法中，每次选择五分中位数的中位数作为<strong>pivot</strong>，这样做的目的就是使得划分比较合理，从而避免了最坏情况的发生。算法步骤如下 ：</p><ol><li><p>将n 个元素划为 [n/5]组，每组5个，至多只有一组由 n mod 5 个元素组成。</p></li><li><p>寻找这 [n/5]个组中每一个组的中位数，这个过程可以用插入排序。</p></li><li><p>对步骤2中的[n/5] 个中位数，重复步骤1和步骤2，递归下去，直到剩下一个数字。</p></li><li><p>最终剩下的数字即为pivot，把大于它的数全放左边，小于等于它的数全放右边。</p></li><li><p>判断pivot的位置与k的大小，有选择的对左边或右边递归。 </p></li></ol><p>求第k大就是求第n-k+1小，这两者等价。 </p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> leetcode </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> leetcode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>动态规划简单归纳</title>
       <link href="/2020/03/17/leetcode/"/>
       <url>/2020/03/17/leetcode/</url>
