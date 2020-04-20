@@ -41,7 +41,7 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
-<link rel="stylesheet" href="/css/prism-duotone-dark.css" type="text/css">
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
 <link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 <body>
@@ -87,6 +87,13 @@
         <a href="/archives" class="waves-effect waves-light">
             
             <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <span>关于</span>
         </a>
     </li>
     
@@ -148,6 +155,15 @@
                 <i class="fa fa-fw fa-link"></i>
                 
                 归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                关于
             </a>
         </li>
         
@@ -331,7 +347,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="Background："><a href="#Background：" class="headerlink" title="Background："></a>Background：</h4><p>few-shot learning问题简单来说，就是通过减少学习的次数来获得有用的知识。我们以传统的image classification为例，对于传统的问题，我们经过大量的样本对模型进行训练从而增强它的泛化能力。也就是给machine看了很多张图片，让它区分开不同类别图片的区别。这和人学习很不一样，人只需要非常少的图片就可以区分图片里的是猫还是狗。few–shot learning就是给少量的训练样本，也能够具有比较好的泛化能力。如何达到呢？这类问题我们使用解决meta-learning的方式去处理。可以参见<a href="https://jasonhu02.github.io/2020/01/12/meta-learning/">meta-learning tutorial</a>中给出的数学定义。</p>
+                <h4 id="Background："><a href="#Background：" class="headerlink" title="Background："></a>Background：</h4><p>few-shot learning问题简单来说，就是通过减少学习的次数来获得有用的知识。我们以传统的image classification为例，对于传统的问题，我们经过大量的样本对模型进行训练从而增强它的泛化能力。也就是给machine看了很多张图片，让它区分开不同类别图片的区别。这和人学习很不一样，人只需要非常少的图片就可以区分图片里的是猫还是狗。few–shot learning就是给少量的训练样本，也能够具有比较好的泛化能力。如何达到呢？这类问题我们使用解决meta-learning的方式去处理。可以参见<a href="https://jasonhu02.github.io/2020/01/12/meta-learning/" target="_blank" rel="noopener">meta-learning tutorial</a>中给出的数学定义。</p>
 <p>这里用通俗的话来讲，过去的机器学习只是教会了机器分类猫和狗-CNN结构的参数 $\theta$，meta-learning教会了机器如何分类，这是一个更大框架的参数 $\phi$ 。这样相当于训练了多个 $\theta$ ，然后根据 $\theta$ 的训练情况，得到最好的 $\phi$ . 可以认为 $\phi$ 控制 $\theta$  , $\phi=f(\theta)$ ，这就是完整训练的过程。将得到的参数 $\phi$ 去测试集上测试，给几张原来没看过的image，丢到网络里面训练，网络生成的 $\theta$ 同时会受到 $\phi$ 的控制， 可以发现可以很快的区分原来没有学习过的image。 并且能够正确的识别出他们的label。</p>
 <p>MAML和Reptiles都是解决上述问题比较好的方法。现在把meta-learning的问题用来解决生成问题。通常来说 生成image有三种方法：pixelCNN，VAE和GAN。VAE曾经在以前的文章中介绍过，实质上是衡量的是真实样本和生成样本的KL-divergence。VAE仍然有很多问题需要解决 ，而GAN有更好的生成特性。</p>
 <h4 id="Method："><a href="#Method：" class="headerlink" title="Method："></a>Method：</h4><p>本文使用latent vector作为input，使用reptile的网络架构，将GAN的generator来生成逼真的图像。GAN由generator和discriminator组成。基本思想通俗来说，用Reptiles的方式来训练Generator和Discriminator，得到的 $\phi_{\mathcal{d}}$ 和 $\phi_{\mathcal{g}}$, $W_{d}$ 和$W_{g}$，使用Wasserstein GP loss进行训练，先进行内层循环K次，得到最佳的 $W_{d}$ 和 $W_{g}$ 。通过$\phi_{\mathcal{d}}-W_{d}$ 和 $\phi_{\mathcal{g}}-W_{g}$ 来更新参数。其loss function为<br>$$<br>\text {minimize} \sum_{T}\left(\Phi_{d}-W_{d \tau}\right)+\left(\Phi_{g}-W_{g \tau}\right)<br>$$<br>训练的流程如下：</p>
@@ -479,28 +495,6 @@
         </div>
     </div>
 
-    
-    <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
-<link rel="stylesheet" href="/css/my-gitalk.css">
-
-<div class="card gitalk-card" data-aos="fade-up">
-    <div id="gitalk-container" class="card-content"></div>
-</div>
-
-<script src="/libs/gitalk/gitalk.min.js"></script>
-<script>
-    let gitalk = new Gitalk({
-        clientID: '',
-        clientSecret: '',
-        repo: 'JasonHu02.github.io/issues/1',
-        owner: 'JasonHu02',
-        admin: "JasonHu02",
-        id: '2020/02/06/few-shot-image-generation-method/',
-        distractionFreeMode: false  // Facebook-like distraction free mode
-    });
-
-    gitalk.render('gitalk-container');
-</script>
     
 
     
@@ -671,7 +665,7 @@
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">13.7k</span>
+            <span class="white-color">13.6k</span>
             
 
             <br>

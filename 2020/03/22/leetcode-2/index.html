@@ -44,7 +44,7 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
-<link rel="stylesheet" href="/css/prism-duotone-dark.css" type="text/css">
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
 <link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 <body>
@@ -90,6 +90,13 @@
         <a href="/archives" class="waves-effect waves-light">
             
             <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <span>关于</span>
         </a>
     </li>
     
@@ -151,6 +158,15 @@
                 <i class="fa fa-fw fa-link"></i>
                 
                 归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                关于
             </a>
         </li>
         
@@ -364,8 +380,7 @@
 <p>了解一个数据结构，必须先学会如何遍历和查找。</p>
 <p>遍历二叉树的数据结构有三种方式，分别是前序遍历，中序遍历和后序遍历。代码上的实现非常类似，但要了解里面的原理。</p>
 <p>前序遍历：</p>
-<pre class="line-numbers language-C++"><code class="language-C++"># include<iostream>
-using namespace std；
+<pre class="line-numbers language-C++"><code class="language-C++">using namespace std；
 class solution{
 public:
     vector<int> preorderTravsal(Treenode* root){
@@ -381,10 +396,9 @@ private:
             __preorderTraversal(node->left,res);
             __preorderTraversal(node->right,res);
         }    
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>中序遍历:</p>
-<pre class="line-numbers language-C++"><code class="language-C++"># include<iostream>
-using namespace std；
+<pre class="line-numbers language-C++"><code class="language-C++">using namespace std；
 class solution{
 public:
     vector<int> midorderTravsal(Treenode* root){
@@ -400,10 +414,9 @@ private:
             __midorderTraversal(node->left,res);
             __midorderTraversal(node->right,res);
         }    
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>后序遍历：</p>
-<pre class="line-numbers language-C++"><code class="language-C++"># include<iostream>
-using namespace std；
+<pre class="line-numbers language-C++"><code class="language-C++">using namespace std；
 class solution{
 public:
     vector<int> aftorderTravsal(Treenode* root){
@@ -419,7 +432,7 @@ private:
             __aftorderTraversal(node->left,res);
             __aftorderTraversal(node->right,res);
         }    
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>了解了遍历的基本特点之后，可以解决相关的遍历的算法问题了。</p>
 <h4 id="Leetcode404-计算给定二叉树的所有左叶子之和："><a href="#Leetcode404-计算给定二叉树的所有左叶子之和：" class="headerlink" title="Leetcode404:计算给定二叉树的所有左叶子之和："></a>Leetcode404:计算给定二叉树的所有左叶子之和：</h4><p>计算给定二叉树的所有左叶子之和。</p>
 <pre><code>    3
@@ -560,28 +573,6 @@ root = [10,5,-3,3,2,null,11,3,-2,null,1], sum = 8
         </div>
     </div>
 
-    
-    <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
-<link rel="stylesheet" href="/css/my-gitalk.css">
-
-<div class="card gitalk-card" data-aos="fade-up">
-    <div id="gitalk-container" class="card-content"></div>
-</div>
-
-<script src="/libs/gitalk/gitalk.min.js"></script>
-<script>
-    let gitalk = new Gitalk({
-        clientID: '',
-        clientSecret: '',
-        repo: 'JasonHu02.github.io/issues/1',
-        owner: 'JasonHu02',
-        admin: "JasonHu02",
-        id: '2020/03/22/leetcode-2/',
-        distractionFreeMode: false  // Facebook-like distraction free mode
-    });
-
-    gitalk.render('gitalk-container');
-</script>
     
 
     
@@ -752,7 +743,7 @@ root = [10,5,-3,3,2,null,11,3,-2,null,1], sum = 8
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">13.7k</span>
+            <span class="white-color">13.6k</span>
             
 
             <br>
