@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jasonhu02.github.io/2020/03/22/leetcode-2/</loc>
+    
+    <lastmod>2020-04-20T03:10:57.632Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jasonhu02.github.io/2020/04/19/leetcode-1/</loc>
     
-    <lastmod>2020-04-19T15:46:33.531Z</lastmod>
+    <lastmod>2020-04-19T15:47:45.505Z</lastmod>
     
   </url>
   
@@ -107,14 +114,14 @@
   </url>
   
   <url>
-    <loc>https://jasonhu02.github.io/contact/index.html</loc>
+    <loc>https://jasonhu02.github.io/categories/index.html</loc>
     
     <lastmod>2019-09-25T14:13:10.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jasonhu02.github.io/categories/index.html</loc>
+    <loc>https://jasonhu02.github.io/contact/index.html</loc>
     
     <lastmod>2019-09-25T14:13:10.000Z</lastmod>
     

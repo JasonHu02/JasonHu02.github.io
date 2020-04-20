@@ -1,4 +1,5 @@
 https://jasonhu02.github.io/2020/04/19/leetcode-1/
+https://jasonhu02.github.io/2020/03/22/leetcode-2/
 https://jasonhu02.github.io/2020/03/17/leetcode/
 https://jasonhu02.github.io/2020/02/08/lstm-and-rnn/
 https://jasonhu02.github.io/2020/02/06/few-shot-image-generation-method/
