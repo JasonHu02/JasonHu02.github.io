@@ -9,8 +9,8 @@
     <meta name="google-site-verification" content>
     <meta name="360-site-verification" content>
     <meta name="description" content="完整的步骤：
-设定好os.environment(&amp;quot; CUDA_VISIBEL_DEVICES &amp;quot;)=&amp;#39;0,1,2,3,4,5&amp;#39;
-pytorch中定义一个变量device = torch.device(&amp;">
+设定好os.environment(&amp;quot; CUDA_VISIBEL_DEVICES &amp;quot;)=&amp;#39;0,1,2,3,4,5&amp;#39; 
+pytorch中定义一个变量device = torch.device(">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -350,10 +350,10 @@ pytorch中定义一个变量device = torch.device(&amp;">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h5 id="完整的步骤："><a href="#完整的步骤：" class="headerlink" title="完整的步骤："></a>完整的步骤：</h5><ol>
-<li>设定好<code>os.environment(&quot; CUDA_VISIBEL_DEVICES &quot;)=&#39;0,1,2,3,4,5&#39;</code></li>
-<li>pytorch中定义一个变量<code>device = torch.device(&quot;cuda:0,1,2,3,4,5&quot;）</code></li>
+<li>设定好<code>os.environment(&quot; CUDA_VISIBEL_DEVICES &quot;)=&#39;0,1,2,3,4,5&#39;</code> </li>
+<li>pytorch中定义一个变量<code>device = torch.device(&quot;cuda:0,1,2,3,4,5&quot;）</code> </li>
 <li>把model使用<code>model = nn.DataParallel(model)</code>，用来分配数据，并且<code>model.to(device)</code>，将model加载到gpu上</li>
-<li>将要训练的数据放入到device中，然后训练这个model就可以了！</li>
+<li>将要训练的数据放入到device中，然后训练这个model就可以了！ </li>
 </ol>
 <h5 id="实际操作："><a href="#实际操作：" class="headerlink" title="实际操作："></a>实际操作：</h5><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> os 
 os<span class="token punctuation">.</span>environment<span class="token punctuation">(</span><span class="token string">"CUDA_VISIBEL_DEVICES"</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token string">'0,1,2,3,4,5'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>

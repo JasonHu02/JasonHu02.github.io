@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://huzhe01.github.io/2020/01/19/pytorch-parallel/</loc>
+    
+    <lastmod>2020-04-22T15:05:35.486Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://huzhe01.github.io/2020/03/22/leetcode-2/</loc>
     
     <lastmod>2020-04-20T04:25:20.705Z</lastmod>
@@ -26,13 +33,6 @@
     <loc>https://huzhe01.github.io/2020/02/06/few-shot-image-generation-method/</loc>
     
     <lastmod>2020-04-18T17:06:56.300Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://huzhe01.github.io/2020/01/19/pytorch-parallel/</loc>
-    
-    <lastmod>2020-04-18T16:53:04.358Z</lastmod>
     
   </url>
   
@@ -100,14 +100,14 @@
   </url>
   
   <url>
-    <loc>https://huzhe01.github.io/archives/index.html</loc>
+    <loc>https://huzhe01.github.io/categories/index.html</loc>
     
     <lastmod>2019-09-25T14:13:10.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://huzhe01.github.io/categories/index.html</loc>
+    <loc>https://huzhe01.github.io/archives/index.html</loc>
     
     <lastmod>2019-09-25T14:13:10.000Z</lastmod>
     
