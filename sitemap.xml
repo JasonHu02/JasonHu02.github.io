@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://huzhe01.github.io/2020/04/27/backtracking/</loc>
+    
+    <lastmod>2020-04-27T15:49:18.448Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://huzhe01.github.io/2020/03/22/leetcode-2/</loc>
+    
+    <lastmod>2020-04-27T15:48:33.105Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://huzhe01.github.io/2020/04/19/leetcode-1/</loc>
     
     <lastmod>2020-04-24T16:21:34.382Z</lastmod>
@@ -12,13 +26,6 @@
     <loc>https://huzhe01.github.io/2020/01/19/pytorch-parallel/</loc>
     
     <lastmod>2020-04-22T15:05:35.486Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://huzhe01.github.io/2020/03/22/leetcode-2/</loc>
-    
-    <lastmod>2020-04-20T04:25:20.705Z</lastmod>
     
   </url>
   

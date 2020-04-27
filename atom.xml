@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://huzhe01.github.io/"/>
-  <updated>2020-04-24T16:21:34.382Z</updated>
+  <updated>2020-04-27T15:49:18.448Z</updated>
   <id>https://huzhe01.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>回溯算法总结</title>
+    <link href="https://huzhe01.github.io/2020/04/27/backtracking/"/>
+    <id>https://huzhe01.github.io/2020/04/27/backtracking/</id>
+    <published>2020-04-27T15:46:55.111Z</published>
+    <updated>2020-04-27T15:49:18.448Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h5 id=&quot;回溯算法：&quot;&gt;&lt;a href=&quot;#回溯算法：&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="leetcode" scheme="https://huzhe01.github.io/categories/leetcode/"/>
+    
+    
+      <category term="backtracking" scheme="https://huzhe01.github.io/tags/backtracking/"/>
+    
+  </entry>
   
   <entry>
     <title>leetcode题解</title>
@@ -49,7 +75,7 @@
     <link href="https://huzhe01.github.io/2020/03/22/leetcode-2/"/>
     <id>https://huzhe01.github.io/2020/03/22/leetcode-2/</id>
     <published>2020-03-22T11:29:20.000Z</published>
-    <updated>2020-04-20T04:25:20.705Z</updated>
+    <updated>2020-04-27T15:48:33.105Z</updated>
     
     <summary type="html">
     
