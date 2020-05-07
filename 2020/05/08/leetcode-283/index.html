@@ -8,12 +8,11 @@
     <meta name="baidu-site-verification" content>
     <meta name="google-site-verification" content>
     <meta name="360-site-verification" content>
-    <meta name="description" content="最小的K个数
-剑指offer的面试题
-输入整数数组 arr ，找出其中最小的 k 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。 
-示例 1：
-输入：arr = [3,2,1], k = 2
-输">
+    <meta name="description" content="这道题是也是我在面试的过程中碰到的一个原题，这里写一下解法。
+题目描述是这样的，给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
+示例:
+输入: [0,1,0,3,12]
+输出: [1,3,12">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -315,7 +314,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-04-19
+                    2020-05-08
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -329,14 +328,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    814
+                    310
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    1 分
                 </div>
                 
                 
@@ -352,94 +351,36 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>最小的K个数</p>
-<p>剑指offer的面试题</p>
-<p>输入整数数组 <code>arr</code> ，找出其中最小的 <code>k</code> 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。 </p>
-<p><strong>示例 1：</strong></p>
-<pre><code>输入：arr = [3,2,1], k = 2
-输出：[1,2] 或者 [2,1]</code></pre><p><strong>示例 2：</strong></p>
-<pre><code>输入：arr = [0,1,2,1], k = 1
-输出：[0]</code></pre><p><strong>限制：</strong></p>
-<ul>
-<li><code>0 &lt;= k &lt;= arr.length &lt;= 10000</code></li>
-<li><code>0 &lt;= arr[i] &lt;= 10000</code></li>
-</ul>
-<p>非常简单让人想到的方法就是排序，从小到大排好序之后，然后直接返回前k个元素，此题求解。</p>
-<p>实际代码也很简单：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">getLeastNumbers</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> arr<span class="token punctuation">,</span> k<span class="token punctuation">:</span>int<span class="token punctuation">)</span> <span class="token punctuation">:</span>
-        a<span class="token operator">=</span>arr<span class="token punctuation">.</span>sort<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token keyword">return</span> arr<span class="token punctuation">[</span><span class="token punctuation">:</span>k<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>list.sort() 方法排序时直接修改原列表，返回None；  sorted() 使用的范围更为广泛，但是如果不需要保留原列表。</p>
-<p>函数形式如下：</p>
-<pre class="line-numbers language-python"><code class="language-python">sorted<span class="token punctuation">(</span>iterable<span class="token punctuation">[</span><span class="token punctuation">,</span> key<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">,</span> reverse<span class="token punctuation">]</span><span class="token punctuation">)</span> 
-list<span class="token punctuation">.</span>sort<span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">,</span> key<span class="token operator">=</span>None<span class="token punctuation">,</span> reverse<span class="token operator">=</span>None<span class="token punctuation">)</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<ul>
-<li><p>key 是带一个参数的<strong>函数</strong>，返回一个值用来排序，默认为 None。这个函数只调用一次，所以fast。</p>
-</li>
-<li><p>reverse 表示排序结果是否反转</p>
-<p>  另外就是一种新方法可以用来了解Top-K算法的一种高级用法。改进的快速排序方法， <strong>BFPRT算法</strong>。</p>
-<p>  在BFPTR算法中，仅仅是改变了快速排序<strong>Partion</strong>中的<strong>pivot</strong>值的选取，在快速排序中，我们始终选择第一个元素或者最后一个元素作为<strong>pivot</strong>，而在BFPTR算法中，每次选择五分中位数的中位数作为<strong>pivot</strong>，这样做的目的就是使得划分比较合理，从而避免了最坏情况的发生。算法步骤如下 ：</p>
+                <p>这道题是也是我在面试的过程中碰到的一个原题，这里写一下解法。</p>
+<p>题目描述是这样的，<br>给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。</p>
+<pre><code>示例:
+输入: [0,1,0,3,12]
+输出: [1,3,12,0,0]</code></pre><p><strong>说明</strong>:</p>
 <ol>
-<li>将n 个元素划为 [n/5]组，每组5个，至多只有一组由 n mod 5 个元素组成。</li>
-<li>寻找这 [n/5]个组中每一个组的中位数，这个过程可以用插入排序。</li>
+<li>必须在原数组上操作，不能拷贝额外的数组。</li>
+<li>尽量减少操作次数。</li>
 </ol>
-</li>
-</ul>
-<ol start="3">
-<li><p>对步骤2中的[n/5] 个中位数，重复步骤1和步骤2，递归下去，直到剩下一个数字。</p>
-<ol start="4">
-<li>最终剩下的数字即为pivot，把大于它的数全放左边，小于等于它的数全放右边。</li>
-</ol>
-</li>
-<li><p>判断pivot的位置与k的大小，有选择的对左边或右边递归。 </p>
-<p>求第k大就是求第n-k+1小，这两者等价。 </p>
-</li>
-</ol>
-<p>TopK问题最佳的解决思路是使用堆排序:</p>
-<p>维护一个小顶堆，保持堆中的元素为k个，依次遍历整个数组中的元素，如果元素超过堆中的数，把顶端的数推出去，直到遍历完整个数组，则堆顶的元素即为topK。</p>
-<pre class="line-numbers language-C++"><code class="language-C++">#include <stdio.h>
-#include <vector>
-#include <algorithm>
-#include <queue>
-using namespace std;
+<p>初次看，是想新开一个数组，然后把所有的零丢到最后，但是这样不满足题目中给定的要求。</p>
+<p>最佳解法，双指针，解题思路可以选择在数组中用指针进行数组的index交换。其中一个数组必须指向第一个index，另外一个数组从零开始进行遍历，如果在首端的指针碰到了零，那么就选择与末端的指针索引对应的数进行交换。</p>
+<pre class="line-numbers language-python"><code class="language-python">nums<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span>
+first<span class="token operator">=</span><span class="token number">0</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>nums<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">!=</span><span class="token number">0</span><span class="token punctuation">:</span>
+        nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>nums<span class="token punctuation">[</span>first<span class="token punctuation">]</span><span class="token operator">=</span>nums<span class="token punctuation">[</span>first<span class="token punctuation">]</span><span class="token punctuation">,</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        first<span class="token operator">+=</span><span class="token number">1</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>nums<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token keyword">var</span> movezeros<span class="token operator">=</span><span class="token keyword">function</span><span class="token punctuation">(</span>nums<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">let</span> anchor<span class="token operator">=</span><span class="token number">0</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> explorer<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>explorer<span class="token operator">&lt;</span>nums<span class="token punctuation">.</span>length<span class="token punctuation">;</span>explorer<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+         <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>explorer<span class="token punctuation">]</span><span class="token operator">!==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">let</span> temp<span class="token operator">=</span>nums<span class="token punctuation">[</span>anchor<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            nums<span class="token punctuation">[</span>anchor<span class="token punctuation">]</span><span class="token operator">=</span>nums<span class="token punctuation">[</span>explorer<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            nums<span class="token punctuation">[</span>explorer<span class="token punctuation">]</span><span class="token operator">=</span>temp<span class="token punctuation">;</span>
 
-class Solution
-{
-public:
-    int findKthLargest(vector<int> &nums, int k)
-    {
-        int result = 0;
-        int numsSize = int(nums.size());
-        if (numsSize == 0 || k > numsSize)
-        {
-            return 0;
-        }
-
-        priority_queue<int, vector<int>, greater<int>> store;
-        //堆中维持k个最大数
-        for (int i = 0; i < numsSize; i++)
-        {
-            store.push(nums[i]);
-            if (int(store.size()) > k)
-            {
-                store.pop();
-            }
-        }
-
-        result = store.top();
-        return result;
-    }
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>其他方法：</p>
-<ul>
-<li><strong>全局排序</strong>，O(n*lg(n))</li>
-<li><strong>局部排序</strong>，只排序TopK个数，O(n*k)</li>
-<li><strong>堆</strong>，TopK个数也不排序了，O(n*lg(k))</li>
-<li>分治法，每个分支“都要”递归，例如：快速排序，O(n*lg(n))</li>
-<li>减治法，“只要”递归一个分支，例如：二分查找O(lg(n))，随机选择O(n)</li>
-<li>TopK的另一个解法：<strong>随机选择</strong>+partition</li>
-</ul>
+            anchor<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
             </div>
             <hr />
@@ -476,7 +417,7 @@ public:
                   property="dct:title" rel="dct:type">
                     《leetcode题解》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04/19/leetcode-1/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/05/08/leetcode-283/" property="cc:attributionName"
                rel="cc:attributionURL">
                 胡哲
             </a> 采用
@@ -516,9 +457,59 @@ public:
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/05/08/leetcode-283/">
+                    <div class="card-image">
+                        
+                        <img src="/medias/featureimages/leetcode.jpg" class="responsive-img" alt="leetcode题解">
+                        
+                        <span class="card-title">leetcode题解</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            leetcode283-移动零
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-05-08
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/leetcode/" class="post-category" target="_blank">
+                                    leetcode
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/leetcode/" target="_blank">
+                        <span class="chip bg-color">leetcode</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2020/04/27/backtracking/">
                     <div class="card-image">
@@ -535,9 +526,9 @@ public:
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-27
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-27
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -555,54 +546,6 @@ public:
                     
                     <a href="/tags/backtracking/" target="_blank">
                         <span class="chip bg-color">backtracking</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/03/22/leetcode-2/">
-                    <div class="card-image">
-                        
-                        <img src="/medias/featureimages/leetcode.jpg" class="responsive-img" alt="leetcode-二叉树题解I">
-                        
-                        <span class="card-title">leetcode-二叉树题解I</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            二叉树的一些总结I
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-03-22
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/leetcode/" class="post-category" target="_blank">
-                                    leetcode
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/leetcode/" target="_blank">
-                        <span class="chip bg-color">leetcode</span>
                     </a>
                     
                 </div>
