@@ -4,6 +4,7 @@ https://huzhe01.github.io/2020/04/19/leetcode-1/
 https://huzhe01.github.io/2020/03/22/leetcode-2/
 https://huzhe01.github.io/2020/03/17/leetcode/
 https://huzhe01.github.io/2020/02/08/lstm-and-rnn/
+https://huzhe01.github.io/2020/02/08/model-yasuo/
 https://huzhe01.github.io/2020/02/06/few-shot-image-generation-method/
 https://huzhe01.github.io/2020/02/02/vae-gan/
 https://huzhe01.github.io/2020/02/02/shen-ru-li-jie-vae/
