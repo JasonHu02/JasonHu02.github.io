@@ -328,7 +328,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    310
+                    359
                 </div>
                 
 
@@ -361,6 +361,7 @@
 <li>尽量减少操作次数。</li>
 </ol>
 <p>初次看，是想新开一个数组，然后把所有的零丢到最后，但是这样不满足题目中给定的要求。</p>
+<p>或者用哈希表把0元素存储起来，然后再把元素丢到后面。但是这样同样需要新开一个数组，需要的空间复杂度为O(n).</p>
 <p>最佳解法，双指针，解题思路可以选择在数组中用指针进行数组的index交换。其中一个数组必须指向第一个index，另外一个数组从零开始进行遍历，如果在首端的指针碰到了零，那么就选择与末端的指针索引对应的数进行交换。</p>
 <pre class="line-numbers language-python"><code class="language-python">nums<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span>
 first<span class="token operator">=</span><span class="token number">0</span>
