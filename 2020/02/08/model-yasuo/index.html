@@ -331,14 +331,14 @@ Dynamic Computation
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.9k
+                    2.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    8 分
                 </div>
                 
                 
@@ -394,7 +394,13 @@ Dynamic Computation
 <p>此时，如果我们令T=100,那么最后的预测概率是y1=0.56,y2=0.23,y3=0.21。（不过李宏毅老师在视频里提到说这个方法在实际使用时貌似用处不大hhhh，感觉这个方法可以回答知乎上的 <strong>什么东西看起来很厉害但是没什么用?</strong> 哈哈哈哈哈哈哈哈哈哈或或）</p>
 <h2 id="四、Parameter-Quantization"><a href="#四、Parameter-Quantization" class="headerlink" title="四、Parameter Quantization"></a>四、Parameter Quantization</h2><h2 id="1-less-bits"><a href="#1-less-bits" class="headerlink" title="1. less bits"></a>1. less bits</h2><p>一个很直观的方法就是使用更少bit来存储数值，例如一般默认是32位，那我们可以用16或者8位来存数据。</p>
 <h2 id="2-weight-clustering"><a href="#2-weight-clustering" class="headerlink" title="2. weight clustering"></a>2. weight clustering</h2><p>如下图所示，最左边表示网络中正常权重矩阵，之后我们对这个权重参数做聚类，比如最后得到了4个聚类，那么为了表示这4个聚类我们只需要2个bit，即用00,01,10,11来表示不同聚类。之后每个聚类的值就用均值来表示。这样的一个缺点就是误差可能会比较大。</p>
-<h2 id="五-Architecture-Design"><a href="#五-Architecture-Design" class="headerlink" title="五.  Architecture Design"></a>五.  Architecture Design</h2><p>Google的mobileNet，采用pair wise network，即对不同的channel使用不同的kernel进行卷积，最后合并在一起。同时采用one size kernel进行downsampling。</p>
+<h2 id="五、Architecture-Design"><a href="#五、Architecture-Design" class="headerlink" title="五、Architecture Design"></a>五、Architecture Design</h2><h2 id="1-Low-Rank-Approximation-低秩近似"><a href="#1-Low-Rank-Approximation-低秩近似" class="headerlink" title="1. Low Rank Approximation(低秩近似)"></a>1. Low Rank Approximation(低秩近似)</h2><p>下图是低秩近似的简单示意图，左边是一个普通的全连接层，可以看到权重矩阵大小为 <img src="https://www.zhihu.com/equation?tex=M%5Ctimes+N" alt="[公式]"> ，而低秩近似的原理就是在两个全连接层之间再插入一层K。是不是很反直观？插入一层后，参数还能变少？</p>
+<p>没错，的确变少了，我们可以看看新插入一层后的参数数量为: <img src="https://www.zhihu.com/equation?tex=N%5Ctimes+K%2BK%5Ctimes+M%3DK%5Ctimes+%28M%2BN%29" alt="[公式]"> ,因为 <img src="https://www.zhihu.com/equation?tex=K%3CM%2CK%3CN" alt="[公式]"> ,所以参数减少了。</p>
+<p>但是低秩近似之所以叫<strong>低秩</strong>，是因为原来的矩阵的秩最大可能是min(M,N),而新增一层后可以看到矩阵U和V的秩都是小于等于K的，我们知道rank(AB)≤min(rank(A),rank(B)), 所以相乘之后的矩阵的秩一定还是小于等于K。那么这样会带来什么影响呢？那就是原先全连接层能表示更大的空间，而现在只能表示小一些的空间了。</p>
+<h2 id="2-Depthwise-Separable-Convolution"><a href="#2-Depthwise-Separable-Convolution" class="headerlink" title="2. Depthwise Separable Convolution"></a>2. Depthwise Separable Convolution</h2><p>首先看一下标准卷积所需要的参数量。如下图示，输入数据由两个6<em>6的feature map组成，之后用4个大小为3</em>3的卷积核做卷积，最后的输出特征图大小为4<em>4</em>4。每个卷积核参数数量为2<em>3</em>3=18,所以总共用到的参数数量为4*18=72。</p>
+<p>而Depthwise Separable卷积分成了两步，如下图示。</p>
+<p>首先是输入数据的每个通道只由一个二维的卷积核负责，即卷积核通道数固定为1，而不是像上面那样，每个卷积核的通道数和输入通道数保持一致。这样最后得到的输出特征图的通道数等于输入通道数。</p>
+<p>因为第一步得到的输出特征图是用不同卷积核计算得到的，所以不同通道之间是独立的，因此我们还需要对不同通道之间进行关联。为了实现关联，在第二步中使用了1<em>1大小的卷积核，通道数量等于输入数据的通道数量。另外1</em>1卷积核的数量等于预期输出特征图的通道数，在这里等于4。最后我们可以得到和标准卷积一样的效果，而且参数数量更少：3<em>3</em>2+(1<em>1</em>2)*4=26。</p>
 <h2 id="六、Dynamic-Computation"><a href="#六、Dynamic-Computation" class="headerlink" title="六、Dynamic Computation"></a>六、Dynamic Computation</h2><p>该方法的主要思路是如果目前的资源充足（比如你的手机电量充足），那么算法就尽量做到最好，比如训练更久，或者训练更多模型等；反之，如果当前资源不够（如电量只剩10%），那么就先算出一个过得去的结果。</p>
 <p>那么如何实现呢？</p>
 <h2 id="1-训练更多的model"><a href="#1-训练更多的model" class="headerlink" title="1. 训练更多的model"></a>1. 训练更多的model</h2><p>比如说我们提前训练多种网络，比如大网络，中等网络和小网络，那么我们就可以根据资源情况来选择不同的网络。但是这样的缺点是我们需要保存多个模型，这在移动设备上的可操作性不高。</p>
@@ -632,7 +638,7 @@ Dynamic Computation
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">17.2k</span>
+            <span class="white-color">17.7k</span>
             
 
             <br>
