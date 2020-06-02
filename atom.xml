@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://huzhe01.github.io/"/>
-  <updated>2020-05-10T03:54:58.786Z</updated>
+  <updated>2020-06-02T15:50:35.728Z</updated>
   <id>https://huzhe01.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>shell语法常见总结</title>
+    <link href="https://huzhe01.github.io/2020/06/02/shell-yu-fa-zong-jie/"/>
+    <id>https://huzhe01.github.io/2020/06/02/shell-yu-fa-zong-jie/</id>
+    <published>2020-06-02T14:40:35.000Z</published>
+    <updated>2020-06-02T15:50:35.728Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在服务器端运行，离不开shell的使用。今天主要总结一下shell的用法：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Shell 是什么？&lt;/strong&gt;&lt;br&gt;Shell 是一个命令解释权，它为用户提供了一个向 Linux 内核发送请求以便运行程序界面系统级程序，用户可以用
+        
+      
+    
+    </summary>
+    
+      <category term="program" scheme="https://huzhe01.github.io/categories/program/"/>
+    
+    
+      <category term="shell" scheme="https://huzhe01.github.io/tags/shell/"/>
+    
+  </entry>
   
   <entry>
     <title>leetcode题解</title>

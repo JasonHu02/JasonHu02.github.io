@@ -4,13 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="pytorch-多GPU操作的方法, SJTU NLP DeepLearning Thinklab 胡哲 huzhe 计算机视觉 深度学习">
+    <meta name="keywords" content="shell语法常见总结, SJTU NLP DeepLearning Thinklab 胡哲 huzhe 计算机视觉 深度学习">
     <meta name="baidu-site-verification" content>
     <meta name="google-site-verification" content>
     <meta name="360-site-verification" content>
-    <meta name="description" content="完整的步骤：
-设定好os.environment(&amp;quot; CUDA_VISIBEL_DEVICES &amp;quot;)=&amp;#39;0,1,2,3,4,5&amp;#39; 
-pytorch中定义一个变量device = torch.device(">
+    <meta name="description" content="在服务器端运行，离不开shell的使用。今天主要总结一下shell的用法：
+Shell 是什么？Shell 是一个命令解释权，它为用户提供了一个向 Linux 内核发送请求以便运行程序界面系统级程序，用户可以用 Shell 来启动、挂起、停">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +17,7 @@ pytorch中定义一个变量device = torch.device(">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>pytorch-多GPU操作的方法 | Zhe Hu&#39;s Blog</title>
+    <title>shell语法常见总结 | Zhe Hu&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -260,13 +259,13 @@ pytorch中定义一个变量device = torch.device(">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/data_parallel.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/blue.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        pytorch-多GPU操作的方法
+                        shell语法常见总结
                     </div>
                 </div>
             </div>
@@ -288,8 +287,8 @@ pytorch中定义一个变量device = torch.device(">
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/pytorch/" target="_blank">
-                            <span class="chip bg-color">pytorch</span>
+                        <a href="/tags/shell/" target="_blank">
+                            <span class="chip bg-color">shell</span>
                         </a>
                         
                     </div>
@@ -300,8 +299,8 @@ pytorch中定义一个变量device = torch.device(">
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                        <a href="/categories/编程/" class="post-category" target="_blank">
-                            编程
+                        <a href="/categories/program/" class="post-category" target="_blank">
+                            program
                         </a>
                         
                     </div>
@@ -312,7 +311,7 @@ pytorch中定义一个变量device = torch.device(">
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-01-19
+                    2020-06-02
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -326,14 +325,14 @@ pytorch中定义一个变量device = torch.device(">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    3 分
                 </div>
                 
                 
@@ -349,85 +348,126 @@ pytorch中定义一个变量device = torch.device(">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h5 id="完整的步骤："><a href="#完整的步骤：" class="headerlink" title="完整的步骤："></a>完整的步骤：</h5><ol>
-<li>设定好<code>os.environment(&quot; CUDA_VISIBEL_DEVICES &quot;)=&#39;0,1,2,3,4,5&#39;</code> </li>
-<li>pytorch中定义一个变量<code>device = torch.device(&quot;cuda:0,1,2,3,4,5&quot;）</code> </li>
-<li>把model使用<code>model = nn.DataParallel(model)</code>，用来分配数据，并且<code>model.to(device)</code>，将model加载到gpu上</li>
-<li>将要训练的数据放入到device中，然后训练这个model就可以了！ </li>
-</ol>
-<h5 id="实际操作："><a href="#实际操作：" class="headerlink" title="实际操作："></a>实际操作：</h5><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> os 
-os<span class="token punctuation">.</span>environment<span class="token punctuation">(</span><span class="token string">"CUDA_VISIBEL_DEVICES"</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token string">'0,1,2,3,4,5'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>上述步骤相当于在shell 命令里面调用了 CUDA_VISIBEL_DEVICES 命令, 相当于打开了6个gpu的入口。分别指定了cuda0,cuda1,cuda2三个gpu进行计算。这里相当于调用了6个gpu</p>
-<p>note：使用torch.cuda.device_count()看到的就是这里调用了几个gpu。</p>
-<pre class="line-numbers language-python"><code class="language-python">device<span class="token operator">=</span>torch<span class="token punctuation">.</span>device<span class="token punctuation">(</span><span class="token string">"cuda:0,1,2,3,4,5"</span><span class="token punctuation">,</span> <span class="token keyword">if</span> torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>is_available<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">else</span> <span class="token string">"cpu"</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>这里必须和上面的数值保持一致，否则会报错。device的输出是 type: “cuda” ，index=0， 用index的值表示了cuda的个数</p>
-<pre class="line-numbers language-python"><code class="language-python">model <span class="token operator">=</span> Model<span class="token punctuation">(</span>input_size<span class="token punctuation">,</span> output_size<span class="token punctuation">)</span>
-<span class="token keyword">if</span> torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>device_count<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">:</span>
-  <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Let's use"</span><span class="token punctuation">,</span> torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>device_count<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"GPUs!"</span><span class="token punctuation">)</span>
-  <span class="token comment" spellcheck="true"># dim = 0 [30, xxx] -> [10, ...], [10, ...], [10, ...] on 3 GPUs</span>
-  model <span class="token operator">=</span> nn<span class="token punctuation">.</span>DataParallel<span class="token punctuation">(</span>model<span class="token punctuation">)</span>
+                <p>在服务器端运行，离不开shell的使用。今天主要总结一下shell的用法：</p>
+<p><strong>Shell 是什么？</strong><br>Shell 是一个命令解释权，它为用户提供了一个向 Linux 内核发送请求以便运行程序界面系统级程序，用户可以用 Shell 来启动、挂起、停止甚至是编写一些程序。</p>
+<img src="Shell语法总结/image-20200602232857092.png" alt="image-20200602232857092" style="zoom:33%;">
 
-model<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>使用nn.DataParallel对model这个网络模型进行data上的自动分配</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">for</span> data <span class="token keyword">in</span> rand_loader<span class="token punctuation">:</span>
-    input <span class="token operator">=</span> data<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span>
-    output <span class="token operator">=</span> model<span class="token punctuation">(</span>input<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Outside: input size"</span><span class="token punctuation">,</span> input<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-          <span class="token string">"output_size"</span><span class="token punctuation">,</span> output<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>将input从dataset中得到batch_size的数据，将data传给GPU中，对模型进行了训练(forward function这里省去)</p>
-<p>这个时候cuda上就会被分配上数据。可以看到最后输出的结果：</p>
-<pre><code>Let&#39;s use 2 GPUs!
-    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])
-    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])
-Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])
-    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])
-    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])
-Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])
-    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])
-    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])
-Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])
-    In Model: input size torch.Size([5, 5]) output size torch.Size([5, 2])
-    In Model: input size torch.Size([5, 5]) output size torch.Size([5, 2])
-Outside: input size torch.Size([10, 5]) output_size torch.Size([10, 2])</code></pre><pre><code>Let&#39;s use 8 GPUs!
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
-Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])
-    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
-    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
-    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
-    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
-    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
-Outside: input size torch.Size([10, 5]) output_size torch.Size([10, 2])</code></pre><p>可以看到model上的data被平均分配到了8个gpu上。</p>
-<p>input_size=2, output_size=5, batch_size=30, data_size=100。</p>
-<p>由于每次batch_size=30, 因此跑了4次，数据量为30+30+30+10</p>
-<p>每次在模型中，30个input被分配到8个gpu上，4+4+4+4+4+2+4+4个，每个cuda上跑了4或2个input，output则相应输出对应的大小。[4,5]表示4个input，每个input的大小为5。</p>
+<p>写一个shell文件，第一行表示用bash执行，第二行打印出“hello world”</p>
+<pre class="line-numbers language-shell"><code class="language-shell">#!/bin/bash 
+echo 'hello world!'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>执行的方法有两种，一种是 <code>sh hello.sh</code> 另外一种方法是 <code>chmod +x hello.sh</code> 之后，这样<code>./hello.sh</code>  就变成了可执行文件，可以直接运行。</p>
+<p>说明:</p>
+<ul>
+<li><code>#!</code> 告诉系统这个脚本需要什么解释器来执行。</li>
+<li>文件扩展名 <code>.sh</code> 不是强制要求的。</li>
+<li>方法1 直接运行解释器，<code>hello.sh</code> 作为 Shell 解释器的参数。此时 Shell 脚本就不需要指定解释器信息，第一行可以去掉。</li>
+<li>方法2 hello.sh 作为可执行程序运行，Shell 脚本第一行一定要指定解释器。</li>
+</ul>
+<p><strong>Shell 变量</strong><br><strong>定义</strong><br>Shell 变量分为<strong>系统变量</strong>和<strong>自定义变量</strong>。系统变量有$HOME、$PWD、$USER等，显示当前 Shell 中所有变量：<code>set</code> 。<br>变量名可以由字母、数字、下划线组成，不能以数字开头。<br><strong>基本语法</strong></p>
+<ul>
+<li><strong>定义变量：</strong>变量名=变量值，等号两侧不能有空格，变量名一般习惯用大写。</li>
+<li><strong>删除变量：</strong>unset 变量名 。</li>
+<li><strong>声明静态变量：</strong>readonly 变量名，静态变量不能unset。</li>
+<li><strong>使用变量：</strong>$变量名</li>
+</ul>
+<p><strong>将命令返回值赋给变量（重点）</strong></p>
+<ul>
+<li>A= `ls` 反引号,执行里面的命令</li>
+<li>A=$(ls) 等价于反引号</li>
+</ul>
+<p><strong>Shell 环境变量</strong> （常用）<br><strong>定义</strong></p>
+<img src="Shell语法总结/image-20200602233553542.png" alt="image-20200602233553542" style="zoom: 33%;">
+
+<p><strong>基本语法</strong></p>
+<ol>
+<li>export 变量名=变量值，将 Shell 变量输出为环境变量。</li>
+<li>source 配置文件路径，让修改后的配置信息立即生效。</li>
+<li>echo $变量名，检查环境变量是否生效</li>
+</ol>
+<p><strong>位置参数变量</strong>（常用）<br><strong>基本语法</strong></p>
+<ul>
+<li>$n ：$0 代表命令本身、$1-$9 代表第1到9个参数，10以上参数用花括号，如 ${10}。</li>
+<li>$* ：命令行中所有参数，且把所有参数看成一个整体。</li>
+<li>$@ ：命令行中所有参数，且把每个参数区分对待。</li>
+<li>$# ：所有参数个数。</li>
+</ul>
+<p><strong>预定义变量</strong><br><strong>定义</strong><br>在赋值定义之前，事先在 Shell 脚本中直接引用的变量。<br><strong>基本语法</strong></p>
+<ul>
+<li>$$ ：当前进程的 PID 进程号。</li>
+<li>$! ：后台运行的最后一个进程的 PID 进程号。</li>
+<li>$? ：最后一次执行的命令的返回状态，0为执行正确，非0执行失败。</li>
+</ul>
+<p><strong>运算符</strong><br><strong>基本语法</strong></p>
+<ul>
+<li>$((运算式)) 或 $[运算式]</li>
+<li>expr m + n 注意 expr 运算符间要有空格</li>
+<li>expr m - n</li>
+<li>expr  \*，/，% 分别代表乘，除，取余</li>
+</ul>
+<h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a><strong>流程控制</strong></h2><h3 id="if-判断"><a href="#if-判断" class="headerlink" title="if 判断"></a><strong>if 判断</strong></h3><h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a><strong>基本语法</strong></h3><pre class="line-numbers language-shell"><code class="language-shell">if [ 条件判断式 ];then   
+    程序   
+fi
+# 或者（推荐）
+if [ 条件判断式 ]
+then
+    程序
+elif [ 条件判断式 ]
+then
+    程序
+fi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="for-循环"><a href="#for-循环" class="headerlink" title="for 循环"></a><strong>for 循环</strong></h3><h3 id="基本语法-1"><a href="#基本语法-1" class="headerlink" title="基本语法"></a><strong>基本语法</strong></h3><pre class="line-numbers language-shell"><code class="language-shell"># 语法1
+for 变量名 in 值1 值2 值3...
+do
+    程序
+done
+
+# 语法2
+for ((初始值;循环控制条件;变量变化))
+do
+    程序
+done<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="while-循环"><a href="#while-循环" class="headerlink" title="while 循环"></a><strong>while 循环</strong></h3><h3 id="基本语法-2"><a href="#基本语法-2" class="headerlink" title="基本语法"></a><strong>基本语法</strong></h3><pre class="line-numbers language-shell"><code class="language-shell">while [ 条件判断式 ]
+do
+    程序
+done <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="读取控制台输入"><a href="#读取控制台输入" class="headerlink" title="读取控制台输入"></a><strong>读取控制台输入</strong></h2><h3 id="基本语法-3"><a href="#基本语法-3" class="headerlink" title="基本语法"></a><strong>基本语法</strong></h3><p>read(选项)(参数)<br><strong>选项</strong></p>
+<ul>
+<li>-p：指定读取值时的提示符</li>
+<li>-t：指定读取值时等待的时间（秒），如果没有在指定时间内输入，就不再等待了。</li>
+</ul>
+<p><strong>参数</strong></p>
+<ul>
+<li>变量名：读取值的变量名</li>
+</ul>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a><strong>函数</strong></h2><p>和其它编程语言一样，Shell 编程有系统函数和自定义函数，本文只举两个常用系统函数。</p>
+<h3 id="系统函数"><a href="#系统函数" class="headerlink" title="系统函数"></a><strong>系统函数</strong></h3><ul>
+<li><p>basename，删掉路径最后一个 / 前的所有部分（包括/），常用于获取文件名。</p>
+<p><strong>基本语法</strong></p>
+</li>
+<li><ul>
+<li><p>basename [pathname] [suffx]</p>
+</li>
+<li><p>basename [string] [suffx]</p>
+</li>
+<li><p>如果指定 suffx，也会删掉pathname或string的后缀部分。</p>
+</li>
+</ul>
+</li>
+<li><p>dirname，删掉路径最后一个 / 后的所有部分（包括/），常用于获取文件路径。<br><strong>基本语法</strong></p>
+</li>
+<li><p>dirname pathname</p>
+</li>
+<li><p>如果路径中不含 / ，则返回 ‘.’ （当前路径）。</p>
+</li>
+</ul>
+<h3 id="自定义函数"><a href="#自定义函数" class="headerlink" title="自定义函数"></a><strong>自定义函数</strong></h3><h3 id="基本语法-4"><a href="#基本语法-4" class="headerlink" title="基本语法"></a><strong>基本语法</strong></h3><pre class="line-numbers language-shell"><code class="language-shell">[ function ] funname[()]
+{
+    Action;
+    [return int;]
+}
+
+# 调用
+funname 参数1 参数2...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
             </div>
             <hr />
@@ -462,9 +502,9 @@ Outside: input size torch.Size([10, 5]) output_size torch.Size([10, 2])</code></
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《pytorch-多GPU操作的方法》
+                    《shell语法常见总结》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/01/19/pytorch-parallel/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/06/02/shell-yu-fa-zong-jie/" property="cc:attributionName"
                rel="cc:attributionURL">
                 胡哲
             </a> 采用
@@ -504,45 +544,47 @@ Outside: input size torch.Size([10, 5]) output_size torch.Size([10, 2])</code></
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/01/22/information-bottleneck-paper/">
+                <a href="/2020/06/02/shell-yu-fa-zong-jie/">
                     <div class="card-image">
                         
-                        <img src="/medias/featureimages/ib.jpg" class="responsive-img" alt="ICLR2020论文解读__Learning robust representations via multi-view information">
+                        <img src="/medias/featureimages/blue.jpg" class="responsive-img" alt="shell语法常见总结">
                         
-                        <span class="card-title">ICLR2020论文解读__Learning robust representations via multi-view information</span>
+                        <span class="card-title">shell语法常见总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            本文是对于信息瓶颈方法的原始公式应用于在学习时可以使用任务特定标签的监督设置中。提出了通过利用muilt-view的方式提供一种实体的两类视图，可以将方法扩展到无监督的情况下.
+                            shell日常中常用的一些语法总结，方便写脚本
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-01-22
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-06-02
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/科研/" class="post-category" target="_blank">
-                                    科研
+                            <a href="/categories/program/" class="post-category" target="_blank">
+                                    program
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/representation-learning/" target="_blank">
-                        <span class="chip bg-color">representation-learning</span>
+                    <a href="/tags/shell/" target="_blank">
+                        <span class="chip bg-color">shell</span>
                     </a>
                     
                 </div>
@@ -556,30 +598,30 @@ Outside: input size torch.Size([10, 5]) output_size torch.Size([10, 2])</code></
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/01/18/pytorch-data/">
+                <a href="/2020/05/08/leetcode-283/">
                     <div class="card-image">
                         
-                        <img src="/medias/featureimages/dataloader.jpg" class="responsive-img" alt="pytorch-data处理的方法">
+                        <img src="/medias/featureimages/leetcode.jpg" class="responsive-img" alt="leetcode题解">
                         
-                        <span class="card-title">pytorch-data处理的方法</span>
+                        <span class="card-title">leetcode题解</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            本文总结了深度学习中数据处理所需要使用的函数,对功能进行了总结
+                            leetcode283-移动零
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-01-18
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-05-08
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/编程/" class="post-category" target="_blank">
-                                    编程
+                            <a href="/categories/leetcode/" class="post-category" target="_blank">
+                                    leetcode
                                 </a>
                             
                             
@@ -589,8 +631,8 @@ Outside: input size torch.Size([10, 5]) output_size torch.Size([10, 2])</code></
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/pytorch/" target="_blank">
-                        <span class="chip bg-color">pytorch</span>
+                    <a href="/tags/leetcode/" target="_blank">
+                        <span class="chip bg-color">leetcode</span>
                     </a>
                     
                 </div>
