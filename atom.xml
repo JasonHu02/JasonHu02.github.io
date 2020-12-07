@@ -71,6 +71,33 @@
   </entry>
   
   <entry>
+    <title>vim操作总结</title>
+    <link href="https://zhehu.ml/2020/06/30/vim-chang-yong-ming-ling/"/>
+    <id>https://zhehu.ml/2020/06/30/vim-chang-yong-ming-ling/</id>
+    <published>2020-06-30T10:55:46.000Z</published>
+    <updated>2020-12-07T18:08:45.677Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;vim常用命令主要分为增删改查以及移动：&lt;/p&gt;
+&lt;h2 id=&quot;vim插件的使用&quot;&gt;&lt;a href=&quot;#vim插件的使用&quot; class=&quot;headerlink&quot; title=&quot;vim插件的使用&quot;&gt;&lt;/a&gt;vim插件的使用&lt;/h2&gt;&lt;p&gt;主要的配置全部在~/.vimrc
+        
+      
+    
+    </summary>
+    
+      <category term="工具" scheme="https://zhehu.ml/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="vim" scheme="https://zhehu.ml/tags/vim/"/>
+    
+  </entry>
+  
+  <entry>
     <title>shell语法常见总结</title>
     <link href="https://zhehu.ml/2020/06/02/shell-yu-fa-zong-jie/"/>
     <id>https://zhehu.ml/2020/06/02/shell-yu-fa-zong-jie/</id>
