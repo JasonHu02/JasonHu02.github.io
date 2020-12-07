@@ -8,7 +8,8 @@
     <meta name="baidu-site-verification" content>
     <meta name="google-site-verification" content>
     <meta name="360-site-verification" content>
-    <meta name="description" content="RNN的工作原理：RNN可以被认为是一种有记忆力的neural network。在RNN里面，每一次hidden layer的neuron产生output的时候，这个output会被存到memory里面。当下次又有input的时候，需要和上">
+    <meta name="description" content="RNN的工作原理：
+RNN可以被认为是一种有记忆力的neural network。在RNN里面，每一次hidden layer的neuron产生output的时候，这个output会被存到memory里面。当下次又有input的时候，需要和">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -347,76 +348,74 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="RNN的工作原理："><a href="#RNN的工作原理：" class="headerlink" title="RNN的工作原理："></a>RNN的工作原理：</h4><p>RNN可以被认为是一种有记忆力的neural network。在RNN里面，每一次hidden layer的neuron产生output的时候，这个output会被存到memory里面。当下次又有input的时候，需要和上一次的memory结合起来使用。对它来说除了$x_1,x_2$以外，这些存在memory里的值$a_1,a_2$也会影响它的output。</p>
-<img src="LSTM-and-RNN/image-20200226154228719.png" alt="image-20200226154228719" style="zoom: 25%;">
-
-<p>如上图所示, 用Recurrent Neural Network处理slot filling这件事，就像是这样，使用者说：“arrive Taipei on November 2nd”，arrive就变成了一个vector丢到neural network里面去，neural network的hidden layer的output写成$a^1$($a^1$是一排neural的output，是一个vector)，$a^1$产生$y^1$,$y^1$就是“arrive”属于每一个slot filling的几率。接下来$a^1$会被存到memory里面去，”Taipei会变为input”，这个hidden layer会同时考虑“Taipei”这个input和存在memory里面的$a^1$,得到$a^2$，根据$a^2$得到$y^2$，$y^2$是属于每一个slot filling的几率。以此类推($a^3$得到$y^2$)。</p>
+                <h4 id="rnn的工作原理">RNN的工作原理：</h4>
+<p>RNN可以被认为是一种有记忆力的neural network。在RNN里面，每一次hidden layer的neuron产生output的时候，这个output会被存到memory里面。当下次又有input的时候，需要和上一次的memory结合起来使用。对它来说除了<span class="math inline">\(x_1,x_2\)</span>以外，这些存在memory里的值<span class="math inline">\(a_1,a_2\)</span>也会影响它的output。</p>
+<p><img src="LSTM-and-RNN/image-20200226154228719.png" alt="image-20200226154228719" style="zoom: 25%;"></p>
+<p>如上图所示, 用Recurrent Neural Network处理slot filling这件事，就像是这样，使用者说：“arrive Taipei on November 2nd”，arrive就变成了一个vector丢到neural network里面去，neural network的hidden layer的output写成<span class="math inline">\(a^1\)</span>(<span class="math inline">\(a^1\)</span>是一排neural的output，是一个vector)，<span class="math inline">\(a^1\)</span>产生<span class="math inline">\(y^1\)</span>,<span class="math inline">\(y^1\)</span>就是“arrive”属于每一个slot filling的几率。接下来<span class="math inline">\(a^1\)</span>会被存到memory里面去，"Taipei会变为input"，这个hidden layer会同时考虑“Taipei”这个input和存在memory里面的<span class="math inline">\(a^1\)</span>,得到<span class="math inline">\(a^2\)</span>，根据<span class="math inline">\(a^2\)</span>得到<span class="math inline">\(y^2\)</span>，<span class="math inline">\(y^2\)</span>是属于每一个slot filling的几率。以此类推(<span class="math inline">\(a^3\)</span>得到<span class="math inline">\(y^2\)</span>)。</p>
 <p>通过这样的方式，RNN就有了推断一句话意思的能力，他不仅仅看到了taibei这个词，也记住了arrive这个词，就可以做自动化做更多的事情。</p>
-<h4 id="LSTM的网络架构："><a href="#LSTM的网络架构：" class="headerlink" title="LSTM的网络架构："></a>LSTM的网络架构：</h4><img src="LSTM-and-RNN/image-20200226154152676.png" alt="image-20200226154152676" style="zoom:25%;">
-
-<p>LSTM的网络架构，相比之下复杂了很多，有四个input，一个output，这构成了这个神经网络。分别是一个是想要存进memory的值，input-gate, forget-gate, output-gate，以及output。这个值输出，那么必须保证input_gate打开，forget_gate不会忘掉，且output_gate开启，而这三个值都会由neural network学到是1还是0. </p>
+<h4 id="lstm的网络架构">LSTM的网络架构：</h4>
+<p><img src="LSTM-and-RNN/image-20200226154152676.png" alt="image-20200226154152676" style="zoom:25%;"></p>
+<p>LSTM的网络架构，相比之下复杂了很多，有四个input，一个output，这构成了这个神经网络。分别是一个是想要存进memory的值，input-gate, forget-gate, output-gate，以及output。这个值输出，那么必须保证input_gate打开，forget_gate不会忘掉，且output_gate开启，而这三个值都会由neural network学到是1还是0.</p>
 <p>我们看一下下面这个已经赋值好的权重的神经网络的输入和输出情况。</p>
-<img src="LSTM-and-RNN/image-20200226174241356.png" alt="image-20200226174241356" style="zoom:25%;">
-
-<p>input的三维vector乘以linear transform以后所得到的结果($x_1$,$x_2$,$x_3$乘以权重再加上bias)，这些权重和bias是哪些值是通过train data用GD学到的。 假设我已经知道这些值是多少了，那用这样的输入会得到什么样的输出。那我们就实际的运算一下。其中绿色的就是bias，</p>
-<p>在实际运算之前，我们先根据它的input，参数分析下可能会得到的结果。底下这个外界传入的cell，$x_1$乘以1，其他的vector乘以0，所以就直接把$x_1$当做输入。在input gate时，$x_2$乘以100，bias乘以-10(假设$x_2$是没有值的话，通常input gate是关闭的(bias等于-10)因为-10通过sigmoid函数之后会接近0，所以就代表是关闭的，若$x_2$的值大于1的话，结果会是一个正值，代表input gate会被打开) 。forget gate通常会被打开的，因为他的bias等于10(它平常会一直记得东西)，只有当$x_2$的值为一个很大的负值时，才会把forget gate关起来。output gate平常是被关闭的，因为bias是一个很大的负值，若$x_3$有一个很大的正值的话，压过bias把output打开。</p>
-<h4 id="LSTM的原理："><a href="#LSTM的原理：" class="headerlink" title="LSTM的原理："></a>LSTM的原理：</h4><img src="LSTM-and-RNN/image-20200226174701864.png" alt="image-20200226174701864" style="zoom:33%;">
-
-<p>现在的input  $x_1,x_2$会乘以不同的weight当做LSTM不同的输入假设我们这个hidden layer只有两个neuron，但实际上是有很多的neuron。input$x_1,x_2$会乘以不同的weight会去操控output gate，乘以不同的weight操控input gate，乘以不同的weight当做底下的input，乘以不同的weight当做forget gate。第二个LSTM也是一样的。所以LSTM是有四个input跟一个output，对于LSTM来说，这四个input是不一样的。在原来的neural network里是一个input一个output。在LSTM里面它需要四个input，它才能产生一个output。</p>
+<p><img src="LSTM-and-RNN/image-20200226174241356.png" alt="image-20200226174241356" style="zoom:25%;"></p>
+<p>input的三维vector乘以linear transform以后所得到的结果(<span class="math inline">\(x_1\)</span>,<span class="math inline">\(x_2\)</span>,<span class="math inline">\(x_3\)</span>乘以权重再加上bias)，这些权重和bias是哪些值是通过train data用GD学到的。 假设我已经知道这些值是多少了，那用这样的输入会得到什么样的输出。那我们就实际的运算一下。其中绿色的就是bias，</p>
+<p>在实际运算之前，我们先根据它的input，参数分析下可能会得到的结果。底下这个外界传入的cell，<span class="math inline">\(x_1\)</span>乘以1，其他的vector乘以0，所以就直接把<span class="math inline">\(x_1\)</span>当做输入。在input gate时，<span class="math inline">\(x_2\)</span>乘以100，bias乘以-10(假设<span class="math inline">\(x_2\)</span>是没有值的话，通常input gate是关闭的(bias等于-10)因为-10通过sigmoid函数之后会接近0，所以就代表是关闭的，若<span class="math inline">\(x_2\)</span>的值大于1的话，结果会是一个正值，代表input gate会被打开) 。forget gate通常会被打开的，因为他的bias等于10(它平常会一直记得东西)，只有当<span class="math inline">\(x_2\)</span>的值为一个很大的负值时，才会把forget gate关起来。output gate平常是被关闭的，因为bias是一个很大的负值，若<span class="math inline">\(x_3\)</span>有一个很大的正值的话，压过bias把output打开。</p>
+<h4 id="lstm的原理">LSTM的原理：</h4>
+<p><img src="LSTM-and-RNN/image-20200226174701864.png" alt="image-20200226174701864" style="zoom:33%;"></p>
+<p>现在的input <span class="math inline">\(x_1,x_2\)</span>会乘以不同的weight当做LSTM不同的输入假设我们这个hidden layer只有两个neuron，但实际上是有很多的neuron。input<span class="math inline">\(x_1,x_2\)</span>会乘以不同的weight会去操控output gate，乘以不同的weight操控input gate，乘以不同的weight当做底下的input，乘以不同的weight当做forget gate。第二个LSTM也是一样的。所以LSTM是有四个input跟一个output，对于LSTM来说，这四个input是不一样的。在原来的neural network里是一个input一个output。在LSTM里面它需要四个input，它才能产生一个output。</p>
 <p>LSTM的最终形态：</p>
-<img src="LSTM-and-RNN/image-20200226174805623.png" alt="image-20200226174805623" style="zoom:33%;">
-
+<p><img src="LSTM-and-RNN/image-20200226174805623.png" alt="image-20200226174805623" style="zoom:33%;"></p>
 <p>其代码实现如下：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token comment" spellcheck="true">#single lstm cell</span>
-<span class="token keyword">def</span> <span class="token function">lstm_cell</span><span class="token punctuation">(</span>batch_dataset<span class="token punctuation">,</span> prev_activation_matrix<span class="token punctuation">,</span> prev_cell_matrix<span class="token punctuation">,</span> parameters<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true">#get parameters</span>
-    fgw <span class="token operator">=</span> parameters<span class="token punctuation">[</span><span class="token string">'fgw'</span><span class="token punctuation">]</span>
-    igw <span class="token operator">=</span> parameters<span class="token punctuation">[</span><span class="token string">'igw'</span><span class="token punctuation">]</span>
-    ogw <span class="token operator">=</span> parameters<span class="token punctuation">[</span><span class="token string">'ogw'</span><span class="token punctuation">]</span>
-    ggw <span class="token operator">=</span> parameters<span class="token punctuation">[</span><span class="token string">'ggw'</span><span class="token punctuation">]</span>
-
-    <span class="token comment" spellcheck="true">#concat batch data and prev_activation matrix</span>
-    concat_dataset <span class="token operator">=</span> np<span class="token punctuation">.</span>concatenate<span class="token punctuation">(</span><span class="token punctuation">(</span>batch_dataset<span class="token punctuation">,</span>prev_activation_matrix<span class="token punctuation">)</span><span class="token punctuation">,</span>axis<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#forget gate activations</span>
-    fa <span class="token operator">=</span> np<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>concat_dataset<span class="token punctuation">,</span>fgw<span class="token punctuation">)</span>
-    fa <span class="token operator">=</span> sigmoid<span class="token punctuation">(</span>fa<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#input gate activations</span>
-    ia <span class="token operator">=</span> np<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>concat_dataset<span class="token punctuation">,</span>igw<span class="token punctuation">)</span>
-    ia <span class="token operator">=</span> sigmoid<span class="token punctuation">(</span>ia<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#output gate activations</span>
-    oa <span class="token operator">=</span> np<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>concat_dataset<span class="token punctuation">,</span>ogw<span class="token punctuation">)</span>
-    oa <span class="token operator">=</span> sigmoid<span class="token punctuation">(</span>oa<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#gate gate activations</span>
-    ga <span class="token operator">=</span> np<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>concat_dataset<span class="token punctuation">,</span>ggw<span class="token punctuation">)</span>
-    ga <span class="token operator">=</span> tanh_activation<span class="token punctuation">(</span>ga<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#new cell memory matrix</span>
-    cell_memory_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>multiply<span class="token punctuation">(</span>fa<span class="token punctuation">,</span>prev_cell_matrix<span class="token punctuation">)</span> <span class="token operator">+</span> np<span class="token punctuation">.</span>multiply<span class="token punctuation">(</span>ia<span class="token punctuation">,</span>ga<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#current activation matrix</span>
-    activation_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>multiply<span class="token punctuation">(</span>oa<span class="token punctuation">,</span> tanh_activation<span class="token punctuation">(</span>cell_memory_matrix<span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true">#lets store the activations to be used in back prop</span>
-    lstm_activations <span class="token operator">=</span> dict<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    lstm_activations<span class="token punctuation">[</span><span class="token string">'fa'</span><span class="token punctuation">]</span> <span class="token operator">=</span> fa
-    lstm_activations<span class="token punctuation">[</span><span class="token string">'ia'</span><span class="token punctuation">]</span> <span class="token operator">=</span> ia
-    lstm_activations<span class="token punctuation">[</span><span class="token string">'oa'</span><span class="token punctuation">]</span> <span class="token operator">=</span> oa
-    lstm_activations<span class="token punctuation">[</span><span class="token string">'ga'</span><span class="token punctuation">]</span> <span class="token operator">=</span> ga
-
-    <span class="token keyword">return</span> lstm_activations<span class="token punctuation">,</span>cell_memory_matrix<span class="token punctuation">,</span>activation_matrix<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">output_cell</span><span class="token punctuation">(</span>activation_matrix<span class="token punctuation">,</span>parameters<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true">#get hidden to output parameters</span>
-    how <span class="token operator">=</span> parameters<span class="token punctuation">[</span><span class="token string">'how'</span><span class="token punctuation">]</span>
-
-    <span class="token comment" spellcheck="true">#get outputs </span>
-    output_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>activation_matrix<span class="token punctuation">,</span>how<span class="token punctuation">)</span>
-    output_matrix <span class="token operator">=</span> softmax<span class="token punctuation">(</span>output_matrix<span class="token punctuation">)</span>
-
-    <span class="token keyword">return</span> output_matrix<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#single lstm cell</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> lstm_cell(batch_dataset, prev_activation_matrix, prev_cell_matrix, parameters):</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#get parameters</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    fgw <span class="op">=</span> parameters[<span class="st">&#39;fgw&#39;</span>]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    igw <span class="op">=</span> parameters[<span class="st">&#39;igw&#39;</span>]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    ogw <span class="op">=</span> parameters[<span class="st">&#39;ogw&#39;</span>]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    ggw <span class="op">=</span> parameters[<span class="st">&#39;ggw&#39;</span>]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#concat batch data and prev_activation matrix</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    concat_dataset <span class="op">=</span> np.concatenate((batch_dataset,prev_activation_matrix),axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">#forget gate activations</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    fa <span class="op">=</span> np.matmul(concat_dataset,fgw)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    fa <span class="op">=</span> sigmoid(fa)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#input gate activations</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    ia <span class="op">=</span> np.matmul(concat_dataset,igw)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    ia <span class="op">=</span> sigmoid(ia)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">#output gate activations</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    oa <span class="op">=</span> np.matmul(concat_dataset,ogw)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    oa <span class="op">=</span> sigmoid(oa)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">#gate gate activations</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    ga <span class="op">=</span> np.matmul(concat_dataset,ggw)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    ga <span class="op">=</span> tanh_activation(ga)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">#new cell memory matrix</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    cell_memory_matrix <span class="op">=</span> np.multiply(fa,prev_cell_matrix) <span class="op">+</span> np.multiply(ia,ga)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">#current activation matrix</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    activation_matrix <span class="op">=</span> np.multiply(oa, tanh_activation(cell_memory_matrix))</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="co">#lets store the activations to be used in back prop</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    lstm_activations <span class="op">=</span> <span class="bu">dict</span>()</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    lstm_activations[<span class="st">&#39;fa&#39;</span>] <span class="op">=</span> fa</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    lstm_activations[<span class="st">&#39;ia&#39;</span>] <span class="op">=</span> ia</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    lstm_activations[<span class="st">&#39;oa&#39;</span>] <span class="op">=</span> oa</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    lstm_activations[<span class="st">&#39;ga&#39;</span>] <span class="op">=</span> ga</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lstm_activations,cell_memory_matrix,activation_matrix</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> output_cell(activation_matrix,parameters):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">#get hidden to output parameters</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    how <span class="op">=</span> parameters[<span class="st">&#39;how&#39;</span>]</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#get outputs </span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    output_matrix <span class="op">=</span> np.matmul(activation_matrix,how)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    output_matrix <span class="op">=</span> softmax(output_matrix)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> output_matrix</span></code></pre></div>
 <p><a href="https://www.youtube.com/watch?v=xCGidAeyS4M" target="_blank" rel="noopener">主要参考了台大李宏毅老师的youtube视频课程。</a></p>
 
             </div>
@@ -649,7 +648,7 @@
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">20k</span>
+            <span class="white-color">21.6k</span>
             
 
             <br>

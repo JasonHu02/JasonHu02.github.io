@@ -10,10 +10,10 @@
     <meta name="360-site-verification" content>
     <meta name="description" content="最小的K个数
 剑指offer的面试题
-输入整数数组 arr ，找出其中最小的 k 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。 
+输入整数数组 arr ，找出其中最小的 k 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。
 示例 1：
 输入：arr = [3,2,1], k = 2
-输">
+输出">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -329,7 +329,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    814
+                    845
                 </div>
                 
 
@@ -354,83 +354,81 @@
             <div id="articleContent">
                 <p>最小的K个数</p>
 <p>剑指offer的面试题</p>
-<p>输入整数数组 <code>arr</code> ，找出其中最小的 <code>k</code> 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。 </p>
+<p>输入整数数组 <code>arr</code> ，找出其中最小的 <code>k</code> 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。</p>
 <p><strong>示例 1：</strong></p>
 <pre><code>输入：arr = [3,2,1], k = 2
-输出：[1,2] 或者 [2,1]</code></pre><p><strong>示例 2：</strong></p>
+输出：[1,2] 或者 [2,1]</code></pre>
+<p><strong>示例 2：</strong></p>
 <pre><code>输入：arr = [0,1,2,1], k = 1
-输出：[0]</code></pre><p><strong>限制：</strong></p>
+输出：[0]</code></pre>
+<p><strong>限制：</strong></p>
 <ul>
 <li><code>0 &lt;= k &lt;= arr.length &lt;= 10000</code></li>
 <li><code>0 &lt;= arr[i] &lt;= 10000</code></li>
 </ul>
 <p>非常简单让人想到的方法就是排序，从小到大排好序之后，然后直接返回前k个元素，此题求解。</p>
 <p>实际代码也很简单：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">getLeastNumbers</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> arr<span class="token punctuation">,</span> k<span class="token punctuation">:</span>int<span class="token punctuation">)</span> <span class="token punctuation">:</span>
-        a<span class="token operator">=</span>arr<span class="token punctuation">.</span>sort<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token keyword">return</span> arr<span class="token punctuation">[</span><span class="token punctuation">:</span>k<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>list.sort() 方法排序时直接修改原列表，返回None；  sorted() 使用的范围更为广泛，但是如果不需要保留原列表。</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> getLeastNumbers(<span class="va">self</span>, arr, k:<span class="bu">int</span>) :</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        a<span class="op">=</span>arr.sort()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> arr[:k]</span></code></pre></div>
+<p>list.sort() 方法排序时直接修改原列表，返回None； sorted() 使用的范围更为广泛，但是如果不需要保留原列表。</p>
 <p>函数形式如下：</p>
-<pre class="line-numbers language-python"><code class="language-python">sorted<span class="token punctuation">(</span>iterable<span class="token punctuation">[</span><span class="token punctuation">,</span> key<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">,</span> reverse<span class="token punctuation">]</span><span class="token punctuation">)</span> 
-list<span class="token punctuation">.</span>sort<span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">,</span> key<span class="token operator">=</span>None<span class="token punctuation">,</span> reverse<span class="token operator">=</span>None<span class="token punctuation">)</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">sorted</span>(iterable[, key][, reverse]) </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>.sort(<span class="op">*</span>, key<span class="op">=</span><span class="va">None</span>, reverse<span class="op">=</span><span class="va">None</span>) </span></code></pre></div>
 <ul>
-<li><p>key 是带一个参数的<strong>函数</strong>，返回一个值用来排序，默认为 None。这个函数只调用一次，所以fast。</p>
-</li>
+<li><p>key 是带一个参数的<strong>函数</strong>，返回一个值用来排序，默认为 None。这个函数只调用一次，所以fast。</p></li>
 <li><p>reverse 表示排序结果是否反转</p>
-<p>  另外就是一种新方法可以用来了解Top-K算法的一种高级用法。改进的快速排序方法， <strong>BFPRT算法</strong>。</p>
-<p>  在BFPTR算法中，仅仅是改变了快速排序<strong>Partion</strong>中的<strong>pivot</strong>值的选取，在快速排序中，我们始终选择第一个元素或者最后一个元素作为<strong>pivot</strong>，而在BFPTR算法中，每次选择五分中位数的中位数作为<strong>pivot</strong>，这样做的目的就是使得划分比较合理，从而避免了最坏情况的发生。算法步骤如下 ：</p>
-<ol>
+<p>另外就是一种新方法可以用来了解Top-K算法的一种高级用法。改进的快速排序方法， <strong>BFPRT算法</strong>。</p>
+<p>在BFPTR算法中，仅仅是改变了快速排序<strong>Partion</strong>中的<strong>pivot</strong>值的选取，在快速排序中，我们始终选择第一个元素或者最后一个元素作为<strong>pivot</strong>，而在BFPTR算法中，每次选择五分中位数的中位数作为<strong>pivot</strong>，这样做的目的就是使得划分比较合理，从而避免了最坏情况的发生。算法步骤如下 ：</p>
+<ol type="1">
 <li>将n 个元素划为 [n/5]组，每组5个，至多只有一组由 n mod 5 个元素组成。</li>
 <li>寻找这 [n/5]个组中每一个组的中位数，这个过程可以用插入排序。</li>
-</ol>
-</li>
+</ol></li>
 </ul>
-<ol start="3">
-<li><p>对步骤2中的[n/5] 个中位数，重复步骤1和步骤2，递归下去，直到剩下一个数字。</p>
-<ol start="4">
+<ol start="3" type="1">
+<li>对步骤2中的[n/5] 个中位数，重复步骤1和步骤2，递归下去，直到剩下一个数字。
+<ol start="4" type="1">
 <li>最终剩下的数字即为pivot，把大于它的数全放左边，小于等于它的数全放右边。</li>
+</ol></li>
+<li>判断pivot的位置与k的大小，有选择的对左边或右边递归。</li>
 </ol>
-</li>
-<li><p>判断pivot的位置与k的大小，有选择的对左边或右边递归。 </p>
-<p>求第k大就是求第n-k+1小，这两者等价。 </p>
-</li>
-</ol>
+<p>求第k大就是求第n-k+1小，这两者等价。</p>
 <p>TopK问题最佳的解决思路是使用堆排序:</p>
 <p>维护一个小顶堆，保持堆中的元素为k个，依次遍历整个数组中的元素，如果元素超过堆中的数，把顶端的数推出去，直到遍历完整个数组，则堆顶的元素即为topK。</p>
-<pre class="line-numbers language-C++"><code class="language-C++">#include <stdio.h>
-#include <vector>
-#include <algorithm>
-#include <queue>
-using namespace std;
-
-class Solution
-{
-public:
-    int findKthLargest(vector<int> &nums, int k)
-    {
-        int result = 0;
-        int numsSize = int(nums.size());
-        if (numsSize == 0 || k > numsSize)
-        {
-            return 0;
-        }
-
-        priority_queue<int, vector<int>, greater<int>> store;
-        //堆中维持k个最大数
-        for (int i = 0; i < numsSize; i++)
-        {
-            store.push(nums[i]);
-            if (int(store.size()) > k)
-            {
-                store.pop();
-            }
-        }
-
-        result = store.top();
-        return result;
-    }
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c++"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;queue&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std;</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Solution</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span>:</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> findKthLargest(vector&lt;<span class="dt">int</span>&gt; &amp;nums, <span class="dt">int</span> k)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> result = <span class="dv">0</span>;</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> numsSize = <span class="dt">int</span>(nums.size());</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (numsSize == <span class="dv">0</span> || k &gt; numsSize)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        priority_queue&lt;<span class="dt">int</span>, vector&lt;<span class="dt">int</span>&gt;, greater&lt;<span class="dt">int</span>&gt;&gt; store;</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        <span class="co">//堆中维持k个最大数</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; numsSize; i++)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>            store.push(nums[i]);</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (<span class="dt">int</span>(store.size()) &gt; k)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>            {</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>                store.pop();</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        result = store.top();</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> result;</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>};</span></code></pre></div>
 <p>其他方法：</p>
 <ul>
 <li><strong>全局排序</strong>，O(n*lg(n))</li>
@@ -673,7 +671,7 @@ public:
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">20k</span>
+            <span class="white-color">21.6k</span>
             
 
             <br>

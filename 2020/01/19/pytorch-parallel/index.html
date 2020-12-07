@@ -9,8 +9,9 @@
     <meta name="google-site-verification" content>
     <meta name="360-site-verification" content>
     <meta name="description" content="完整的步骤：
-设定好os.environment(&amp;quot; CUDA_VISIBEL_DEVICES &amp;quot;)=&amp;#39;0,1,2,3,4,5&amp;#39; 
-pytorch中定义一个变量device = torch.device(">
+
+设定好os.environment(&#34; CUDA_VISIBEL_DEVICES &#34;)=&#39;0,1,2,3,4,5&#39;
+pytorch中定义一个变量device = torch.device(&#34;cuda:0,1,2,3,4,5&#34;">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -333,7 +334,7 @@ pytorch中定义一个变量device = torch.device(">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    6 分
                 </div>
                 
                 
@@ -349,34 +350,34 @@ pytorch中定义一个变量device = torch.device(">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h5 id="完整的步骤："><a href="#完整的步骤：" class="headerlink" title="完整的步骤："></a>完整的步骤：</h5><ol>
-<li>设定好<code>os.environment(&quot; CUDA_VISIBEL_DEVICES &quot;)=&#39;0,1,2,3,4,5&#39;</code> </li>
-<li>pytorch中定义一个变量<code>device = torch.device(&quot;cuda:0,1,2,3,4,5&quot;）</code> </li>
+                <h5 id="完整的步骤">完整的步骤：</h5>
+<ol type="1">
+<li>设定好<code>os.environment(" CUDA_VISIBEL_DEVICES ")='0,1,2,3,4,5'</code></li>
+<li>pytorch中定义一个变量<code>device = torch.device("cuda:0,1,2,3,4,5"）</code></li>
 <li>把model使用<code>model = nn.DataParallel(model)</code>，用来分配数据，并且<code>model.to(device)</code>，将model加载到gpu上</li>
-<li>将要训练的数据放入到device中，然后训练这个model就可以了！ </li>
+<li>将要训练的数据放入到device中，然后训练这个model就可以了！</li>
 </ol>
-<h5 id="实际操作："><a href="#实际操作：" class="headerlink" title="实际操作："></a>实际操作：</h5><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> os 
-os<span class="token punctuation">.</span>environment<span class="token punctuation">(</span><span class="token string">"CUDA_VISIBEL_DEVICES"</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token string">'0,1,2,3,4,5'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h5 id="实际操作">实际操作：</h5>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>os.environment(<span class="st">&quot;CUDA_VISIBEL_DEVICES&quot;</span>)<span class="op">=</span><span class="st">&#39;0,1,2,3,4,5&#39;</span></span></code></pre></div>
 <p>上述步骤相当于在shell 命令里面调用了 CUDA_VISIBEL_DEVICES 命令, 相当于打开了6个gpu的入口。分别指定了cuda0,cuda1,cuda2三个gpu进行计算。这里相当于调用了6个gpu</p>
 <p>note：使用torch.cuda.device_count()看到的就是这里调用了几个gpu。</p>
-<pre class="line-numbers language-python"><code class="language-python">device<span class="token operator">=</span>torch<span class="token punctuation">.</span>device<span class="token punctuation">(</span><span class="token string">"cuda:0,1,2,3,4,5"</span><span class="token punctuation">,</span> <span class="token keyword">if</span> torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>is_available<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">else</span> <span class="token string">"cpu"</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>这里必须和上面的数值保持一致，否则会报错。device的输出是 type: “cuda” ，index=0， 用index的值表示了cuda的个数</p>
-<pre class="line-numbers language-python"><code class="language-python">model <span class="token operator">=</span> Model<span class="token punctuation">(</span>input_size<span class="token punctuation">,</span> output_size<span class="token punctuation">)</span>
-<span class="token keyword">if</span> torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>device_count<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">:</span>
-  <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Let's use"</span><span class="token punctuation">,</span> torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>device_count<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"GPUs!"</span><span class="token punctuation">)</span>
-  <span class="token comment" spellcheck="true"># dim = 0 [30, xxx] -> [10, ...], [10, ...], [10, ...] on 3 GPUs</span>
-  model <span class="token operator">=</span> nn<span class="token punctuation">.</span>DataParallel<span class="token punctuation">(</span>model<span class="token punctuation">)</span>
-
-model<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>device<span class="op">=</span>torch.device(<span class="st">&quot;cuda:0,1,2,3,4,5&quot;</span>, <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">&quot;cpu&quot;</span>)</span></code></pre></div>
+<p>这里必须和上面的数值保持一致，否则会报错。device的输出是 type: "cuda" ，index=0， 用index的值表示了cuda的个数</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Model(input_size, output_size)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> torch.cuda.device_count() <span class="op">&gt;</span> <span class="dv">1</span>:</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;Let&#39;s use&quot;</span>, torch.cuda.device_count(), <span class="st">&quot;GPUs!&quot;</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># dim = 0 [30, xxx] -&gt; [10, ...], [10, ...], [10, ...] on 3 GPUs</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> nn.DataParallel(model)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>model.to(device)</span></code></pre></div>
 <p>使用nn.DataParallel对model这个网络模型进行data上的自动分配</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">for</span> data <span class="token keyword">in</span> rand_loader<span class="token punctuation">:</span>
-    input <span class="token operator">=</span> data<span class="token punctuation">.</span>to<span class="token punctuation">(</span>device<span class="token punctuation">)</span>
-    output <span class="token operator">=</span> model<span class="token punctuation">(</span>input<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Outside: input size"</span><span class="token punctuation">,</span> input<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-          <span class="token string">"output_size"</span><span class="token punctuation">,</span> output<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> data <span class="kw">in</span> rand_loader:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span> <span class="op">=</span> data.to(device)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    output <span class="op">=</span> model(<span class="bu">input</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Outside: input size&quot;</span>, <span class="bu">input</span>.size(),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;output_size&quot;</span>, output.size())</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    </span></code></pre></div>
 <p>将input从dataset中得到batch_size的数据，将data传给GPU中，对模型进行了训练(forward function这里省去)</p>
 <p>这个时候cuda上就会被分配上数据。可以看到最后输出的结果：</p>
 <pre><code>Let&#39;s use 2 GPUs!
@@ -391,7 +392,8 @@ Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])
 Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])
     In Model: input size torch.Size([5, 5]) output size torch.Size([5, 2])
     In Model: input size torch.Size([5, 5]) output size torch.Size([5, 2])
-Outside: input size torch.Size([10, 5]) output_size torch.Size([10, 2])</code></pre><pre><code>Let&#39;s use 8 GPUs!
+Outside: input size torch.Size([10, 5]) output_size torch.Size([10, 2])</code></pre>
+<pre><code>Let&#39;s use 8 GPUs!
     In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
     In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
     In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
@@ -424,7 +426,8 @@ Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])
     In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
     In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
     In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
-Outside: input size torch.Size([10, 5]) output_size torch.Size([10, 2])</code></pre><p>可以看到model上的data被平均分配到了8个gpu上。</p>
+Outside: input size torch.Size([10, 5]) output_size torch.Size([10, 2])</code></pre>
+<p>可以看到model上的data被平均分配到了8个gpu上。</p>
 <p>input_size=2, output_size=5, batch_size=30, data_size=100。</p>
 <p>由于每次batch_size=30, 因此跑了4次，数据量为30+30+30+10</p>
 <p>每次在模型中，30个input被分配到8个gpu上，4+4+4+4+4+2+4+4个，每个cuda上跑了4或2个input，output则相应输出对应的大小。[4,5]表示4个input，每个input的大小为5。</p>
@@ -659,7 +662,7 @@ Outside: input size torch.Size([10, 5]) output_size torch.Size([10, 2])</code></
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">20k</span>
+            <span class="white-color">21.6k</span>
             
 
             <br>

@@ -324,7 +324,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.6k
+                    1.7k
                 </div>
                 
 
@@ -348,98 +348,109 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>本文是对于信息瓶颈方法的原始公式应用于在学习时可以使用任务特定标签的监督设置中。提出了通过利用multi-view的方式 提供一种实体的两类视图，可以将方法扩展到无监督的设置。本文通过理论分析得到了多视图的定义。还通过利用标准数据增强技术将理论扩展到单视图，比传统的无监督学习的方法相比，有更好的泛化能力。并在数据集Sketchy和MIR-flickr上进行了实验。</p>
-<p><img src="image/image-20200217022428246.png" alt="image-20200217022428246"></p>
+<figure>
+<img src="image/image-20200217022428246.png" alt="image-20200217022428246"><figcaption aria-hidden="true">image-20200217022428246</figcaption>
+</figure>
 <p>表示了x和z之间的互信息分成三部份，<strong>第一部分表示为x和z之间的互信息在没有预测为y的情况下</strong>；第二部分<strong>x，y之间的互信息，是一个常数，该常数由原始观测值标签的信息来决定</strong>；减去<strong>第三部分，表示x编码为z丢失的和y有关的互信息</strong>。第二部分和第三部分的区别就是考虑了z情况下的x，y互信息，包含于没有考虑x，y情况下的，所以减去。</p>
-<h4 id="理论"><a href="#理论" class="headerlink" title="理论:"></a>理论:</h4><p>其中涉及到了几个定理和推论，文中均给出了详尽的证明，涉及到大量的信息论和概率的知识，必须借助维基百科()加上自己的手推才能完全理解本文的思路。在此直接列出所有结论。</p>
+<h4 id="理论">理论:</h4>
+<p>其中涉及到了几个定理和推论，文中均给出了详尽的证明，涉及到大量的信息论和概率的知识，必须借助维基百科()加上自己的手推才能完全理解本文的思路。在此直接列出所有结论。</p>
 <p>定义1，充分性：</p>
-<img src="image/image-20200217143840828.png" alt="image-20200217143840828" style="zoom: 50%;">
-
-<p>z对y充分定义为，I(x;y|z)在z条件下的y对x的互信息为0. 由该定义可以推出如下结论:<br>$$<br>I(\mathbf{x} ; \mathbf{y} | \mathbf{z})=0 \Longleftrightarrow I(\mathbf{x} ; \mathbf{y})=I(\mathbf{y} ; \mathbf{z})<br>$$<br>命题2.1：</p>
-<p><img src="image/image-20200217150059055.png" alt="image-20200217150059055"></p>
+<p><img src="image/image-20200217143840828.png" alt="image-20200217143840828" style="zoom: 50%;"></p>
+<p>z对y充分定义为，I(x;y|z)在z条件下的y对x的互信息为0. 由该定义可以推出如下结论: <span class="math display">\[
+I(\mathbf{x} ; \mathbf{y} | \mathbf{z})=0 \Longleftrightarrow I(\mathbf{x} ; \mathbf{y})=I(\mathbf{y} ; \mathbf{z})
+\]</span> 命题2.1：</p>
+<figure>
+<img src="image/image-20200217150059055.png" alt="image-20200217150059055"><figcaption aria-hidden="true">image-20200217150059055</figcaption>
+</figure>
 <p>定义2，冗余性</p>
-<p><img src="image/image-20200217150236253.png" alt="image-20200217150236253"></p>
+<figure>
+<img src="image/image-20200217150236253.png" alt="image-20200217150236253"><figcaption aria-hidden="true">image-20200217150236253</figcaption>
+</figure>
 <p>推论1：</p>
-<p><img src="image/image-20200217150331149.png" alt="image-20200217150331149"></p>
+<figure>
+<img src="image/image-20200217150331149.png" alt="image-20200217150331149"><figcaption aria-hidden="true">image-20200217150331149</figcaption>
+</figure>
 <p>附录部分给出了非常详尽的证明，对任何理解上不到位的地方都可以去看数学推导。</p>
-<h4 id="Related-Work："><a href="#Related-Work：" class="headerlink" title="Related Work："></a>Related Work：</h4><img src="image/image-20200217142805245.png" alt="image-20200217142805245" style="zoom: 50%;">
-
+<h4 id="related-work">Related Work：</h4>
+<p><img src="image/image-20200217142805245.png" alt="image-20200217142805245" style="zoom: 50%;"></p>
 <p>为了比较和其他模型的区别，文中这个图对作者使用的情况进行了详细的解释说明。infomax最大化互信息，来实现无监督学习。理想情况下，良好的表示形式将最大程度地提供有关标签的信息，同时保留来自观察结果的最少信息。也就是图中平行四边形左上方的顶点。从图中可以看到MIB模型是最接近最优解的，本文是第一篇明确指出在多视角无监督学习中丢弃冗余信息的一篇文章。</p>
-<h4 id="实施方法"><a href="#实施方法" class="headerlink" title="实施方法:"></a>实施方法:</h4><p>论文的核心思想在这个图上：</p>
-<img src="image/image-20200217024601501.png" alt="image-20200217024601501" style="zoom: 33%;">
-
+<h4 id="实施方法">实施方法:</h4>
+<p>论文的核心思想在这个图上：</p>
+<p><img src="image/image-20200217024601501.png" alt="image-20200217024601501" style="zoom: 33%;"></p>
 <p>在v1和v2两个视图上，分别得到编码得到z1和z2，通过比较两者的分布之间的平均KL散度，以及z1和z2之间的互信息来更新loss。</p>
 <p>它的loss为全文核心：</p>
-<p><img src="image/image-20200217024749741.png" alt="image-20200217024749741"></p>
+<figure>
+<img src="image/image-20200217024749741.png" alt="image-20200217024749741"><figcaption aria-hidden="true">image-20200217024749741</figcaption>
+</figure>
 <p>散度减去互信息，其表达了用冗余信息减去预测y充分性下的z1和z2的互信息，我们使得在z1|v1和z2|v2下的的KL散度最大化，即v1，v2呈现不同的视角使其给的信息更加无关，而最大化z1和z2之间的互信息，使得z1和z2的信息更加相关。这样的目的都是消除两个变量之间的相关性，也就是信息瓶颈的意思，让最有用的信息通过去，留下对预测没用的多余信息。本文的意图就是想方设法的使得两个不同分布的数据集关联度尽可能小，简单来讲就是让互信息尽可能小。</p>
 <p>最后作者将MIB方法在Sketchy和Flickr数据集上与先前的多视图算法做比较。Sketchy数据集包含来自125个类别的12,500张图像和75,471张手绘草图，是两种信息量上差别很大的图。MIR-Flicker则是通过图像和文字结合，提供两种视角。最后的效果如图所示：分别在Sketchy和Flickr上的效果如下：</p>
 <p>可以看到mv-infomax的实力也非常不错，所以文章主要就是和它在做对比。</p>
-<img src="image/image-20200217030932182.png" alt="image-20200217030932182" style="zoom:33%;">
-
-<img src="image/image-20200217025835301.png" alt="image-20200217025835301" style="zoom:33%;">
-
+<p><img src="image/image-20200217030932182.png" alt="image-20200217030932182" style="zoom:33%;"></p>
+<p><img src="image/image-20200217025835301.png" alt="image-20200217025835301" style="zoom:33%;"></p>
 <p>我特地去view了代码，发现代码实现的方法非常简单，说明该方法从某一些理论性的角度解决了模型鲁棒性的问题，训练起来速度很快，有一定的参考价值。且论文作者丝毫不避讳地把实验中所有数据全部公开在论文附录里，看来是对论文地实验效果非常有信心，有足够地把握给读者看。总之，可以借鉴地点非常多。之后工作可以围绕他的思路做一些扩展了。</p>
 <p>核心代码在这里：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">for</span> epoch <span class="token keyword">in</span> tqdm<span class="token punctuation">(</span>range<span class="token punctuation">(</span>epochs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">for</span> v_1<span class="token punctuation">,</span> v_2<span class="token punctuation">,</span> _ <span class="token keyword">in</span> train_loader<span class="token punctuation">:</span>
-
-        <span class="token keyword">if</span> cuda<span class="token punctuation">:</span>
-            v_1 <span class="token operator">=</span> v_1<span class="token punctuation">.</span>cuda<span class="token punctuation">(</span><span class="token punctuation">)</span>
-            v_2 <span class="token operator">=</span> v_2<span class="token punctuation">.</span>cuda<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-        <span class="token comment" spellcheck="true"># Encode a batch of data</span>
-        p_z_1_given_v_1 <span class="token operator">=</span> encoder_v_1<span class="token punctuation">(</span>v_1<span class="token punctuation">)</span>
-        p_z_2_given_v_2 <span class="token operator">=</span> encoder_v_2<span class="token punctuation">(</span>v_2<span class="token punctuation">)</span>
-
-        <span class="token comment" spellcheck="true"># Sample from the posteriors with reparametrization</span>
-        z_1 <span class="token operator">=</span> p_z_1_given_v_1<span class="token punctuation">.</span>rsample<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        z_2 <span class="token operator">=</span> p_z_2_given_v_2<span class="token punctuation">.</span>rsample<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-        <span class="token comment" spellcheck="true"># Mutual information estimation</span>
-        mi_gradient<span class="token punctuation">,</span> mi_estimation <span class="token operator">=</span> mi_estimator<span class="token punctuation">(</span>z_1<span class="token punctuation">,</span>z_2<span class="token punctuation">)</span>
-        mi_gradient <span class="token operator">=</span> mi_gradient<span class="token punctuation">.</span>mean<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        mi_estimation <span class="token operator">=</span> mi_estimation<span class="token punctuation">.</span>mean<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-        <span class="token comment" spellcheck="true"># Symmetrized Kullback-Leibler divergence</span>
-        kl_1_2 <span class="token operator">=</span> p_z_1_given_v_1<span class="token punctuation">.</span>log_prob<span class="token punctuation">(</span>z_1<span class="token punctuation">)</span> <span class="token operator">-</span> p_z_2_given_v_2<span class="token punctuation">.</span>log_prob<span class="token punctuation">(</span>z_1<span class="token punctuation">)</span>
-        kl_2_1 <span class="token operator">=</span> p_z_2_given_v_2<span class="token punctuation">.</span>log_prob<span class="token punctuation">(</span>z_2<span class="token punctuation">)</span> <span class="token operator">-</span> p_z_1_given_v_1<span class="token punctuation">.</span>log_prob<span class="token punctuation">(</span>z_2<span class="token punctuation">)</span>
-        skl <span class="token operator">=</span> <span class="token punctuation">(</span>kl_1_2 <span class="token operator">+</span> kl_2_1<span class="token punctuation">)</span><span class="token punctuation">.</span>mean<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">.</span>
-
-        <span class="token comment" spellcheck="true"># Update the value of beta according to the policy</span>
-        beta <span class="token operator">=</span> beta_scheduler<span class="token punctuation">(</span>iterations<span class="token punctuation">)</span>
-        iterations <span class="token operator">+=</span><span class="token number">1</span>
-
-        <span class="token comment" spellcheck="true"># Computing the loss function</span>
-        loss <span class="token operator">=</span> <span class="token operator">-</span> mi_gradient <span class="token operator">+</span> beta <span class="token operator">*</span> skl
-
-        <span class="token comment" spellcheck="true"># Logging</span>
-        mi_over_time<span class="token punctuation">.</span>append<span class="token punctuation">(</span>mi_estimation<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        skl_over_time<span class="token punctuation">.</span>append<span class="token punctuation">(</span>skl<span class="token punctuation">.</span>item<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-        <span class="token comment" spellcheck="true"># Backward pass and update</span>
-        opt<span class="token punctuation">.</span>zero_grad<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        loss<span class="token punctuation">.</span>backward<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        opt<span class="token punctuation">.</span>step<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-
-    <span class="token comment" spellcheck="true"># Plot the loss components every 5 epochs</span>
-    <span class="token keyword">if</span> epoch <span class="token operator">%</span> plot_every <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
-        f<span class="token punctuation">,</span> ax <span class="token operator">=</span> plt<span class="token punctuation">.</span>subplots<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span> figsize<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        ax<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>set_title<span class="token punctuation">(</span><span class="token string">'$I(z_1;z_2)$'</span><span class="token punctuation">)</span>
-        ax<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>set_title<span class="token punctuation">(</span><span class="token string">'$D_{SKL}(p(z_1|v_1)||p(z_2|v_2))$'</span><span class="token punctuation">)</span>
-        ax<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>set_yscale<span class="token punctuation">(</span><span class="token string">'log'</span><span class="token punctuation">)</span>
-        ax<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>plot<span class="token punctuation">(</span>mi_over_time<span class="token punctuation">,</span> <span class="token string">'.'</span><span class="token punctuation">,</span> alpha<span class="token operator">=</span><span class="token number">0.1</span><span class="token punctuation">)</span>
-        ax<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>plot<span class="token punctuation">(</span>skl_over_time<span class="token punctuation">,</span> <span class="token string">'.r'</span><span class="token punctuation">,</span> alpha<span class="token operator">=</span><span class="token number">0.1</span><span class="token punctuation">)</span>
-        ax<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>set_ylim<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">)</span>
-        ax<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>set_ylim<span class="token punctuation">(</span><span class="token number">1e</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">)</span>
-
-        f<span class="token punctuation">.</span>suptitle<span class="token punctuation">(</span><span class="token string">'Epoch: %d'</span><span class="token operator">%</span>epoch<span class="token punctuation">,</span> fontsize<span class="token operator">=</span><span class="token number">15</span><span class="token punctuation">)</span>
-        plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-        <span class="token comment" spellcheck="true"># Compute train and test_accuracy of a logistic regression</span>
-        train_accuracy<span class="token punctuation">,</span> test_accuracy <span class="token operator">=</span> evaluate<span class="token punctuation">(</span>encoder<span class="token operator">=</span>encoder_v_1<span class="token punctuation">,</span> train_on<span class="token operator">=</span>train_subset<span class="token punctuation">,</span> test_on<span class="token operator">=</span>test_set<span class="token punctuation">,</span> cuda<span class="token operator">=</span>cuda<span class="token punctuation">)</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Train Accuracy: %f'</span><span class="token operator">%</span> train_accuracy<span class="token punctuation">)</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Test Accuracy: %f'</span><span class="token operator">%</span> test_accuracy<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="点评："><a href="#点评：" class="headerlink" title="点评："></a>点评：</h4><p>这是一篇很好的多视角表示学习论文，具有新的见解。learn variable z_1和z_2，它们是一致的，包含视角不变信息，但应尽可能丢弃特定于视角的信息。<br>本文依赖于相互信息估计，并且无需重构。在先前的一些工作中（例如Aaron van den Oord等人2018）中提到，重建损失会引入偏见，对学习的表征产生负面影响。与现有的尝试最大化学习的表示和视图之间的相互信息的多视图表示学习方法相比，本文明确定义了多余的信息，我们应该尝试抛弃这些多余的信息，并弄清楚如何获得足够的学习的表示用于输出。作者还得出了一些现有的（多视图）表示学习方法与他们提出的方法之间的明确联系。</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> tqdm(<span class="bu">range</span>(epochs)):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> v_1, v_2, _ <span class="kw">in</span> train_loader:</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> cuda:</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>            v_1 <span class="op">=</span> v_1.cuda()</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            v_2 <span class="op">=</span> v_2.cuda()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Encode a batch of data</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        p_z_1_given_v_1 <span class="op">=</span> encoder_v_1(v_1)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        p_z_2_given_v_2 <span class="op">=</span> encoder_v_2(v_2)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Sample from the posteriors with reparametrization</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        z_1 <span class="op">=</span> p_z_1_given_v_1.rsample()</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        z_2 <span class="op">=</span> p_z_2_given_v_2.rsample()</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Mutual information estimation</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        mi_gradient, mi_estimation <span class="op">=</span> mi_estimator(z_1,z_2)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        mi_gradient <span class="op">=</span> mi_gradient.mean()</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        mi_estimation <span class="op">=</span> mi_estimation.mean()</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Symmetrized Kullback-Leibler divergence</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        kl_1_2 <span class="op">=</span> p_z_1_given_v_1.log_prob(z_1) <span class="op">-</span> p_z_2_given_v_2.log_prob(z_1)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        kl_2_1 <span class="op">=</span> p_z_2_given_v_2.log_prob(z_2) <span class="op">-</span> p_z_1_given_v_1.log_prob(z_2)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        skl <span class="op">=</span> (kl_1_2 <span class="op">+</span> kl_2_1).mean()<span class="op">/</span> <span class="fl">2.</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the value of beta according to the policy</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        beta <span class="op">=</span> beta_scheduler(iterations)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        iterations <span class="op">+=</span><span class="dv">1</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Computing the loss function</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">=</span> <span class="op">-</span> mi_gradient <span class="op">+</span> beta <span class="op">*</span> skl</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Logging</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        mi_over_time.append(mi_estimation.item())</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        skl_over_time.append(skl.item())</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Backward pass and update</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>        opt.zero_grad()</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>        loss.backward()</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>        opt.step()</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot the loss components every 5 epochs</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> epoch <span class="op">%</span> plot_every <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>        f, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">3</span>))</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>        ax[<span class="dv">0</span>].set_title(<span class="st">&#39;$I(z_1;z_2)$&#39;</span>)</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>        ax[<span class="dv">1</span>].set_title(<span class="st">&#39;$D_</span><span class="sc">{SKL}</span><span class="st">(p(z_1|v_1)||p(z_2|v_2))$&#39;</span>)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>        ax[<span class="dv">1</span>].set_yscale(<span class="st">&#39;log&#39;</span>)</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>        ax[<span class="dv">0</span>].plot(mi_over_time, <span class="st">&#39;.&#39;</span>, alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>        ax[<span class="dv">1</span>].plot(skl_over_time, <span class="st">&#39;.r&#39;</span>, alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>        ax[<span class="dv">0</span>].set_ylim(<span class="dv">0</span>,<span class="dv">8</span>)</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>        ax[<span class="dv">1</span>].set_ylim(<span class="fl">1e-3</span>)</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>        f.suptitle(<span class="st">&#39;Epoch: </span><span class="sc">%d</span><span class="st">&#39;</span><span class="op">%</span>epoch, fontsize<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>        plt.show()</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute train and test_accuracy of a logistic regression</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>        train_accuracy, test_accuracy <span class="op">=</span> evaluate(encoder<span class="op">=</span>encoder_v_1, train_on<span class="op">=</span>train_subset, test_on<span class="op">=</span>test_set, cuda<span class="op">=</span>cuda)</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&#39;Train Accuracy: </span><span class="sc">%f</span><span class="st">&#39;</span><span class="op">%</span> train_accuracy)</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&#39;Test Accuracy: </span><span class="sc">%f</span><span class="st">&#39;</span><span class="op">%</span> test_accuracy)</span></code></pre></div>
+<h4 id="点评">点评：</h4>
+<p>这是一篇很好的多视角表示学习论文，具有新的见解。learn variable z_1和z_2，它们是一致的，包含视角不变信息，但应尽可能丢弃特定于视角的信息。 本文依赖于相互信息估计，并且无需重构。在先前的一些工作中（例如Aaron van den Oord等人2018）中提到，重建损失会引入偏见，对学习的表征产生负面影响。与现有的尝试最大化学习的表示和视图之间的相互信息的多视图表示学习方法相比，本文明确定义了多余的信息，我们应该尝试抛弃这些多余的信息，并弄清楚如何获得足够的学习的表示用于输出。作者还得出了一些现有的（多视图）表示学习方法与他们提出的方法之间的明确联系。</p>
 
             </div>
             <hr />
@@ -671,7 +682,7 @@
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">20k</span>
+            <span class="white-color">21.6k</span>
             
 
             <br>

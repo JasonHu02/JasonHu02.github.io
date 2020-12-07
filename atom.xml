@@ -31,7 +31,7 @@
         
           &lt;p&gt;最小的K个数&lt;/p&gt;
 &lt;p&gt;剑指offer的面试题&lt;/p&gt;
-&lt;p&gt;输入整数数组 &lt;code&gt;arr&lt;/code&gt; ，找出其中最小的 &lt;code&gt;k&lt;/code&gt; 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。
+&lt;p&gt;输入整数数组 &lt;code&gt;arr&lt;/code&gt; ，找出其中最小的 &lt;code&gt;k&lt;/code&gt;
         
       
     
@@ -57,7 +57,7 @@
       
         
         
-          &lt;h5 id=&quot;回溯算法：&quot;&gt;&lt;a href=&quot;#回溯算法：&quot; class=&quot;headerlink&quot;
+          &lt;h5
         
       
     
@@ -75,7 +75,7 @@
     <link href="https://zhehu.ml/2020/06/30/vim-chang-yong-ming-ling/"/>
     <id>https://zhehu.ml/2020/06/30/vim-chang-yong-ming-ling/</id>
     <published>2020-06-30T10:55:46.000Z</published>
-    <updated>2020-12-07T19:06:53.832Z</updated>
+    <updated>2020-12-07T19:29:01.467Z</updated>
     
     <summary type="html">
     
@@ -84,7 +84,9 @@
         
         
           &lt;p&gt;vim常用命令主要分为增删改查以及移动：&lt;/p&gt;
-&lt;h2 id=&quot;vim插件的使用&quot;&gt;&lt;a href=&quot;#vim插件的使用&quot; class=&quot;headerlink&quot; title=&quot;vim插件的使用&quot;&gt;&lt;/a&gt;vim插件的使用&lt;/h2&gt;&lt;p&gt;主要的配置全部在~/.vimrc
+&lt;h2 id=&quot;vim插件的使用&quot;&gt;vim插件的使用&lt;/h2&gt;
+&lt;p&gt;主要的配置全部在~/.vimrc 中，在使用之前，先安装插件管理工具。&lt;/p&gt;
+&lt;pre class=&quot;shell&quot;&gt;&lt;code&gt;curl -fLo
         
       
     
@@ -111,7 +113,7 @@
         
         
           &lt;p&gt;在服务器端运行，离不开shell的使用。今天主要总结一下shell的用法：&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Shell 是什么？&lt;/strong&gt;&lt;br&gt;Shell 是一个命令解释权，它为用户提供了一个向 Linux 内核发送请求以便运行程序界面系统级程序，用户可以用
+&lt;p&gt;&lt;strong&gt;Shell 是什么？&lt;/strong&gt; Shell 是一个命令解释权，它为用户提供了一个向 Linux 内核发送请求以便运行程序界面系统级程序，用户可以用 Shell
         
       
     
@@ -138,9 +140,10 @@
         
         
           &lt;p&gt;这道题是也是我在面试的过程中碰到的一个原题，这里写一下解法。&lt;/p&gt;
-&lt;p&gt;题目描述是这样的，&lt;br&gt;给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。&lt;/p&gt;
+&lt;p&gt;题目描述是这样的， 给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;示例:
-输入:
+输入: [0,1,0,3,12]
+输出:
         
       
     
@@ -166,7 +169,7 @@
       
         
         
-          &lt;h4 id=&quot;二叉树的特点&quot;&gt;&lt;a href=&quot;#二叉树的特点&quot; class=&quot;headerlink&quot;
+          &lt;h4
         
       
     
@@ -219,7 +222,8 @@
       
         
         
-          &lt;h4 id=&quot;RNN的工作原理：&quot;&gt;&lt;a href=&quot;#RNN的工作原理：&quot; class=&quot;headerlink&quot; title=&quot;RNN的工作原理：&quot;&gt;&lt;/a&gt;RNN的工作原理：&lt;/h4&gt;&lt;p&gt;RNN可以被认为是一种有记忆力的neural
+          &lt;h4 id=&quot;rnn的工作原理&quot;&gt;RNN的工作原理：&lt;/h4&gt;
+&lt;p&gt;RNN可以被认为是一种有记忆力的neural network。在RNN里面，每一次hidden
         
       
     
@@ -245,9 +249,12 @@
       
         
         
-          &lt;h2 id=&quot;一、方法总结&quot;&gt;&lt;a href=&quot;#一、方法总结&quot; class=&quot;headerlink&quot; title=&quot;一、方法总结&quot;&gt;&lt;/a&gt;一、方法总结&lt;/h2&gt;&lt;ul&gt;
+          &lt;h2 id=&quot;一方法总结&quot;&gt;一、方法总结&lt;/h2&gt;
+&lt;ul&gt;
 &lt;li&gt;Network Pruning&lt;/li&gt;
-&lt;li&gt;Knowledge
+&lt;li&gt;Knowledge Distillation&lt;/li&gt;
+&lt;li&gt;Parameter Quantization&lt;/li&gt;
+&lt;li&gt;Architecture
         
       
     
@@ -273,7 +280,8 @@
       
         
         
-          &lt;h4 id=&quot;Background：&quot;&gt;&lt;a href=&quot;#Background：&quot; class=&quot;headerlink&quot; title=&quot;Background：&quot;&gt;&lt;/a&gt;Background：&lt;/h4&gt;&lt;p&gt;few-shot
+          &lt;h4 id=&quot;background&quot;&gt;Background：&lt;/h4&gt;
+&lt;p&gt;few-shot learning问题简单来说，就是通过减少学习的次数来获得有用的知识。我们以传统的image
         
       
     
@@ -379,8 +387,9 @@
       
         
         
-          &lt;h5 id=&quot;完整的步骤：&quot;&gt;&lt;a href=&quot;#完整的步骤：&quot; class=&quot;headerlink&quot; title=&quot;完整的步骤：&quot;&gt;&lt;/a&gt;完整的步骤：&lt;/h5&gt;&lt;ol&gt;
-&lt;li&gt;设定好&lt;code&gt;os.environment(&amp;quot;
+          &lt;h5 id=&quot;完整的步骤&quot;&gt;完整的步骤：&lt;/h5&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;设定好&lt;code&gt;os.environment(&quot; CUDA_VISIBEL_DEVICES
         
       
     
@@ -433,7 +442,7 @@
       
         
         
-          &lt;h4 id=&quot;迁移学习概述：&quot;&gt;&lt;a href=&quot;#迁移学习概述：&quot; class=&quot;headerlink&quot;
+          &lt;h4
         
       
     
