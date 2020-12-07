@@ -1,0 +1,822 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Meta-learning tutorial, SJTU NLP DeepLearning Thinklab 胡哲 huzhe 计算机视觉 深度学习">
+    <meta name="baidu-site-verification" content>
+    <meta name="google-site-verification" content>
+    <meta name="360-site-verification" content>
+    <meta name="description" content="乘着假期期间，把meta-learning部分的内容全部过一遍。把最近的工作做一些简单的总结，顺便做了一份tutorial方便更多的同学对这个领域quickview。以及提供一部分代码进行实践，深入了解目前元学习领域解决的各种问题。以及非常">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Meta-learning tutorial | Zhe Hu&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Zhe Hu's Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Zhe Hu's Blog</div>
+        <div class="logo-desc">
+            
+            上海交通大学 | 计算机科学与技术 | 深度学习
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/JasonHu02" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JasonHu02" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/maml.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Meta-learning tutorial
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="container content">
+
+    
+    <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                        <a href="/tags/meta-learning/" target="_blank">
+                            <span class="chip bg-color">meta-learning</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                        <a href="/categories/科研/" class="post-category" target="_blank">
+                            科研
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-01-12
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    胡哲
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    8 分
+                </div>
+                
+                
+
+                
+                <div id="busuanzi_container_page_pv" class="info-break-policy">
+                    <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                    <span id="busuanzi_value_page_pv"></span>
+                </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>乘着假期期间，把meta-learning部分的内容全部过一遍。把最近的工作做一些简单的总结，顺便做了一份tutorial方便更多的同学对这个领域quickview。以及提供一部分代码进行实践，深入了解目前元学习领域解决的各种问题。以及非常流行的MAML和Reptile两种模型无关的元学习方法。并尝试从理论上对元学习模型进行解释，learn to learn对于few-shot，zero-shot，one-shot learning都有很好的应用，同时需要掌握的概念有迁移学习和表示学习的概念，了解神经网络学习的主要特征有哪些。本tutorial的参考资料都列到了最后的附录中。</p>
+<h4 id="Meta-learning的两类观点"><a href="#Meta-learning的两类观点" class="headerlink" title="Meta-learning的两类观点"></a>Meta-learning的两类观点</h4><ul>
+<li>一种是Mechanistic view: 可以读取整个数据集并预测新数据点的深度神经网络模型。训练该网络使用一个元数据集，该元数据集本身包含许多数据集，每个数据集用于不同的任务。此观点使实现meta-learning算法更加容易。</li>
+<li>另一种是Probabilistic view：从一组（元训练meta-training）任务中提取先验信息，从而高效地学习新任务学习新任务时, 使用此先验和（小）训练集来推断最有可能的后验参数。此观点使理解元学习算法更加容易。</li>
+</ul>
+<h4 id="元学习的数学定义"><a href="#元学习的数学定义" class="headerlink" title="元学习的数学定义"></a>元学习的数学定义</h4><p>通过学习一类任务，得到一个通用的参数$\theta ^*$,通过固定参数$\theta$ ，在每个训练集的任务上用该task运用该task可以得到$\phi$的训练参数。</p>
+<h5 id="监督学习："><a href="#监督学习：" class="headerlink" title="监督学习："></a>监督学习：</h5><p>目标是:$\arg \max _{\phi} \log p(\phi | D)$ ，其中$\mathcal{D}=\left\{\left(x_{1}, y_{1}\right), \ldots,\left(x_{k}, y_{k}\right)\right\}$ </p>
+<p>其中，xi表示input，比如image，而y表示label。</p>
+<p>$=\arg \max \log p(D | \phi)+\log p(\phi)$</p>
+<p>$=\arg \max \sum_{i} \log p\left(y_{i} | x_{i}, \phi\right)+\log p(\phi)$</p>
+<p>上式可以理解为寻找最大的$\phi$ , 使得学习出来的输出和真实的输出在相似度(极大似然)上最大。其中$\log p(\phi)$ 可以理解为在训练过程中加的正则项，为了防止训练的时候出现过拟合。</p>
+<p>对于监督学习来说，存在的问题是</p>
+<ul>
+<li><p>如果想训练出一个非常强大的模型需要大量的数据，</p>
+</li>
+<li><p>对于一些任务来说label data 非常有限</p>
+</li>
+</ul>
+<h5 id="元学习"><a href="#元学习" class="headerlink" title="元学习"></a>元学习</h5><p>实际上，我们可以将数据集分成多个dataset，其中每一个dataset含有不同张图片，我们把这个新的dataset称作是meta-train数据集。</p>
+<p><img src="\image\图片1.png" alt="图片1" style="zoom: 50%;"><img src="meta-learning/image-20200220032921498.png" alt="image-20200220032921498"></p>
+<p>这样就是在每一个Di上都可以学习到需要的参数，最后综合在不同的dataset上学习到的参数作为$\phi$使得其最大。数学上的定义就是：</p>
+<p>$\arg \max _{\phi} \log p\left(\phi | \mathcal{D}, \mathcal{D}_{\text {meta-train }}\right)$</p>
+<p>meta-learning的问题就建立在这样的数据集的基础上，其中$\mathcal{D}=\left\{\left(x_{1}, y_{1}\right), \ldots,\left(x_{k}, y_{k}\right)\right\}$ $\mathcal{D}_{\text {meta-train }}=\left\{\mathcal{D}_{1}, \ldots, \mathcal{D}_{n}\right\}$ ，$\mathcal{D}_{i}=\left\{\left(x_{1}^{i}, y_{1}^{i}\right), \ldots,\left(x_{k}^{i}, y_{k}^{i}\right)\right\}$ .</p>
+<p>因此, 假定$\phi \perp \mathcal{D}_{\text {meta-train }} | \theta$, 表示$ \phi$ 与 $\mathcal{D}_{meta-train}$ 和 $\theta $ 是独立无关的, 可以推导出下面的式子 </p>
+<p>$\log p\left(\phi | \mathcal{D}, \mathcal{D}_{\mathrm{meta}-\mathrm{train}}\right)=\log \int_{\Theta} p(\phi | \mathcal{D}, \theta) p\left(\theta | \mathcal{D}_{\mathrm{meta}-\mathrm{train}}\right) d \theta$  </p>
+<p> $\approx \log p\left(\phi | \mathcal{D}, \theta^{\star}\right)+\log p\left(\theta^{\star} | \mathcal{D}_{\text {meta-train }}\right)$ </p>
+<p>第二行是找到一个平均值$\theta^{\star}$对积分做一个平均得到。其中，第二项中不包含变量$\phi$，为常数项，因此最后问题就变成了：</p>
+<p>$\arg \max _{\phi} \log p\left(\phi | \mathcal{D}, \mathcal{D}_{\text {meta-train }}\right) \approx \arg \max _{\phi} \log p\left(\phi | \mathcal{D}, \theta^{\star}\right)$ </p>
+<p>数学定义完全可以看明白。上式称为是<strong>元学习(meta-learning)需要解决的问题</strong>。要先找到一个$\theta^{*}$ ，再找到最好的$\phi$ 使得能够得到最大的p。</p>
+<h5 id="元学习解决思路及术语介绍："><a href="#元学习解决思路及术语介绍：" class="headerlink" title="元学习解决思路及术语介绍："></a>元学习解决思路及术语介绍：</h5><p>要想使得上式能够得到求解，我们看一下如何进行完整的optimization 过程。优化问题可以分为两部分：</p>
+<ul>
+<li><p>1.第一部分：meta-learning，即$\theta^{\star}=\arg \max _{\theta} \log p\left(\theta | \mathcal{D}_{\text {meta-train }}\right)$ </p>
+</li>
+<li><p>2.第二部分：adaptation. 即 $\phi^{\star}=\arg \max _{\phi} \log p\left(\phi | \mathcal{D}^{\operatorname{tr}}, \theta^{\star}\right)$ </p>
+</li>
+</ul>
+<p>我们将meta-train数据集进行完整的划分：</p>
+<p>$\begin{array}{l}{\mathcal{D}_{\text {meta-train }}=\left\{\left(\mathcal{D}_{1}^{\text {tr }}, \mathcal{D}_{1}^{\text {ts }}\right), \ldots,\left(\mathcal{D}_{n}^{\text {tr }}, \mathcal{D}_{n}^{\text {ts }}\right)\right\}} \\ {D_{i}^{\text {tr }}=\left\{\left(x_{1}^{i}, y_{1}^{i}\right), \ldots,\left(x_{k}^{i}, y_{k}^{i}\right)\right\}} \\ {\mathcal{D}_{i}^{\text {ts }}=\left\{\left(x_{1}^{i}, y_{1}^{i}\right), \ldots,\left(x_{l}^{i}, y_{l}^{i}\right)\right\}}\end{array}$ </p>
+<p>因此，可以将$\phi^{\star}=\arg \max _{\phi} \log p\left(\phi | \mathcal{D}^{\operatorname{tr}}, \theta^{\star}\right)$ 进行训练，得到的参数$\phi$ 即可以表示$\phi^{\star}=f_{\theta^{\star}}\left(\mathcal{D}^{\mathrm{tr}}\right)$ 下的$\theta$ ，通过进行更新参数$\theta$ ，验证在$D^{tr}$得到结果。</p>
+<p>以上可以认为是一个完整的训练过程，其训练$\theta$ 优化数学表达为：</p>
+<p>$\theta^{\star}=\max _{\theta} \sum_{i=1}^{n} \log p\left(\phi_{i} | \mathcal{D}_{\mathcal{i}}^{(\mathrm{ts})}\right)$ </p>
+<p>where $\phi_{i}= f_{\theta}(D_{i}^{tr})$</p>
+<p>要在训练集上最优，使得$\phi=f_{\theta}\left(\mathcal{D}^{\mathrm{tr}}\right)$ 学习到的$\theta$。</p>
+<p>总结来说， 直观上$\phi$ 是在训练任务$D^{tr}$ 中学习得到的通用的经验，我们称它为$f_{\theta}(D_{i}^{tr})$ , 下标表示含有$\theta$ 这个参数，最终目的是要使得在$D_{i}^{ts}$ 上学习到最好的结果——p最大。这样就完成了在少样本测试的情况下给出了最好的分类性能。实现了meta-learning的目的。</p>
+<p>对于数据集中的训练集和测试集，需要重新定义如下图：</p>
+<p><img src="meta-learning/image-20200220032944265.png" alt="image-20200220032944265"></p>
+<p>note：meta-learning的范式也有一些与其非常相关的问题，比如多任务学习(multi-task learning)，或者超参数优化和automl问题。</p>
+<h5 id="元学习常用的几类方法："><a href="#元学习常用的几类方法：" class="headerlink" title="元学习常用的几类方法："></a>元学习常用的几类方法：</h5><p>有四类方法，并不打算过多地展开讲，可以参见我另外一篇博客中使用模型无关的思想做了图像生成的工作，可以说对maml的理解比较深入了。也确实明白这是一个非常不错的工作。这里参考了ICML2019 tutorial的分类，也可以参考 <a href="https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html" target="_blank" rel="noopener">https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html</a> 的分类，主流方法还是MAML的各种改进。</p>
+<h6 id="1-Black-box-adaptation"><a href="#1-Black-box-adaptation" class="headerlink" title="1.Black-box adaptation"></a>1.Black-box adaptation</h6><p><img src="meta-learning/image-20200220033004659.png" alt="image-20200220033004659"></p>
+<h6 id="2-Opamizaaon-based-inference"><a href="#2-Opamizaaon-based-inference" class="headerlink" title="2.Opamizaaon-based inference"></a>2.Opamizaaon-based inference</h6><p>其中，最经典的莫过于MAML。</p>
+<p>其思路可以直接用下图表示，即让这个loss最小。深入的理解，需要从论文出发。</p>
+<p><img src="meta-learning/image-20200220033024315.png" alt="image-20200220033024315"></p>
+<p><img src="\image\2020-02-16_00-46-53.jpg" alt="2020-02-16_00-46-53" style="zoom: 50%;"><img src="meta-learning/image-20200220033039938.png" alt="image-20200220033039938"></p>
+<h6 id="3-Non-parametric-methods"><a href="#3-Non-parametric-methods" class="headerlink" title="3.Non-parametric methods"></a>3.Non-parametric methods</h6><p><img src="meta-learning/image-20200220033058725.png" alt="image-20200220033058725"></p>
+<h6 id="4-Bayesian-meta-learning"><a href="#4-Bayesian-meta-learning" class="headerlink" title="4.Bayesian meta-learning"></a>4.Bayesian meta-learning</h6><p><img src="meta-learning/image-20200220033114720.png" alt="image-20200220033114720"></p>
+<h5 id="元学习的应用："><a href="#元学习的应用：" class="headerlink" title="元学习的应用："></a>元学习的应用：</h5><p>参考ICML2019tutorial，在语言和图像上都有应用，包括现在比较火的reinforcement learning以及robtic learning。</p>
+<img src="meta-learning/image-20200220033126015.png" alt="image-20200220033126015" style="zoom:50%;">
+
+
+
+<p><img src="meta-learning/image-20200220033139928.png" alt="image-20200220033139928">：</p>
+<p>上述应用还是在比较传统的领域，实际上，更多的工作开始围绕着强化学习展开，由于强化学习方面的了解的不够深入，今后会继续了解imitation learning相关的工作成果。</p>
+<p>很喜欢这个图：元学习的终极目标，作为本篇文章的结尾！</p>
+<p><img src="meta-learning/image-20200220033150499.png" alt="image-20200220033150499"></p>
+<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><ul>
+<li>ICML2019tutorial上的，Chelsea Finn和Sergey Levine做的lecuture。 <a href="https://sites.google.com/view/icml19metalearning" target="_blank" rel="noopener">https://sites.google.com/view/icml19metalearning</a> (google site)  <a href="https://youtube.videoken.com/embed/DijI4XrhqNo" target="_blank" rel="noopener">https://youtube.videoken.com/embed/DijI4XrhqNo</a> </li>
+<li>hungyi-Lee，台大，<a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses/ML_2019/Lecture/Meta1%20(v6).pptx" target="_blank" rel="noopener">http://speech.ee.ntu.edu.tw/~tlkagk/courses/ML_2019/Lecture/Meta1%20(v6).pptx</a> ppt, <a href="https://www.youtube.com/watch?v=EkAqYbpCYAc&amp;list=PLJV_el3uVTsOK_ZK5L0Iv_EQoL1JefRL4&amp;index=33&amp;t=0s" target="_blank" rel="noopener">https://www.youtube.com/watch?v=EkAqYbpCYAc&amp;list=PLJV_el3uVTsOK_ZK5L0Iv_EQoL1JefRL4&amp;index=33&amp;t=0s</a> (video)</li>
+<li>meta-learning比较好的overview: <a href="https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html" target="_blank" rel="noopener">https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html</a> </li>
+<li>meta-transfer-learning:  <a href="https://yyliu.net/files/meta-transfer-learning-slides.pdf" target="_blank" rel="noopener">https://yyliu.net/files/meta-transfer-learning-slides.pdf</a> (slides) <a href="https://github.com/yaoyao-liu/meta-transfer-learning" target="_blank" rel="noopener">https://github.com/yaoyao-liu/meta-transfer-learning</a> (code)</li>
+<li>few-shot image generation with reptile: <a href="https://github.com/LuEE-C/FIGR" target="_blank" rel="noopener">https://github.com/LuEE-C/FIGR</a> (code) <a href="https://arxiv.org/abs/1901.02199" target="_blank" rel="noopener">https://arxiv.org/abs/1901.02199</a> (paper)</li>
+<li>meta-transfer-learning-gan:  <a href="https://yyliu.net/files/meta-transfer-learning-slides.pdf" target="_blank" rel="noopener">https://yyliu.net/files/meta-transfer-learning-slides.pdf</a> (pdf) <a href="https://arxiv.org/pdf/1812.02391" target="_blank" rel="noopener">https://arxiv.org/pdf/1812.02391</a> (paper)</li>
+</ul>
+
+            </div>
+            <hr />
+
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《Meta-learning tutorial》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/01/12/meta-learning/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                胡哲
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/01/16/transfer-learning/">
+                    <div class="card-image">
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Transfer-learning tutorial">
+                        
+                        <span class="card-title">Transfer-learning tutorial</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            本文从迁移学习的数学定义出发，对迁移学习做了一个总体的回顾，通过这篇博客可以对迁移学习有一个大致的认识。
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-01-16
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/科研/" class="post-category" target="_blank">
+                                    科研
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/transfer-learning/" target="_blank">
+                        <span class="chip bg-color">transfer-learning</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                本篇&nbsp;<i class="fa fa-dot-circle-o"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/01/12/meta-learning/">
+                    <div class="card-image">
+                        
+                        <img src="/medias/featureimages/maml.jpg" class="responsive-img" alt="Meta-learning tutorial">
+                        
+                        <span class="card-title">Meta-learning tutorial</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            本文理论上对元学习进行了解释和实现方法和元学习的一系列引用场景
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-01-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/科研/" class="post-category" target="_blank">
+                                    科研
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/meta-learning/" target="_blank">
+                        <span class="chip bg-color">meta-learning</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('50')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Zhe Hu's Blog<br />'
+            + '作者: 胡哲<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2020 huzhe. All Rights Reserved.
+
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">18.8k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+            <br>
+            
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/JasonHu02" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:hu.zhe@sjtu.edu.cn" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/hu_zhe" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+    <a href="https://user.qzone.qq.com/545088576" class="tooltipped" target="_blank" data-tooltip="访问我的QQ空间" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 1);
+        var pvcountOffset = -100000;
+        var uvcountOffset = -200000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 1,16, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 "  + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st;
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+
+    
+
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>
