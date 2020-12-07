@@ -128,13 +128,6 @@
   </url>
   
   <url>
-    <loc>https://zhehu.ml/archives/index.html</loc>
-    
-    <lastmod>2019-09-25T14:13:10.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://zhehu.ml/categories/index.html</loc>
     
     <lastmod>2019-09-25T14:13:10.000Z</lastmod>
@@ -142,14 +135,21 @@
   </url>
   
   <url>
-    <loc>https://zhehu.ml/tags/index.html</loc>
+    <loc>https://zhehu.ml/contact/index.html</loc>
     
     <lastmod>2019-09-25T14:13:10.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://zhehu.ml/contact/index.html</loc>
+    <loc>https://zhehu.ml/archives/index.html</loc>
+    
+    <lastmod>2019-09-25T14:13:10.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://zhehu.ml/tags/index.html</loc>
     
     <lastmod>2019-09-25T14:13:10.000Z</lastmod>
     
