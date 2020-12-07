@@ -4,7 +4,7 @@
   <url>
     <loc>https://zhehu.ml/2020/06/30/vim-chang-yong-ming-ling/</loc>
     
-    <lastmod>2020-12-07T18:43:00.967Z</lastmod>
+    <lastmod>2020-12-07T19:06:53.832Z</lastmod>
     
   </url>
   
@@ -135,13 +135,6 @@
   </url>
   
   <url>
-    <loc>https://zhehu.ml/categories/index.html</loc>
-    
-    <lastmod>2019-09-25T14:13:10.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://zhehu.ml/archives/index.html</loc>
     
     <lastmod>2019-09-25T14:13:10.000Z</lastmod>
@@ -149,7 +142,7 @@
   </url>
   
   <url>
-    <loc>https://zhehu.ml/tags/index.html</loc>
+    <loc>https://zhehu.ml/categories/index.html</loc>
     
     <lastmod>2019-09-25T14:13:10.000Z</lastmod>
     
@@ -157,6 +150,13 @@
   
   <url>
     <loc>https://zhehu.ml/contact/index.html</loc>
+    
+    <lastmod>2019-09-25T14:13:10.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://zhehu.ml/tags/index.html</loc>
     
     <lastmod>2019-09-25T14:13:10.000Z</lastmod>
     
