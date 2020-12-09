@@ -4,12 +4,16 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="VAE-GAN的一些理解, SJTU DeepLearning Thinklab 胡哲 huzhe 计算机视觉 深度学习">
+    <meta name="keywords" content="再谈动态规划框架, SJTU DeepLearning Thinklab 胡哲 huzhe 计算机视觉 深度学习">
     <meta name="baidu-site-verification" content>
     <meta name="google-site-verification" content>
     <meta name="360-site-verification" content>
-    <meta name="description" content="CVAE-GAN这篇论文有一些不错的insight可以拿过来使用。
-VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差和均值。根据方差和均值得到一个正态分布，从这个分布中采样一个z，该正态分布与标准正态分布之间有一个转换关">
+    <meta name="description" content="动态规划框架
+动态规划问题一般是求最值，比如求最长子序列，最小编辑距离等。
+动态规划三要素：
+1.存在重叠”子问题“， 如果暴力穷举，效率会非常低下，因此需要具备备忘录，DPtabel来优化穷举过程；
+
+具备最优子结构，才能通过子问题的最值">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +21,7 @@ VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>VAE-GAN的一些理解 | Zhe Hu&#39;s Blog</title>
+    <title>再谈动态规划框架 | Zhe Hu&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -259,13 +263,13 @@ VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/vae-gan.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/leetcode.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        VAE-GAN的一些理解
+                        再谈动态规划框架
                     </div>
                 </div>
             </div>
@@ -287,8 +291,8 @@ VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/representation-learning/" target="_blank">
-                            <span class="chip bg-color">representation-learning</span>
+                        <a href="/tags/动态规划/" target="_blank">
+                            <span class="chip bg-color">动态规划</span>
                         </a>
                         
                     </div>
@@ -299,8 +303,8 @@ VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                        <a href="/categories/科研/" class="post-category" target="_blank">
-                            科研
+                        <a href="/categories/leetcode/" class="post-category" target="_blank">
+                            leetcode
                         </a>
                         
                     </div>
@@ -311,7 +315,7 @@ VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-02-02
+                    2020-09-30
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -325,14 +329,14 @@ VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    526
+                    679
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
                 
@@ -348,23 +352,31 @@ VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>CVAE-GAN这篇论文有一些不错的insight可以拿过来使用。</p>
-<p>VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差和均值。根据方差和均值得到一个正态分布，从这个分布中采样一个z，该正态分布与标准正态分布之间有一个转换关系，$z=uz<em>+sigma <span class="math inline">\(, 通过decoder这个神经网络生成新的\)</span>x</em><span class="math inline">\(。这个\)</span>x*$可以用来表示新的图像。</p>
-<p>衡量decoder和encoder之间的metric是通过用KL-divergence来表示Loss function，具体的推导过程如下，</p>
-<p><img src="VAE_GAN/image-20200218140108115.png" alt="image-20200218140108115" style="zoom:33%;"></p>
-<p><img src="VAE_GAN/image-20200218140121734.png" alt="image-20200218140121734" style="zoom:33%;"></p>
-<p>理解VAE的本质：</p>
-<p><strong>它本质上就是在我们常规的自编码器的基础上，对 encoder 的结果（在VAE中对应着计算均值的网络）加上了“高斯噪声”，使得结果 decoder 能够对噪声有鲁棒性；而那个额外的 KL loss（目的是让均值为 0，方差为 1），事实上就是相当于对 encoder 的一个正则项，希望 encoder 出来的东西均有零均值。</strong></p>
-<p>​ 那另外一个 encoder（对应着计算方差的网络）的作用呢？它是用来<strong>动态调节噪声的强度</strong>的。直觉上来想，<strong>当 decoder 还没有训练好时（重构误差远大于 KL loss），就会适当降低噪声（KL loss 增加），使得拟合起来容易一些（重构误差开始下降）</strong>。反之，<strong>如果 decoder 训练得还不错时（重构误差小于 KL loss），这时候噪声就会增加（KL loss 减少），使得拟合更加困难了（重构误差又开始增加），这时候 decoder 就要想办法提高它的生成能力了</strong>。</p>
-<p>在GAN中，其中的discriminator本质上也是一个metric的判别器，表示生成样本和真实样本之间的JS-divergence。但是GAN存在的问题是</p>
-<p>对于cVAE来说，就是存在一个有监督的标签，通过这个标签，只需要将KL-divergence进行一下变换即可：</p>
-<p><img src="VAE_GAN/image-20200218140135714.png" alt="image-20200218140135714" style="zoom:33%;"></p>
-<hr>
-<p>正式说VAE和GAN的结合：</p>
-<p>论文链接： https://arxiv.org/pdf/1703.10155.pdf</p>
-<p><img src="VAE_GAN/image-20200218140159343.png" alt="image-20200218140159343" style="zoom:50%;"></p>
-<p>cvae-gan的具体实施架构</p>
-<p><img src="VAE_GAN/image-20200218140217148.png" alt="image-20200218140217148" style="zoom: 50%;"></p>
+                <h2 id="动态规划框架">动态规划框架</h2>
+<p>动态规划问题一般是求最值，比如求最长子序列，最小编辑距离等。</p>
+<p>动态规划三要素：</p>
+<p>1.存在重叠”子问题“， 如果暴力穷举，效率会非常低下，因此需要具备备忘录，DPtabel来优化穷举过程；</p>
+<ol start="2" type="1">
+<li><p>具备最优子结构，才能通过子问题的最值得到原问题的最值。</p></li>
+<li><p>正确的”状态转移方程“，穷举所以可行解并不是一件容易的事情，这一步最为重要。</p>
+<p>如何列举出状态转移方程，可以遵守以下步骤：</p>
+<ol type="1">
+<li>这个问题的base case (最简单的情况) 是什么？</li>
+<li>这个问题有什么状态？</li>
+<li>对于每个”状态“，可以做什么”选择“ 使得”状态“发生改变？</li>
+<li>如何定义 <code>dp</code> 数组/函数 的含义来表现”状态“和“选择”？</li>
+</ol></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#初始化base case</span></span><br><span class="line">dp[<span class="number">0</span>][<span class="number">0</span>][...]=base case</span><br><span class="line"><span class="keyword">for</span> 状态<span class="number">1</span> <span class="keyword">in</span> 状态<span class="number">1</span>的所有数值:</span><br><span class="line">	<span class="keyword">for</span> 状态<span class="number">2</span> <span class="keyword">in</span> 状态<span class="number">2</span>的所有数值:</span><br><span class="line">		<span class="keyword">for</span> ...:</span><br><span class="line">			dp[状态<span class="number">1</span>][状态<span class="number">2</span>][...]=求最值(选择<span class="number">1</span>,选择<span class="number">2</span>,...)</span><br><span class="line">      </span><br><span class="line"><span class="comment"># 在每个列举出来的状态中通过求最值的方法得到当前状态的最大/最小选择。for循环列举出所有的状态。状态转移体现在f(z)=min(f(x),f(y))中，z=x+y z和x，y有关系，这样可以得到最后的min值</span></span><br></pre></td></tr></table></figure>
+<p>斐波那契数列: https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof/</p>
+<p>写一个函数，输入 n ，求斐波那契（Fibonacci）数列的第 n 项。斐波那契数列的定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">F(0) = 0,   F(1) = 1</span><br><span class="line">F(N) = F(N - 1) + F(N - 2), 其中 N &gt; 1.</span><br></pre></td></tr></table></figure>
+<p>斐波那契数列由0和1开始，之后的斐波那契数就是由之前的两数相加而得出。</p>
+<p>答案需要取模1e9+7(1000000007), 如计算初始结果为:1000000008, 请返回1。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">if</span> (n==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">if</span> (n==<span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">      <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; dp;</span><br><span class="line">      dp[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">      dp[<span class="number">2</span>]=<span class="number">1</span>;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">3</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        dp[i]=(dp[i<span class="number">-1</span>]+dp[i<span class="number">-2</span>])%<span class="number">10000007</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> dp[n<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">if</span> (n==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">if</span> (n==<span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">int</span> prev=<span class="number">1</span>;</span><br><span class="line">      <span class="keyword">int</span> curr=<span class="number">1</span>;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">3</span>;i&lt;=n;i++)&#123;</span><br><span class="line">					<span class="keyword">int</span> sums= prev+curr;</span><br><span class="line">        	prev=curr;</span><br><span class="line">        	curr=sums;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> sums;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>零钱交换: https://leetcode-cn.com/problems/coin-change/</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; coins, <span class="keyword">int</span> amount)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> Max = amount + <span class="number">1</span>;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">dp</span><span class="params">(amount + <span class="number">1</span>, Max)</span></span>;</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= amount; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; (<span class="keyword">int</span>)coins.size(); ++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (coins[j] &lt;= i) &#123;</span><br><span class="line">                    dp[i] = min(dp[i], dp[i - coins[j]] + <span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[amount] &gt; amount ? <span class="number">-1</span> : dp[amount];</span><br><span class="line">      <span class="comment">//如果条件满足，则返回-1，否则返回dp[amount]</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
             </div>
             <hr />
@@ -399,9 +411,9 @@ VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《VAE-GAN的一些理解》
+                    《再谈动态规划框架》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/02/02/vae-gan/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/09/30/dong-tai-gui-hua-kuang-jia/" property="cc:attributionName"
                rel="cc:attributionURL">
                 胡哲
             </a> 采用
@@ -445,30 +457,30 @@ VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/02/06/few-shot-image-generation-method/">
+                <a href="/2020/11/25/backtracking/">
                     <div class="card-image">
                         
-                        <img src="/medias/featureimages/few-shot.jpg" class="responsive-img" alt="Few shot learning 少样本图像生成任务">
+                        <img src="/medias/featureimages/leetcode.jpg" class="responsive-img" alt="回溯算法总结">
                         
-                        <span class="card-title">Few shot learning 少样本图像生成任务</span>
+                        <span class="card-title">回溯算法总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            本项目结合meta-learning的方法reptiles使用GAN的框架解决few-shot learning问题.
+                            用几道例题总结一下回溯算法
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-06
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-11-25
                         </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/科研/" class="post-category" target="_blank">
-                                    科研
+                            <a href="/categories/leetcode/" class="post-category" target="_blank">
+                                    leetcode
                                 </a>
                             
                             
@@ -478,8 +490,8 @@ VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/meta-learning/" target="_blank">
-                        <span class="chip bg-color">meta-learning</span>
+                    <a href="/tags/backtracking/" target="_blank">
+                        <span class="chip bg-color">backtracking</span>
                     </a>
                     
                 </div>
@@ -493,30 +505,30 @@ VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/02/02/shen-ru-li-jie-vae/">
+                <a href="/2020/06/30/vim-chang-yong-ming-ling/">
                     <div class="card-image">
                         
-                        <img src="/medias/featureimages/vae-deep.jpg" class="responsive-img" alt="VAE的一些理解">
+                        <img src="/medias/featureimages/green.jpg" class="responsive-img" alt="vim操作总结">
                         
-                        <span class="card-title">VAE的一些理解</span>
+                        <span class="card-title">vim操作总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            本文对从贝叶斯概率图模型的角度出发, 重新对VAE做了深入的理解
+                            汇总了一些常用的vim操作
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-02
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-06-30
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/科研/" class="post-category" target="_blank">
-                                    科研
+                            <a href="/categories/工具/" class="post-category" target="_blank">
+                                    工具
                                 </a>
                             
                             
@@ -526,8 +538,8 @@ VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/representation-learning/" target="_blank">
-                        <span class="chip bg-color">representation-learning</span>
+                    <a href="/tags/vim/" target="_blank">
+                        <span class="chip bg-color">vim</span>
                     </a>
                     
                 </div>
@@ -581,13 +593,6 @@ VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差
 
 </main>
 
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
-    });
-</script>
 
     <footer class="page-footer bg-color">
     <div class="container row center-align">

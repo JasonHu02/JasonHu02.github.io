@@ -366,56 +366,8 @@ RNN可以被认为是一种有记忆力的neural network。在RNN里面，每一
 <p>LSTM的最终形态：</p>
 <p><img src="LSTM-and-RNN/image-20200226174805623.png" alt="image-20200226174805623" style="zoom:33%;"></p>
 <p>其代码实现如下：</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#single lstm cell</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> lstm_cell(batch_dataset, prev_activation_matrix, prev_cell_matrix, parameters):</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#get parameters</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    fgw <span class="op">=</span> parameters[<span class="st">&#39;fgw&#39;</span>]</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    igw <span class="op">=</span> parameters[<span class="st">&#39;igw&#39;</span>]</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    ogw <span class="op">=</span> parameters[<span class="st">&#39;ogw&#39;</span>]</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    ggw <span class="op">=</span> parameters[<span class="st">&#39;ggw&#39;</span>]</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#concat batch data and prev_activation matrix</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    concat_dataset <span class="op">=</span> np.concatenate((batch_dataset,prev_activation_matrix),axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">#forget gate activations</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    fa <span class="op">=</span> np.matmul(concat_dataset,fgw)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    fa <span class="op">=</span> sigmoid(fa)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#input gate activations</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    ia <span class="op">=</span> np.matmul(concat_dataset,igw)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    ia <span class="op">=</span> sigmoid(ia)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">#output gate activations</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    oa <span class="op">=</span> np.matmul(concat_dataset,ogw)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    oa <span class="op">=</span> sigmoid(oa)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">#gate gate activations</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    ga <span class="op">=</span> np.matmul(concat_dataset,ggw)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    ga <span class="op">=</span> tanh_activation(ga)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">#new cell memory matrix</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    cell_memory_matrix <span class="op">=</span> np.multiply(fa,prev_cell_matrix) <span class="op">+</span> np.multiply(ia,ga)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">#current activation matrix</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    activation_matrix <span class="op">=</span> np.multiply(oa, tanh_activation(cell_memory_matrix))</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="co">#lets store the activations to be used in back prop</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    lstm_activations <span class="op">=</span> <span class="bu">dict</span>()</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    lstm_activations[<span class="st">&#39;fa&#39;</span>] <span class="op">=</span> fa</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    lstm_activations[<span class="st">&#39;ia&#39;</span>] <span class="op">=</span> ia</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    lstm_activations[<span class="st">&#39;oa&#39;</span>] <span class="op">=</span> oa</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    lstm_activations[<span class="st">&#39;ga&#39;</span>] <span class="op">=</span> ga</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lstm_activations,cell_memory_matrix,activation_matrix</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> output_cell(activation_matrix,parameters):</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">#get hidden to output parameters</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    how <span class="op">=</span> parameters[<span class="st">&#39;how&#39;</span>]</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#get outputs </span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    output_matrix <span class="op">=</span> np.matmul(activation_matrix,how)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    output_matrix <span class="op">=</span> softmax(output_matrix)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> output_matrix</span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#single lstm cell</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lstm_cell</span><span class="params">(batch_dataset, prev_activation_matrix, prev_cell_matrix, parameters)</span>:</span></span><br><span class="line">    <span class="comment">#get parameters</span></span><br><span class="line">    fgw = parameters[<span class="string">'fgw'</span>]</span><br><span class="line">    igw = parameters[<span class="string">'igw'</span>]</span><br><span class="line">    ogw = parameters[<span class="string">'ogw'</span>]</span><br><span class="line">    ggw = parameters[<span class="string">'ggw'</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#concat batch data and prev_activation matrix</span></span><br><span class="line">    concat_dataset = np.concatenate((batch_dataset,prev_activation_matrix),axis=<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#forget gate activations</span></span><br><span class="line">    fa = np.matmul(concat_dataset,fgw)</span><br><span class="line">    fa = sigmoid(fa)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#input gate activations</span></span><br><span class="line">    ia = np.matmul(concat_dataset,igw)</span><br><span class="line">    ia = sigmoid(ia)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#output gate activations</span></span><br><span class="line">    oa = np.matmul(concat_dataset,ogw)</span><br><span class="line">    oa = sigmoid(oa)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#gate gate activations</span></span><br><span class="line">    ga = np.matmul(concat_dataset,ggw)</span><br><span class="line">    ga = tanh_activation(ga)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#new cell memory matrix</span></span><br><span class="line">    cell_memory_matrix = np.multiply(fa,prev_cell_matrix) + np.multiply(ia,ga)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#current activation matrix</span></span><br><span class="line">    activation_matrix = np.multiply(oa, tanh_activation(cell_memory_matrix))</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#lets store the activations to be used in back prop</span></span><br><span class="line">    lstm_activations = dict()</span><br><span class="line">    lstm_activations[<span class="string">'fa'</span>] = fa</span><br><span class="line">    lstm_activations[<span class="string">'ia'</span>] = ia</span><br><span class="line">    lstm_activations[<span class="string">'oa'</span>] = oa</span><br><span class="line">    lstm_activations[<span class="string">'ga'</span>] = ga</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> lstm_activations,cell_memory_matrix,activation_matrix</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">output_cell</span><span class="params">(activation_matrix,parameters)</span>:</span></span><br><span class="line">    <span class="comment">#get hidden to output parameters</span></span><br><span class="line">    how = parameters[<span class="string">'how'</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#get outputs </span></span><br><span class="line">    output_matrix = np.matmul(activation_matrix,how)</span><br><span class="line">    output_matrix = softmax(output_matrix)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> output_matrix</span><br></pre></td></tr></table></figure>
 <p><a href="https://www.youtube.com/watch?v=xCGidAeyS4M" target="_blank" rel="noopener">主要参考了台大李宏毅老师的youtube视频课程。</a></p>
 
             </div>
@@ -648,7 +600,7 @@ RNN可以被认为是一种有记忆力的neural network。在RNN里面，每一
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">21.6k</span>
+            <span class="white-color">22.2k</span>
             
 
             <br>

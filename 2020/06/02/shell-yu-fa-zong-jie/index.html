@@ -352,8 +352,7 @@ Shell 是什么？ Shell 是一个命令解释权，它为用户提供了一个�
 <p><strong>Shell 是什么？</strong> Shell 是一个命令解释权，它为用户提供了一个向 Linux 内核发送请求以便运行程序界面系统级程序，用户可以用 Shell 来启动、挂起、停止甚至是编写一些程序。</p>
 <p><img src="Shell语法总结/image-20200602232857092.png" alt="image-20200602232857092" style="zoom:33%;"></p>
 <p>写一个shell文件，第一行表示用bash执行，第二行打印出“hello world”</p>
-<pre class="shell"><code>#!/bin/bash 
-echo &#39;hello world!&#39;</code></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash </span><br><span class="line">echo 'hello world!'</span><br></pre></td></tr></table></figure>
 <p>执行的方法有两种，一种是 <code>sh hello.sh</code> 另外一种方法是 <code>chmod +x hello.sh</code> 之后，这样<code>./hello.sh</code> 就变成了可执行文件，可以直接运行。</p>
 <p>说明:</p>
 <ul>
@@ -405,36 +404,13 @@ echo &#39;hello world!&#39;</code></pre>
 <h2 id="流程控制"><strong>流程控制</strong></h2>
 <h3 id="if-判断"><strong>if 判断</strong></h3>
 <h3 id="基本语法"><strong>基本语法</strong></h3>
-<pre class="shell"><code>if [ 条件判断式 ];then   
-    程序   
-fi
-# 或者（推荐）
-if [ 条件判断式 ]
-then
-    程序
-elif [ 条件判断式 ]
-then
-    程序
-fi</code></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">if [ 条件判断式 ];then   </span><br><span class="line">    程序   </span><br><span class="line">fi</span><br><span class="line"><span class="meta">#</span> 或者（推荐）</span><br><span class="line">if [ 条件判断式 ]</span><br><span class="line">then</span><br><span class="line">    程序</span><br><span class="line">elif [ 条件判断式 ]</span><br><span class="line">then</span><br><span class="line">    程序</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
 <h3 id="for-循环"><strong>for 循环</strong></h3>
 <h3 id="基本语法-1"><strong>基本语法</strong></h3>
-<pre class="shell"><code># 语法1
-for 变量名 in 值1 值2 值3...
-do
-    程序
-done
-
-# 语法2
-for ((初始值;循环控制条件;变量变化))
-do
-    程序
-done</code></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span> 语法1</span><br><span class="line">for 变量名 in 值1 值2 值3...</span><br><span class="line">do</span><br><span class="line">    程序</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 语法2</span><br><span class="line">for ((初始值;循环控制条件;变量变化))</span><br><span class="line">do</span><br><span class="line">    程序</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 <h3 id="while-循环"><strong>while 循环</strong></h3>
 <h3 id="基本语法-2"><strong>基本语法</strong></h3>
-<pre class="shell"><code>while [ 条件判断式 ]
-do
-    程序
-done </code></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">while [ 条件判断式 ]</span><br><span class="line">do</span><br><span class="line">    程序</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 <h2 id="读取控制台输入"><strong>读取控制台输入</strong></h2>
 <h3 id="基本语法-3"><strong>基本语法</strong></h3>
 <p>read (选项) (参数) <strong>选项</strong></p>
@@ -463,14 +439,7 @@ done </code></pre>
 </ul>
 <h3 id="自定义函数"><strong>自定义函数</strong></h3>
 <h3 id="基本语法-4"><strong>基本语法</strong></h3>
-<pre class="shell"><code>[ function ] funname[()]
-{
-    Action;
-    [return int;]
-}
-
-# 调用
-funname 参数1 参数2...</code></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[ function ] funname[()]</span><br><span class="line">&#123;</span><br><span class="line">    Action;</span><br><span class="line">    [return int;]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 调用</span><br><span class="line">funname 参数1 参数2...</span><br></pre></td></tr></table></figure>
 
             </div>
             <hr />
@@ -702,7 +671,7 @@ funname 参数1 参数2...</code></pre>
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">21.6k</span>
+            <span class="white-color">22.2k</span>
             
 
             <br>

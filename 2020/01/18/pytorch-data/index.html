@@ -325,7 +325,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    965
+                    949
                 </div>
                 
 
@@ -360,82 +360,29 @@
 <li><p><code>ToTensor</code>: to convert the numpy images to torch images (we need to swap axes).</p>
 <p>note: numpy中的图像数据是 H × W × C ; 而torch.tensor的数据是C × H × W</p></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Rescale(obejct)： </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, output_size):</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span> <span class="bu">isinstance</span>(output_size, (<span class="bu">int</span>, <span class="bu">tuple</span>))</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.output_size <span class="op">=</span> output_size</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, sample):</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        image, landmarks <span class="op">=</span> sample[<span class="st">&#39;image&#39;</span>], sample[<span class="st">&#39;landmarks&#39;</span>]</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        h, w <span class="op">=</span> image.shape[:<span class="dv">2</span>]</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(<span class="va">self</span>.output_size, <span class="bu">int</span>):</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> h <span class="op">&gt;</span> w:</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                new_h, new_w <span class="op">=</span> <span class="va">self</span>.output_size <span class="op">*</span> h <span class="op">/</span> w, <span class="va">self</span>.output_size</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                new_h, new_w <span class="op">=</span> <span class="va">self</span>.output_size, <span class="va">self</span>.output_size <span class="op">*</span> w <span class="op">/</span> h</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>            new_h, new_w <span class="op">=</span> <span class="va">self</span>.output_size</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        new_h, new_w <span class="op">=</span> <span class="bu">int</span>(new_h), <span class="bu">int</span>(new_w)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        img <span class="op">=</span> transform.resize(image, (new_h, new_w))</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># h and w are swapped for landmarks because for images,</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># x and y axes are axis 1 and 0 respectively</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        landmarks <span class="op">=</span> landmarks <span class="op">*</span> [new_w <span class="op">/</span> w, new_h <span class="op">/</span> h]</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> {<span class="st">&#39;image&#39;</span>: img, <span class="st">&#39;landmarks&#39;</span>: landmarks}</span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rescale</span><span class="params">(obejct)</span>： </span></span><br><span class="line"><span class="class">	<span class="title">def</span> <span class="title">__init__</span><span class="params">(self, output_size)</span>:</span></span><br><span class="line">        <span class="keyword">assert</span> isinstance(output_size, (int, tuple))</span><br><span class="line">        self.output_size = output_size</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, sample)</span>:</span></span><br><span class="line">        image, landmarks = sample[<span class="string">'image'</span>], sample[<span class="string">'landmarks'</span>]</span><br><span class="line"></span><br><span class="line">        h, w = image.shape[:<span class="number">2</span>]</span><br><span class="line">        <span class="keyword">if</span> isinstance(self.output_size, int):</span><br><span class="line">            <span class="keyword">if</span> h &gt; w:</span><br><span class="line">                new_h, new_w = self.output_size * h / w, self.output_size</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                new_h, new_w = self.output_size, self.output_size * w / h</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            new_h, new_w = self.output_size</span><br><span class="line"></span><br><span class="line">        new_h, new_w = int(new_h), int(new_w)</span><br><span class="line"></span><br><span class="line">        img = transform.resize(image, (new_h, new_w))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># h and w are swapped for landmarks because for images,</span></span><br><span class="line">        <span class="comment"># x and y axes are axis 1 and 0 respectively</span></span><br><span class="line">        landmarks = landmarks * [new_w / w, new_h / h]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">'image'</span>: img, <span class="string">'landmarks'</span>: landmarks&#125;</span><br></pre></td></tr></table></figure>
 <p><code>_call_</code>函数的作用是可以直接调用rescale这个类，不需要每次调用时都需要传递参数。 We will write them as callable classes instead of simple functions so that parameters of the transform need not be passed everytime it’s called.</p>
 <h5 id="transformer的用法">transformer的用法：</h5>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>transformed_dataset <span class="op">=</span> FaceLandmarksDataset(csv_file<span class="op">=</span><span class="st">&#39;data/faces/face_landmarks.csv&#39;</span>,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                                           root_dir<span class="op">=</span><span class="st">&#39;data/faces/&#39;</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                                           transform<span class="op">=</span>transforms.Compose([</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                                               Rescale(<span class="dv">256</span>),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                                               RandomCrop(<span class="dv">224</span>),</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                                               ToTensor()</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                                           ]))</span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">transformed_dataset = FaceLandmarksDataset(csv_file=<span class="string">'data/faces/face_landmarks.csv'</span>,</span><br><span class="line">                                           root_dir=<span class="string">'data/faces/'</span>,</span><br><span class="line">                                           transform=transforms.Compose([</span><br><span class="line">                                               Rescale(<span class="number">256</span>),</span><br><span class="line">                                               RandomCrop(<span class="number">224</span>),</span><br><span class="line">                                               ToTensor()</span><br><span class="line">                                           ]))</span><br></pre></td></tr></table></figure>
 <p>FaceLandmarksDataset是之前定义的一个类，transformed_dataset是它的实例化，等于对目录下的data经过了处理，保存到了transformed_dataset这个实例化的类中。</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(transformed_dataset)):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    sample <span class="op">=</span> transformed_dataset[i]</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i, sample[<span class="st">&#39;image&#39;</span>].size(), sample[<span class="st">&#39;landmarks&#39;</span>].size())</span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(transformed_dataset)):</span><br><span class="line">    sample = transformed_dataset[i]</span><br><span class="line"></span><br><span class="line">    print(i, sample[<span class="string">'image'</span>].size(), sample[<span class="string">'landmarks'</span>].size())</span><br></pre></td></tr></table></figure>
 <p>然后通过for 循环，用sample一个一个取出这个类中的数据。</p>
 <p>输出如下:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>0 torch.Size([3, 224, 224]) torch.Size([68, 2])</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>1 torch.Size([3, 224, 224]) torch.Size([68, 2])</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>2 torch.Size([3, 224, 224]) torch.Size([68, 2])</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>3 torch.Size([3, 224, 224]) torch.Size([68, 2])</span></code></pre></div>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">0 torch.Size([3, 224, 224]) torch.Size([68, 2])</span><br><span class="line">1 torch.Size([3, 224, 224]) torch.Size([68, 2])</span><br><span class="line">2 torch.Size([3, 224, 224]) torch.Size([68, 2])</span><br><span class="line">3 torch.Size([3, 224, 224]) torch.Size([68, 2])</span><br></pre></td></tr></table></figure>
 <h4 id="dataloader">dataloader:</h4>
 <p>由此，这不是深度学习中常用的方式，</p>
 <p>1.我们对数据集通常会进行打乱，不是顺序读取的。shffle data</p>
 <p>2.我们会选择一个batch作为数据，而不是每次都train一个图像。batch data</p>
 <p>3.用上述的代码不适合在多线程运行。muilt-processing</p>
 <p>此题背景是有69张人脸图像+其面部轮廓的框图。我们使用上面的方法，那么就是先标准化处理每张图像，并且将框图和人脸融合，作为一个深度学习标准的数据集，这些是transform做的事情。接下来载入数据，我们想通过数据集<strong>载入</strong>到图像数据中</p>
-<pre><code>dataloader=torch.util.data.Dataloader{
-    transforms_dataset,batch_size=4,shuffle=true, num_workers=4
-}</code></pre>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dataloader=torch.util.data.Dataloader&#123;</span><br><span class="line">	transforms_dataset,batch_size=4,shuffle=true, num_workers=4</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>通过这样的方式，就解决了上述的三个问题。num_workers是读取数据的线程数目。</p>
 <p>note: 补充一下这个函数的实现方式，有一个collate_fn这个函数，是核心，<strong>如果后面想用到其他数据里面</strong>，重写collate_fn函数，在dataloader=torch.util.data.Dataloader{collate_fn=collate_fn}来得到自己想要的加载数据的结果：</p>
 <blockquote>
 <p>collate_fn这个函数的输入就是一个list，list的长度是一个batch size，list中的每个元素都是__getitem__得到的结果。</p>
 </blockquote>
 <h4 id="imagefolder">ImageFolder</h4>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torchvision <span class="im">import</span> transforms, datasets</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>data_transform <span class="op">=</span> transforms.Compose([</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        transforms.RandomSizedCrop(<span class="dv">224</span>),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        transforms.RandomHorizontalFlip(),</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        transforms.ToTensor(),</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        transforms.Normalize(mean<span class="op">=</span>[<span class="fl">0.485</span>, <span class="fl">0.456</span>, <span class="fl">0.406</span>],</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                             std<span class="op">=</span>[<span class="fl">0.229</span>, <span class="fl">0.224</span>, <span class="fl">0.225</span>])</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    ])</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>hymenoptera_dataset <span class="op">=</span> datasets.ImageFolder(root<span class="op">=</span><span class="st">&#39;hymenoptera_data/train&#39;</span>,</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                                           transform<span class="op">=</span>data_transform)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>dataset_loader <span class="op">=</span> torch.utils.data.DataLoader(hymenoptera_dataset,</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                                             batch_size<span class="op">=</span><span class="dv">4</span>, shuffle<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                                             num_workers<span class="op">=</span><span class="dv">4</span>)</span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms, datasets</span><br><span class="line"></span><br><span class="line">data_transform = transforms.Compose([</span><br><span class="line">        transforms.RandomSizedCrop(<span class="number">224</span>),</span><br><span class="line">        transforms.RandomHorizontalFlip(),</span><br><span class="line">        transforms.ToTensor(),</span><br><span class="line">        transforms.Normalize(mean=[<span class="number">0.485</span>, <span class="number">0.456</span>, <span class="number">0.406</span>],</span><br><span class="line">                             std=[<span class="number">0.229</span>, <span class="number">0.224</span>, <span class="number">0.225</span>])</span><br><span class="line">    ])</span><br><span class="line">hymenoptera_dataset = datasets.ImageFolder(root=<span class="string">'hymenoptera_data/train'</span>,</span><br><span class="line">                                           transform=data_transform)</span><br><span class="line">dataset_loader = torch.utils.data.DataLoader(hymenoptera_dataset,</span><br><span class="line">                                             batch_size=<span class="number">4</span>, shuffle=<span class="literal">True</span>,</span><br><span class="line">                                             num_workers=<span class="number">4</span>)</span><br></pre></td></tr></table></figure>
 <p>从torchvision中导入这两个函数，先写transforms定义了随机裁图片，变成tensor，进行标准化处理。</p>
 <p>使用ImageFolder读取在train下面的图片，其输出如下: {'cat': 0, 'dog': 1} 这样的形式，将label和input做了分离 。</p>
 <p>最后使用dataloader导入数据。</p>
@@ -670,7 +617,7 @@
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">21.6k</span>
+            <span class="white-color">22.2k</span>
             
 
             <br>

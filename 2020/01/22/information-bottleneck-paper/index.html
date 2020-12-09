@@ -324,7 +324,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.7k
+                    1.6k
                 </div>
                 
 
@@ -389,66 +389,7 @@ I(\mathbf{x} ; \mathbf{y} | \mathbf{z})=0 \Longleftrightarrow I(\mathbf{x} ; \ma
 <p><img src="image/image-20200217025835301.png" alt="image-20200217025835301" style="zoom:33%;"></p>
 <p>我特地去view了代码，发现代码实现的方法非常简单，说明该方法从某一些理论性的角度解决了模型鲁棒性的问题，训练起来速度很快，有一定的参考价值。且论文作者丝毫不避讳地把实验中所有数据全部公开在论文附录里，看来是对论文地实验效果非常有信心，有足够地把握给读者看。总之，可以借鉴地点非常多。之后工作可以围绕他的思路做一些扩展了。</p>
 <p>核心代码在这里：</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> tqdm(<span class="bu">range</span>(epochs)):</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> v_1, v_2, _ <span class="kw">in</span> train_loader:</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> cuda:</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>            v_1 <span class="op">=</span> v_1.cuda()</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            v_2 <span class="op">=</span> v_2.cuda()</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Encode a batch of data</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        p_z_1_given_v_1 <span class="op">=</span> encoder_v_1(v_1)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        p_z_2_given_v_2 <span class="op">=</span> encoder_v_2(v_2)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Sample from the posteriors with reparametrization</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        z_1 <span class="op">=</span> p_z_1_given_v_1.rsample()</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        z_2 <span class="op">=</span> p_z_2_given_v_2.rsample()</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Mutual information estimation</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        mi_gradient, mi_estimation <span class="op">=</span> mi_estimator(z_1,z_2)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        mi_gradient <span class="op">=</span> mi_gradient.mean()</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        mi_estimation <span class="op">=</span> mi_estimation.mean()</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Symmetrized Kullback-Leibler divergence</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        kl_1_2 <span class="op">=</span> p_z_1_given_v_1.log_prob(z_1) <span class="op">-</span> p_z_2_given_v_2.log_prob(z_1)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        kl_2_1 <span class="op">=</span> p_z_2_given_v_2.log_prob(z_2) <span class="op">-</span> p_z_1_given_v_1.log_prob(z_2)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        skl <span class="op">=</span> (kl_1_2 <span class="op">+</span> kl_2_1).mean()<span class="op">/</span> <span class="fl">2.</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the value of beta according to the policy</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        beta <span class="op">=</span> beta_scheduler(iterations)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        iterations <span class="op">+=</span><span class="dv">1</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Computing the loss function</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">=</span> <span class="op">-</span> mi_gradient <span class="op">+</span> beta <span class="op">*</span> skl</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Logging</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        mi_over_time.append(mi_estimation.item())</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        skl_over_time.append(skl.item())</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Backward pass and update</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>        opt.zero_grad()</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>        loss.backward()</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>        opt.step()</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot the loss components every 5 epochs</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> epoch <span class="op">%</span> plot_every <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>        f, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">3</span>))</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>        ax[<span class="dv">0</span>].set_title(<span class="st">&#39;$I(z_1;z_2)$&#39;</span>)</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>        ax[<span class="dv">1</span>].set_title(<span class="st">&#39;$D_</span><span class="sc">{SKL}</span><span class="st">(p(z_1|v_1)||p(z_2|v_2))$&#39;</span>)</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>        ax[<span class="dv">1</span>].set_yscale(<span class="st">&#39;log&#39;</span>)</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>        ax[<span class="dv">0</span>].plot(mi_over_time, <span class="st">&#39;.&#39;</span>, alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>        ax[<span class="dv">1</span>].plot(skl_over_time, <span class="st">&#39;.r&#39;</span>, alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>        ax[<span class="dv">0</span>].set_ylim(<span class="dv">0</span>,<span class="dv">8</span>)</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>        ax[<span class="dv">1</span>].set_ylim(<span class="fl">1e-3</span>)</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>        f.suptitle(<span class="st">&#39;Epoch: </span><span class="sc">%d</span><span class="st">&#39;</span><span class="op">%</span>epoch, fontsize<span class="op">=</span><span class="dv">15</span>)</span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>        plt.show()</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute train and test_accuracy of a logistic regression</span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>        train_accuracy, test_accuracy <span class="op">=</span> evaluate(encoder<span class="op">=</span>encoder_v_1, train_on<span class="op">=</span>train_subset, test_on<span class="op">=</span>test_set, cuda<span class="op">=</span>cuda)</span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&#39;Train Accuracy: </span><span class="sc">%f</span><span class="st">&#39;</span><span class="op">%</span> train_accuracy)</span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&#39;Test Accuracy: </span><span class="sc">%f</span><span class="st">&#39;</span><span class="op">%</span> test_accuracy)</span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> tqdm(range(epochs)):</span><br><span class="line">    <span class="keyword">for</span> v_1, v_2, _ <span class="keyword">in</span> train_loader:</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> cuda:</span><br><span class="line">            v_1 = v_1.cuda()</span><br><span class="line">            v_2 = v_2.cuda()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Encode a batch of data</span></span><br><span class="line">        p_z_1_given_v_1 = encoder_v_1(v_1)</span><br><span class="line">        p_z_2_given_v_2 = encoder_v_2(v_2)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Sample from the posteriors with reparametrization</span></span><br><span class="line">        z_1 = p_z_1_given_v_1.rsample()</span><br><span class="line">        z_2 = p_z_2_given_v_2.rsample()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Mutual information estimation</span></span><br><span class="line">        mi_gradient, mi_estimation = mi_estimator(z_1,z_2)</span><br><span class="line">        mi_gradient = mi_gradient.mean()</span><br><span class="line">        mi_estimation = mi_estimation.mean()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Symmetrized Kullback-Leibler divergence</span></span><br><span class="line">        kl_1_2 = p_z_1_given_v_1.log_prob(z_1) - p_z_2_given_v_2.log_prob(z_1)</span><br><span class="line">        kl_2_1 = p_z_2_given_v_2.log_prob(z_2) - p_z_1_given_v_1.log_prob(z_2)</span><br><span class="line">        skl = (kl_1_2 + kl_2_1).mean()/ <span class="number">2.</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Update the value of beta according to the policy</span></span><br><span class="line">        beta = beta_scheduler(iterations)</span><br><span class="line">        iterations +=<span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Computing the loss function</span></span><br><span class="line">        loss = - mi_gradient + beta * skl</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Logging</span></span><br><span class="line">        mi_over_time.append(mi_estimation.item())</span><br><span class="line">        skl_over_time.append(skl.item())</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Backward pass and update</span></span><br><span class="line">        opt.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        opt.step()</span><br><span class="line">	</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Plot the loss components every 5 epochs</span></span><br><span class="line">    <span class="keyword">if</span> epoch % plot_every == <span class="number">0</span>:</span><br><span class="line">        f, ax = plt.subplots(<span class="number">1</span>,<span class="number">2</span>, figsize=(<span class="number">8</span>,<span class="number">3</span>))</span><br><span class="line">        ax[<span class="number">0</span>].set_title(<span class="string">'$I(z_1;z_2)$'</span>)</span><br><span class="line">        ax[<span class="number">1</span>].set_title(<span class="string">'$D_&#123;SKL&#125;(p(z_1|v_1)||p(z_2|v_2))$'</span>)</span><br><span class="line">        ax[<span class="number">1</span>].set_yscale(<span class="string">'log'</span>)</span><br><span class="line">        ax[<span class="number">0</span>].plot(mi_over_time, <span class="string">'.'</span>, alpha=<span class="number">0.1</span>)</span><br><span class="line">        ax[<span class="number">1</span>].plot(skl_over_time, <span class="string">'.r'</span>, alpha=<span class="number">0.1</span>)</span><br><span class="line">        ax[<span class="number">0</span>].set_ylim(<span class="number">0</span>,<span class="number">8</span>)</span><br><span class="line">        ax[<span class="number">1</span>].set_ylim(<span class="number">1e-3</span>)</span><br><span class="line">        </span><br><span class="line">        f.suptitle(<span class="string">'Epoch: %d'</span>%epoch, fontsize=<span class="number">15</span>)</span><br><span class="line">        plt.show()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Compute train and test_accuracy of a logistic regression</span></span><br><span class="line">        train_accuracy, test_accuracy = evaluate(encoder=encoder_v_1, train_on=train_subset, test_on=test_set, cuda=cuda)</span><br><span class="line">        print(<span class="string">'Train Accuracy: %f'</span>% train_accuracy)</span><br><span class="line">        print(<span class="string">'Test Accuracy: %f'</span>% test_accuracy)</span><br></pre></td></tr></table></figure>
 <h4 id="点评">点评：</h4>
 <p>这是一篇很好的多视角表示学习论文，具有新的见解。learn variable z_1和z_2，它们是一致的，包含视角不变信息，但应尽可能丢弃特定于视角的信息。 本文依赖于相互信息估计，并且无需重构。在先前的一些工作中（例如Aaron van den Oord等人2018）中提到，重建损失会引入偏见，对学习的表征产生负面影响。与现有的尝试最大化学习的表示和视图之间的相互信息的多视图表示学习方法相比，本文明确定义了多余的信息，我们应该尝试抛弃这些多余的信息，并弄清楚如何获得足够的学习的表示用于输出。作者还得出了一些现有的（多视图）表示学习方法与他们提出的方法之间的明确联系。</p>
 
@@ -682,7 +623,7 @@ I(\mathbf{x} ; \mathbf{y} | \mathbf{z})=0 \Longleftrightarrow I(\mathbf{x} ; \ma
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">21.6k</span>
+            <span class="white-color">22.2k</span>
             
 
             <br>

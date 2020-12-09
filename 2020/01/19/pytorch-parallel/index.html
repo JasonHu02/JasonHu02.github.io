@@ -334,7 +334,7 @@ pytorch中定义一个变量device = torch.device(&#34;cuda:0,1,2,3,4,5&#34;">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    5 分
                 </div>
                 
                 
@@ -358,75 +358,18 @@ pytorch中定义一个变量device = torch.device(&#34;cuda:0,1,2,3,4,5&#34;">
 <li>将要训练的数据放入到device中，然后训练这个model就可以了！</li>
 </ol>
 <h5 id="实际操作">实际操作：</h5>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>os.environment(<span class="st">&quot;CUDA_VISIBEL_DEVICES&quot;</span>)<span class="op">=</span><span class="st">&#39;0,1,2,3,4,5&#39;</span></span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os </span><br><span class="line">os.environment(<span class="string">"CUDA_VISIBEL_DEVICES"</span>)=<span class="string">'0,1,2,3,4,5'</span></span><br></pre></td></tr></table></figure>
 <p>上述步骤相当于在shell 命令里面调用了 CUDA_VISIBEL_DEVICES 命令, 相当于打开了6个gpu的入口。分别指定了cuda0,cuda1,cuda2三个gpu进行计算。这里相当于调用了6个gpu</p>
 <p>note：使用torch.cuda.device_count()看到的就是这里调用了几个gpu。</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>device<span class="op">=</span>torch.device(<span class="st">&quot;cuda:0,1,2,3,4,5&quot;</span>, <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">&quot;cpu&quot;</span>)</span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">device=torch.device(<span class="string">"cuda:0,1,2,3,4,5"</span>, <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">"cpu"</span>)</span><br></pre></td></tr></table></figure>
 <p>这里必须和上面的数值保持一致，否则会报错。device的输出是 type: "cuda" ，index=0， 用index的值表示了cuda的个数</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Model(input_size, output_size)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> torch.cuda.device_count() <span class="op">&gt;</span> <span class="dv">1</span>:</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;Let&#39;s use&quot;</span>, torch.cuda.device_count(), <span class="st">&quot;GPUs!&quot;</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># dim = 0 [30, xxx] -&gt; [10, ...], [10, ...], [10, ...] on 3 GPUs</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> nn.DataParallel(model)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>model.to(device)</span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">model = Model(input_size, output_size)</span><br><span class="line"><span class="keyword">if</span> torch.cuda.device_count() &gt; <span class="number">1</span>:</span><br><span class="line">  print(<span class="string">"Let's use"</span>, torch.cuda.device_count(), <span class="string">"GPUs!"</span>)</span><br><span class="line">  <span class="comment"># dim = 0 [30, xxx] -&gt; [10, ...], [10, ...], [10, ...] on 3 GPUs</span></span><br><span class="line">  model = nn.DataParallel(model)</span><br><span class="line"></span><br><span class="line">model.to(device)</span><br></pre></td></tr></table></figure>
 <p>使用nn.DataParallel对model这个网络模型进行data上的自动分配</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> data <span class="kw">in</span> rand_loader:</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span> <span class="op">=</span> data.to(device)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    output <span class="op">=</span> model(<span class="bu">input</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Outside: input size&quot;</span>, <span class="bu">input</span>.size(),</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;output_size&quot;</span>, output.size())</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    </span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> data <span class="keyword">in</span> rand_loader:</span><br><span class="line">    input = data.to(device)</span><br><span class="line">    output = model(input)</span><br><span class="line">    print(<span class="string">"Outside: input size"</span>, input.size(),</span><br><span class="line">          <span class="string">"output_size"</span>, output.size())</span><br></pre></td></tr></table></figure>
 <p>将input从dataset中得到batch_size的数据，将data传给GPU中，对模型进行了训练(forward function这里省去)</p>
 <p>这个时候cuda上就会被分配上数据。可以看到最后输出的结果：</p>
-<pre><code>Let&#39;s use 2 GPUs!
-    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])
-    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])
-Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])
-    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])
-    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])
-Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])
-    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])
-    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])
-Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])
-    In Model: input size torch.Size([5, 5]) output size torch.Size([5, 2])
-    In Model: input size torch.Size([5, 5]) output size torch.Size([5, 2])
-Outside: input size torch.Size([10, 5]) output_size torch.Size([10, 2])</code></pre>
-<pre><code>Let&#39;s use 8 GPUs!
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])
-    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
-Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])
-    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
-    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
-    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
-    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
-    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])
-Outside: input size torch.Size([10, 5]) output_size torch.Size([10, 2])</code></pre>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Let&apos;s use 2 GPUs!</span><br><span class="line">    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])</span><br><span class="line">    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])</span><br><span class="line">Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])</span><br><span class="line">    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])</span><br><span class="line">    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])</span><br><span class="line">Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])</span><br><span class="line">    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])</span><br><span class="line">    In Model: input size torch.Size([15, 5]) output size torch.Size([15, 2])</span><br><span class="line">Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])</span><br><span class="line">    In Model: input size torch.Size([5, 5]) output size torch.Size([5, 2])</span><br><span class="line">    In Model: input size torch.Size([5, 5]) output size torch.Size([5, 2])</span><br><span class="line">Outside: input size torch.Size([10, 5]) output_size torch.Size([10, 2])</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Let&apos;s use 8 GPUs!</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([4, 5]) output size torch.Size([4, 2])</span><br><span class="line">    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])</span><br><span class="line">Outside: input size torch.Size([30, 5]) output_size torch.Size([30, 2])</span><br><span class="line">    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])</span><br><span class="line">    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])</span><br><span class="line">    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])</span><br><span class="line">    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])</span><br><span class="line">    In Model: input size torch.Size([2, 5]) output size torch.Size([2, 2])</span><br><span class="line">Outside: input size torch.Size([10, 5]) output_size torch.Size([10, 2])</span><br></pre></td></tr></table></figure>
 <p>可以看到model上的data被平均分配到了8个gpu上。</p>
 <p>input_size=2, output_size=5, batch_size=30, data_size=100。</p>
 <p>由于每次batch_size=30, 因此跑了4次，数据量为30+30+30+10</p>
@@ -662,7 +605,7 @@ Outside: input size torch.Size([10, 5]) output_size torch.Size([10, 2])</code></
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">21.6k</span>
+            <span class="white-color">22.2k</span>
             
 
             <br>

@@ -327,7 +327,7 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    1.2k
                 </div>
                 
 
@@ -353,60 +353,9 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https">
                 <p>vim常用命令主要分为增删改查以及移动：</p>
 <h2 id="vim插件的使用">vim插件的使用</h2>
 <p>主要的配置全部在~/.vimrc 中，在使用之前，先安装插件管理工具。</p>
-<pre class="shell"><code>curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-#如果没有安装成功，sudo /etc/hosts 中添加 151.101.108.133 raw.githubusercontent.com</code></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim</span><br><span class="line"><span class="meta">#</span>如果没有安装成功，sudo /etc/hosts 中添加 151.101.108.133 raw.githubusercontent.com</span><br></pre></td></tr></table></figure>
 <p>安装这个在<code>.vim/autoload</code>这个目录下之后，在vimrc里面使用下述命令即可安装各类插件，列出我常用的几个插件:</p>
-<pre class="shell"><code>call plug#begin(&#39;~/.vim/plugged&#39;)
-Plug &#39;vim-airline/vim-airline&#39;
-Plug &#39;preservim/nerdcommenter&#39;
-Plug &#39;jiangmiao/auto-pairs&#39;
-Plug &#39;neoclide/coc.nvim&#39;
-Plug &#39;neoclide/coc-python&#39;
-Plug &#39;neoclide/coc-highlight&#39;
-Plug &#39;preservim/nerdtree&#39;
-Plug &#39;tomasr/molokai&#39;
-Plug &#39;Yggdroot/LeaderF&#39;
-Plug &#39;preservim/nerdcommenter&#39;
-call plug#end()
-
-&quot; theme
-let g:molokai_original=1
-let g:rehash256=1
-colorscheme molokai
-
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-if !exists(&#39;g:airline_symbols&#39;)
-        let g:airline_symbols = {}
-endif
-let g:airline_right_sep = &#39;◀&#39;
-let g:airline_left_sep = &#39;▶&#39;
-let g:airline_left_alt_sep = &#39;❯&#39;
-let g:airline_right_alt_sep = &#39;❮&#39;
-let g:airline_symbols.linenr = &#39;¶&#39;
-let g:airline_symbols.branch = &#39;⎇&#39;
-
-set  mouse = r
-
-&quot; NERDTree
-map &lt;C-n&gt; :NERDTreeToggle&lt;CR&gt;
-
-&quot; Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-&quot; Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-&quot; Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = &#39;left&#39;
-&quot; Set a language to use its alternate delimiters by default
-let g:NERDAltDelims_java = 1
-&quot; Add your own custom formats or override the defaults
-let g:NERDCustomDelimiters = { &#39;c&#39;: { &#39;left&#39;: &#39;/**&#39;,&#39;right&#39;: &#39;*/&#39; } }
-&quot; Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
-&quot; Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-&quot; Enable NERDCommenterToggle to check all selected lines is commented or not
-let g:NERDToggleCheckAllLines = 1</code></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">call plug#begin('~/.vim/plugged')</span><br><span class="line">Plug 'vim-airline/vim-airline'</span><br><span class="line">Plug 'preservim/nerdcommenter'</span><br><span class="line">Plug 'jiangmiao/auto-pairs'</span><br><span class="line">Plug 'neoclide/coc.nvim'</span><br><span class="line">Plug 'neoclide/coc-python'</span><br><span class="line">Plug 'neoclide/coc-highlight'</span><br><span class="line">Plug 'preservim/nerdtree'</span><br><span class="line">Plug 'tomasr/molokai'</span><br><span class="line">Plug 'Yggdroot/LeaderF'</span><br><span class="line">Plug 'preservim/nerdcommenter'</span><br><span class="line">call plug#end()</span><br><span class="line"></span><br><span class="line">" theme</span><br><span class="line">let g:molokai_original=1</span><br><span class="line">let g:rehash256=1</span><br><span class="line">colorscheme molokai</span><br><span class="line"></span><br><span class="line">let g:airline_powerline_fonts = 1</span><br><span class="line">let g:airline#extensions#tabline#enabled = 1</span><br><span class="line">if !exists('g:airline_symbols')</span><br><span class="line">        let g:airline_symbols = &#123;&#125;</span><br><span class="line">endif</span><br><span class="line">let g:airline_right_sep = '◀'</span><br><span class="line">let g:airline_left_sep = '▶'</span><br><span class="line">let g:airline_left_alt_sep = '❯'</span><br><span class="line">let g:airline_right_alt_sep = '❮'</span><br><span class="line">let g:airline_symbols.linenr = '¶'</span><br><span class="line">let g:airline_symbols.branch = '⎇'</span><br><span class="line"></span><br><span class="line">set  mouse = r</span><br><span class="line"></span><br><span class="line">" NERDTree</span><br><span class="line">map &lt;C-n&gt; :NERDTreeToggle&lt;CR&gt;</span><br><span class="line"></span><br><span class="line">" Add spaces after comment delimiters by default</span><br><span class="line">let g:NERDSpaceDelims = 1</span><br><span class="line">" Use compact syntax for prettified multi-line comments</span><br><span class="line">let g:NERDCompactSexyComs = 1</span><br><span class="line">" Align line-wise comment delimiters flush left instead of following code indentation</span><br><span class="line">let g:NERDDefaultAlign = 'left'</span><br><span class="line">" Set a language to use its alternate delimiters by default</span><br><span class="line">let g:NERDAltDelims_java = 1</span><br><span class="line">" Add your own custom formats or override the defaults</span><br><span class="line">let g:NERDCustomDelimiters = &#123; 'c': &#123; 'left': '/**','right': '*/' &#125; &#125;</span><br><span class="line">" Allow commenting and inverting empty lines (useful when commenting a region)</span><br><span class="line">let g:NERDCommentEmptyLines = 1</span><br><span class="line">" Enable trimming of trailing whitespace when uncommenting</span><br><span class="line">let g:NERDTrimTrailingWhitespace = 1</span><br><span class="line">" Enable NERDCommenterToggle to check all selected lines is commented or not</span><br><span class="line">let g:NERDToggleCheckAllLines = 1</span><br></pre></td></tr></table></figure>
 <p>直接复制粘贴到vimrc中，然后使用先保存整个文本， 然后再PlugInstall即可配置好整个vim了。</p>
 <p>note: 'neoclide/coc.nvim'中的一些坑，首先要求安装好nodejs，但是会报错，这个时候在<code>.vim/coc.vim</code>下，使用yarn install 安装好，然后会提示在 <code>[coc.nvim] creating data directory: /Users/zhehu/.config/coc</code></p>
 <h2 id="normal的模式下">Normal的模式下：</h2>
@@ -437,37 +386,9 @@ let g:NERDToggleCheckAllLines = 1</code></pre>
 <p><code>ctrl+w</code>在insert 模式下删除单词</p>
 <h2 id="vim多窗口模式">vim多窗口模式</h2>
 <h4 id="目录树使用">目录树使用</h4>
-<pre class="shell"><code>?: 快速帮助文档
-o: 打开一个目录或者打开文件，创建的是 buffer，也可以用来打开书签
-go: 打开一个文件，但是光标仍然留在 NERDTree，创建的是 buffer
-t: 打开一个文件，创建的是Tab，对书签同样生效
-T: 打开一个文件，但是光标仍然留在 NERDTree，创建的是 Tab，对书签同样生效
-i: 水平分割创建文件的窗口，创建的是 buffer
-gi: 水平分割创建文件的窗口，但是光标仍然留在 NERDTree
-s: 垂直分割创建文件的窗口，创建的是 buffer
-gs: 和 gi，go 类似
-x: 收起当前打开的目录
-X: 收起所有打开的目录
-e: 以文件管理的方式打开选中的目录
-D: 删除书签</code></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">?: 快速帮助文档</span><br><span class="line">o: 打开一个目录或者打开文件，创建的是 buffer，也可以用来打开书签</span><br><span class="line">go: 打开一个文件，但是光标仍然留在 NERDTree，创建的是 buffer</span><br><span class="line">t: 打开一个文件，创建的是Tab，对书签同样生效</span><br><span class="line">T: 打开一个文件，但是光标仍然留在 NERDTree，创建的是 Tab，对书签同样生效</span><br><span class="line">i: 水平分割创建文件的窗口，创建的是 buffer</span><br><span class="line">gi: 水平分割创建文件的窗口，但是光标仍然留在 NERDTree</span><br><span class="line">s: 垂直分割创建文件的窗口，创建的是 buffer</span><br><span class="line">gs: 和 gi，go 类似</span><br><span class="line">x: 收起当前打开的目录</span><br><span class="line">X: 收起所有打开的目录</span><br><span class="line">e: 以文件管理的方式打开选中的目录</span><br><span class="line">D: 删除书签</span><br></pre></td></tr></table></figure>
 <h4 id="vim下的命令">vim下的命令</h4>
-<pre><code>:e file
-# 可以再打开一个文件，并且此时vim里会显示出file文件的内容。
-同时显示多个文件：
-:sp         //水平切分窗口
-:vsplit     //垂直切分窗口
-二、在文件之间切换：
-1.文件间切换
-Ctrl+6  //两文件间的切换
-:bn      //下一个文件
-:bp      //上一个文件
-:ls       //列出打开的文件，带编号
-:b1~n  //切换至第n个文件
-对于用(v)split在多个窗格中打开的文件，这种方法只会在当前窗格中切换不同的文件。
-2.在窗格间切换的方法
-Ctrl+w+方向键——切换到前／下／上／后一个窗格
-Ctrl+w+h/j/k/l ——同上
-Ctrl+ww——依次向后切换到下一个窗格中</code></pre>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">:e file</span><br><span class="line"># 可以再打开一个文件，并且此时vim里会显示出file文件的内容。</span><br><span class="line">同时显示多个文件：</span><br><span class="line">:sp         //水平切分窗口</span><br><span class="line">:vsplit     //垂直切分窗口</span><br><span class="line">二、在文件之间切换：</span><br><span class="line">1.文件间切换</span><br><span class="line">Ctrl+6  //两文件间的切换</span><br><span class="line">:bn      //下一个文件</span><br><span class="line">:bp      //上一个文件</span><br><span class="line">:ls       //列出打开的文件，带编号</span><br><span class="line">:b1~n  //切换至第n个文件</span><br><span class="line">对于用(v)split在多个窗格中打开的文件，这种方法只会在当前窗格中切换不同的文件。</span><br><span class="line">2.在窗格间切换的方法</span><br><span class="line">Ctrl+w+方向键——切换到前／下／上／后一个窗格</span><br><span class="line">Ctrl+w+h/j/k/l ——同上</span><br><span class="line">Ctrl+ww——依次向后切换到下一个窗格中</span><br></pre></td></tr></table></figure>
 <h4 id="other">Other:</h4>
 <p>如何在vim中使用跳转功能。</p>
 <p>todo:</p>
@@ -551,23 +472,23 @@ Ctrl+ww——依次向后切换到下一个窗格中</code></pre>
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/11/25/backtracking/">
+                <a href="/2020/09/30/dong-tai-gui-hua-kuang-jia/">
                     <div class="card-image">
                         
-                        <img src="/medias/featureimages/leetcode.jpg" class="responsive-img" alt="回溯算法总结">
+                        <img src="/medias/featureimages/leetcode.jpg" class="responsive-img" alt="再谈动态规划框架">
                         
-                        <span class="card-title">回溯算法总结</span>
+                        <span class="card-title">再谈动态规划框架</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            用几道例题总结一下回溯算法
+                            总结了动态规划问题的一般解题思路
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-11-25
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-09-30
                         </span>
                         <span class="publish-author">
                             
@@ -584,8 +505,8 @@ Ctrl+ww——依次向后切换到下一个窗格中</code></pre>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/backtracking/" target="_blank">
-                        <span class="chip bg-color">backtracking</span>
+                    <a href="/tags/动态规划/" target="_blank">
+                        <span class="chip bg-color">动态规划</span>
                     </a>
                     
                 </div>
@@ -695,7 +616,7 @@ Ctrl+ww——依次向后切换到下一个窗格中</code></pre>
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">21.6k</span>
+            <span class="white-color">22.2k</span>
             
 
             <br>

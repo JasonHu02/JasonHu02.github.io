@@ -10,9 +10,7 @@
     <meta name="360-site-verification" content>
     <meta name="description" content="这道题是也是我在面试的过程中碰到的一个原题，这里写一下解法。
 题目描述是这样的， 给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
-示例:
-输入: [0,1,0,3,12]
-输出: [1,3,1">
+示例:输入: [0,1,0,3,12]输出: [1,3,12,">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -328,7 +326,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    359
+                    363
                 </div>
                 
 
@@ -353,9 +351,7 @@
             <div id="articleContent">
                 <p>这道题是也是我在面试的过程中碰到的一个原题，这里写一下解法。</p>
 <p>题目描述是这样的， 给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。</p>
-<pre><code>示例:
-输入: [0,1,0,3,12]
-输出: [1,3,12,0,0]</code></pre>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">示例:</span><br><span class="line">输入: [0,1,0,3,12]</span><br><span class="line">输出: [1,3,12,0,0]</span><br></pre></td></tr></table></figure>
 <p><strong>说明</strong>:</p>
 <ol type="1">
 <li>必须在原数组上操作，不能拷贝额外的数组。</li>
@@ -364,25 +360,8 @@
 <p>初次看，是想新开一个数组，然后把所有的零丢到最后，但是这样不满足题目中给定的要求。</p>
 <p>或者用哈希表把0元素存储起来，然后再把元素丢到后面。但是这样同样需要新开一个数组，需要的空间复杂度为O(n).</p>
 <p>最佳解法，双指针，解题思路可以选择在数组中用指针进行数组的index交换。其中一个数组必须指向第一个index，另外一个数组从零开始进行遍历，如果在首端的指针碰到了零，那么就选择与末端的指针索引对应的数进行交换。</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nums<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>]</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>first<span class="op">=</span><span class="dv">0</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(nums)):</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> nums[i]<span class="op">!=</span><span class="dv">0</span>:</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        nums[i],nums[first]<span class="op">=</span>nums[first],nums[i]</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        first<span class="op">+=</span><span class="dv">1</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(nums)</span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> movezeros<span class="op">=</span><span class="kw">function</span>(nums){</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> anchor<span class="op">=</span><span class="dv">0</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">let</span> explorer<span class="op">=</span><span class="dv">0</span><span class="op">;</span>explorer<span class="op">&lt;</span>nums<span class="op">.</span><span class="at">length</span><span class="op">;</span>explorer<span class="op">++</span>){</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (nums[explorer]<span class="op">!==</span><span class="dv">0</span>){</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>            <span class="kw">let</span> temp<span class="op">=</span>nums[anchor]<span class="op">;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>            nums[anchor]<span class="op">=</span>nums[explorer]<span class="op">;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            nums[explorer]<span class="op">=</span>temp<span class="op">;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            anchor<span class="op">++;</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">nums=[<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>]</span><br><span class="line">first=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)):</span><br><span class="line">    <span class="keyword">if</span> nums[i]!=<span class="number">0</span>:</span><br><span class="line">        nums[i],nums[first]=nums[first],nums[i]</span><br><span class="line">        first+=<span class="number">1</span></span><br><span class="line">print(nums)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> movezeros=<span class="function"><span class="keyword">function</span>(<span class="params">nums</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">let</span> anchor=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> explorer=<span class="number">0</span>;explorer&lt;nums.length;explorer++)&#123;</span><br><span class="line">     	<span class="keyword">if</span> (nums[explorer]!==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">let</span> temp=nums[anchor];</span><br><span class="line">            nums[anchor]=nums[explorer];</span><br><span class="line">            nums[explorer]=temp;</span><br><span class="line">            </span><br><span class="line">            anchor++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
             </div>
             <hr />
@@ -614,7 +593,7 @@
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">21.6k</span>
+            <span class="white-color">22.2k</span>
             
 
             <br>
