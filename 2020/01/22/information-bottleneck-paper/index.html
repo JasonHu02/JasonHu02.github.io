@@ -2,12 +2,12 @@
 <html lang="zh-CN">
 
 
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <meta charset="utf-8">
     <meta name="keywords" content="ICLR2020论文解读__Learning robust representations via multi-view information, SJTU DeepLearning Thinklab 胡哲 huzhe 计算机视觉 深度学习">
-    <meta name="baidu-site-verification" content>
-    <meta name="google-site-verification" content>
-    <meta name="360-site-verification" content>
+    <meta name="baidu-site-verification" content="" />
+    <meta name="google-site-verification" content="" />
+    <meta name="360-site-verification" content="" />
     <meta name="description" content="本文是对于信息瓶颈方法的原始公式应用于在学习时可以使用任务特定标签的监督设置中。提出了通过利用multi-view的方式 提供一种实体的两类视图，可以将方法扩展到无监督的设置。本文通过理论分析得到了多视图的定义。还通过利用标准数据增强技术将">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -41,7 +41,11 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
-<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.2.0"><link rel="stylesheet" href="/css/prism-duotone-dark.css" type="text/css">
 <link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 <body>
@@ -113,7 +117,7 @@
         <div class="logo-name">Zhe Hu's Blog</div>
         <div class="logo-desc">
             
-            上海交通大学 | 机器学习 | 深度学习
+            上海交通大学 | 机器学习 | 数据挖掘
             
         </div>
     </div>
@@ -298,7 +302,7 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                        <a href="/categories/科研/" class="post-category" target="_blank">
+                        <a href="/categories/%E7%A7%91%E7%A0%94/" class="post-category" target="_blank">
                             科研
                         </a>
                         
@@ -417,7 +421,7 @@ I(\mathbf{x} ; \mathbf{y} | \mathbf{z})=0 \Longleftrightarrow I(\mathbf{x} ; \ma
         </p>
         
             <div class="center-align">
-                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
                     <img alt=""
                          style="border-width:0"
                          src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
@@ -432,7 +436,7 @@ I(\mathbf{x} ; \mathbf{y} | \mathbf{z})=0 \Longleftrightarrow I(\mathbf{x} ; \ma
                rel="cc:attributionURL">
                 胡哲
             </a> 采用
-            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+            <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
                 知识共享署名 4.0 国际许可协议
             </a>进行许可。
         
@@ -494,7 +498,7 @@ I(\mathbf{x} ; \mathbf{y} | \mathbf{z})=0 \Longleftrightarrow I(\mathbf{x} ; \ma
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/科研/" class="post-category" target="_blank">
+                            <a href="/categories/%E7%A7%91%E7%A0%94/" class="post-category" target="_blank">
                                     科研
                                 </a>
                             
@@ -542,7 +546,7 @@ I(\mathbf{x} ; \mathbf{y} | \mathbf{z})=0 \Longleftrightarrow I(\mathbf{x} ; \ma
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/编程/" class="post-category" target="_blank">
+                            <a href="/categories/%E7%BC%96%E7%A8%8B/" class="post-category" target="_blank">
                                     编程
                                 </a>
                             
@@ -612,9 +616,10 @@ I(\mathbf{x} ; \mathbf{y} | \mathbf{z})=0 \Longleftrightarrow I(\mathbf{x} ; \ma
 <script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script>
     MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+        tex2jax: {inlineMath: [['$', '$'], }
     });
 </script>
+
 
     <footer class="page-footer bg-color">
     <div class="container row center-align">
