@@ -71,6 +71,32 @@
   </entry>
   
   <entry>
+    <title>广度优先遍历(BFS)算法框架</title>
+    <link href="https://zhehu.ml/2020/10/25/bfs-suan-fa-kuang-jia/"/>
+    <id>https://zhehu.ml/2020/10/25/bfs-suan-fa-kuang-jia/</id>
+    <published>2020-10-25T11:20:46.000Z</published>
+    <updated>2020-12-11T03:47:45.907Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;DFS算法可以被认为是回溯算法，BFS算法出现的场景：在一副图中找到从起点 &lt;code&gt;start&lt;/code&gt;到终点 &lt;code&gt;target&lt;/code&gt;
+        
+      
+    
+    </summary>
+    
+      <category term="leetcode" scheme="https://zhehu.ml/categories/leetcode/"/>
+    
+    
+      <category term="BFS" scheme="https://zhehu.ml/tags/BFS/"/>
+    
+  </entry>
+  
+  <entry>
     <title>再谈动态规划框架</title>
     <link href="https://zhehu.ml/2020/09/30/dong-tai-gui-hua-kuang-jia/"/>
     <id>https://zhehu.ml/2020/09/30/dong-tai-gui-hua-kuang-jia/</id>
@@ -104,7 +130,7 @@
     <link href="https://zhehu.ml/2020/06/30/vim-chang-yong-ming-ling/"/>
     <id>https://zhehu.ml/2020/06/30/vim-chang-yong-ming-ling/</id>
     <published>2020-06-30T10:55:46.000Z</published>
-    <updated>2020-12-07T19:29:01.467Z</updated>
+    <updated>2020-12-09T18:16:19.869Z</updated>
     
     <summary type="html">
     

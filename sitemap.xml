@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://zhehu.ml/2020/09/30/dong-tai-gui-hua-kuang-jia/</loc>
+    <loc>https://zhehu.ml/2020/10/25/bfs-suan-fa-kuang-jia/</loc>
     
-    <lastmod>2020-12-09T16:04:04.611Z</lastmod>
+    <lastmod>2020-12-11T03:47:45.907Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://zhehu.ml/2020/06/30/vim-chang-yong-ming-ling/</loc>
     
-    <lastmod>2020-12-07T19:29:01.467Z</lastmod>
+    <lastmod>2020-12-09T18:16:19.869Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://zhehu.ml/2020/09/30/dong-tai-gui-hua-kuang-jia/</loc>
+    
+    <lastmod>2020-12-09T16:04:04.611Z</lastmod>
     
   </url>
   
@@ -142,14 +149,14 @@
   </url>
   
   <url>
-    <loc>https://zhehu.ml/archives/index.html</loc>
+    <loc>https://zhehu.ml/categories/index.html</loc>
     
     <lastmod>2019-09-25T14:13:10.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://zhehu.ml/categories/index.html</loc>
+    <loc>https://zhehu.ml/archives/index.html</loc>
     
     <lastmod>2019-09-25T14:13:10.000Z</lastmod>
     
