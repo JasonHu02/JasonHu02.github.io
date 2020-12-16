@@ -126,6 +126,34 @@
   </entry>
   
   <entry>
+    <title>滑动窗口算法框架</title>
+    <link href="https://huzhe01.github.io/2020/09/30/hua-dong-chuang-kou-suan-fa-kuang-jia/"/>
+    <id>https://huzhe01.github.io/2020/09/30/hua-dong-chuang-kou-suan-fa-kuang-jia/</id>
+    <published>2020-09-30T11:32:54.000Z</published>
+    <updated>2020-12-16T15:28:49.844Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;滑动窗口本质上就是两个指针，其中一个指针向前移动，另外一个指针在判断收缩条件后也向前移动。在每次移动的时候， 左右指针分别在自己的循环体里面进行数据的更新操作。分别都是用两个&lt;/p&gt;
+&lt;p&gt;滑动窗口算法框架：&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="leetcode" scheme="https://huzhe01.github.io/categories/leetcode/"/>
+    
+    
+      <category term="滑动窗口" scheme="https://huzhe01.github.io/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/"/>
+    
+  </entry>
+  
+  <entry>
     <title>vim操作总结</title>
     <link href="https://huzhe01.github.io/2020/06/30/vim-chang-yong-ming-ling/"/>
     <id>https://huzhe01.github.io/2020/06/30/vim-chang-yong-ming-ling/</id>

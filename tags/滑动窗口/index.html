@@ -4,12 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="VAE-GAN的一些理解, SJTU DeepLearning Thinklab 胡哲 huzhe 计算机视觉 深度学习">
+    <meta name="keywords" content="标签: 滑动窗口, SJTU DeepLearning Thinklab 胡哲 huzhe 计算机视觉 深度学习">
     <meta name="baidu-site-verification" content="" />
     <meta name="google-site-verification" content="" />
     <meta name="360-site-verification" content="" />
-    <meta name="description" content="CVAE-GAN这篇论文有一些不错的insight可以拿过来使用。
-VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差和均值。根据方差和均值得到一个正态分布，从这个分布中采样一个z，该正态分布与标准正态分布之间有一个转换关">
+    <meta name="description" content="标签: 滑动窗口 | Zhe Hu&#39;s Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +16,7 @@ VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>VAE-GAN的一些理解 | Zhe Hu&#39;s Blog</title>
+    <title>标签: 滑动窗口 | Zhe Hu&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -246,352 +245,218 @@ VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差
 
 </header>
 
-    
-<script src="/libs/cryptojs/crypto-js.min.js"></script>
-<script>
-    (function() {
-        let pwd = '';
-        if (pwd && pwd.length > 0) {
-            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
-                alert('密码错误，将返回主页！');
-                location.href = '/';
-            }
-        }
-    })();
-</script>
-
-
-
-
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/vae-gan.jpg')">
+    <div class="bg-cover pd-header about-cover">
     <div class="container">
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <div class="description center-align post-title">
-                        VAE-GAN的一些理解
-                    </div>
-                </div>
+    <div class="row">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
+        <div class="brand">
+            <div class="title center-align">
+                <!-- 
+                    Welcome to Zhe Hu&#39;s Blog
+                 -->
+                
+                    标签
+                
+            </div>
+
+            <div class="description center-align">
+                
+                    <!-- 上海交通大学 | 机器学习 | 数据挖掘 -->
+                    <span id="jinrishici-sentence">正在加载今日诗词...</span>
+                
             </div>
         </div>
     </div>
 </div>
+<script>
+// 每天切换 banner 图.  Switch banner image every day.
+$('.bg-cover').css('background-image', 'url(/medias/banner/' + 1 + '.jpg)');
+</script>
+    </div>
+</div>
 
-
-
-<main class="container content">
+<main class="content">
 
     
-    <!-- 文章内容详情 -->
-<div id="artDetail">
+
+<div id="tags" class="container chip-container">
     <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                    <div class="article-tag">
-                        
-                        <a href="/tags/representation-learning/" target="_blank">
-                            <span class="chip bg-color">representation-learning</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fa fa-bookmark fa-fw icon-category"></i>
-                        
-                        <a href="/categories/%E7%A7%91%E7%A0%94/" class="post-category" target="_blank">
-                            科研
-                        </a>
-                        
-                    </div>
-                    
-                </div>
+        <div class="card-content">
+            <div class="tag-title center-align">
+                <i class="fa fa-tags"></i>&nbsp;&nbsp;文章标签
             </div>
-
-            <div class="post-info">
-                <div class="post-date info-break-policy">
-                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-02-02
-                </div>
-
-                <div class="post-author info-break-policy">
-                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
-                    
-                    胡哲
-                    
-                </div>
-
+            <div class="tag-chips">
                 
                 
-                <div class="info-break-policy">
-                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    526
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
-                </div>
+                <a href="/tags/LSTM/" title="LSTM: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="LSTM" style="background-color: #F9EBEA;">LSTM
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
                 
                 
-
+                <a href="/tags/representation-learning/" title="representation-learning: 3">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="representation-learning" style="background-color: #F5EEF8;">representation-learning
+                        <span class="tag-length">3</span>
+                    </span>
+                </a>
                 
-                <div id="busuanzi_container_page_pv" class="info-break-policy">
-                    <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
-                    <span id="busuanzi_value_page_pv"></span>
-                </div>
+                
+                <a href="/tags/backtracking/" title="backtracking: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="backtracking" style="background-color: #D5F5E3;">backtracking
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/BFS/" title="BFS: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="BFS" style="background-color: #E8F8F5;">BFS
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/shell/" title="shell: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="shell" style="background-color: #FEF9E7;">shell
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/meta-learning/" title="meta-learning: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="meta-learning" style="background-color: #F8F9F9;">meta-learning
+                        <span class="tag-length">2</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/leetcode/" title="leetcode: 3">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="leetcode" style="background-color: #82E0AA;">leetcode
+                        <span class="tag-length">3</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/dynamic-programming/" title="dynamic programming: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="dynamic programming" style="background-color: #D7BDE2;">dynamic programming
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/" title="模型压缩: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="模型压缩" style="background-color: #A3E4D7;">模型压缩
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/pytorch/" title="pytorch: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="pytorch" style="background-color: #85C1E9;">pytorch
+                        <span class="tag-length">2</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" title="动态规划: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="动态规划" style="background-color: #F8C471;">动态规划
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/transfer-learning/" title="transfer-learning: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="transfer-learning" style="background-color: #F9E79F;">transfer-learning
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/vim/" title="vim: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="vim" style="background-color: #85C1E9;">vim
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" title="滑动窗口: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-active "
+                            data-tagname="滑动窗口" style="background-color: #82E0AA;">滑动窗口
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
                 
             </div>
         </div>
-        <hr class="clearfix">
-        <div class="card-content article-card-content">
-            <div id="articleContent">
-                <p>CVAE-GAN这篇论文有一些不错的insight可以拿过来使用。</p>
-<p>VAE中的encoder是一个神经网路结构用来生成数据样本X中的方差和均值。根据方差和均值得到一个正态分布，从这个分布中采样一个z，该正态分布与标准正态分布之间有一个转换关系，$z=uz<em>+sigma <span class="math inline">\(, 通过decoder这个神经网络生成新的\)</span>x</em><span class="math inline">\(。这个\)</span>x*$可以用来表示新的图像。</p>
-<p>衡量decoder和encoder之间的metric是通过用KL-divergence来表示Loss function，具体的推导过程如下，</p>
-<p><img src="VAE_GAN/image-20200218140108115.png" alt="image-20200218140108115" style="zoom:33%;"></p>
-<p><img src="VAE_GAN/image-20200218140121734.png" alt="image-20200218140121734" style="zoom:33%;"></p>
-<p>理解VAE的本质：</p>
-<p><strong>它本质上就是在我们常规的自编码器的基础上，对 encoder 的结果（在VAE中对应着计算均值的网络）加上了“高斯噪声”，使得结果 decoder 能够对噪声有鲁棒性；而那个额外的 KL loss（目的是让均值为 0，方差为 1），事实上就是相当于对 encoder 的一个正则项，希望 encoder 出来的东西均有零均值。</strong></p>
-<p>​ 那另外一个 encoder（对应着计算方差的网络）的作用呢？它是用来<strong>动态调节噪声的强度</strong>的。直觉上来想，<strong>当 decoder 还没有训练好时（重构误差远大于 KL loss），就会适当降低噪声（KL loss 增加），使得拟合起来容易一些（重构误差开始下降）</strong>。反之，<strong>如果 decoder 训练得还不错时（重构误差小于 KL loss），这时候噪声就会增加（KL loss 减少），使得拟合更加困难了（重构误差又开始增加），这时候 decoder 就要想办法提高它的生成能力了</strong>。</p>
-<p>在GAN中，其中的discriminator本质上也是一个metric的判别器，表示生成样本和真实样本之间的JS-divergence。但是GAN存在的问题是</p>
-<p>对于cVAE来说，就是存在一个有监督的标签，通过这个标签，只需要将KL-divergence进行一下变换即可：</p>
-<p><img src="VAE_GAN/image-20200218140135714.png" alt="image-20200218140135714" style="zoom:33%;"></p>
-<hr>
-<p>正式说VAE和GAN的结合：</p>
-<p>论文链接： https://arxiv.org/pdf/1703.10155.pdf</p>
-<p><img src="VAE_GAN/image-20200218140159343.png" alt="image-20200218140159343" style="zoom:50%;"></p>
-<p>cvae-gan的具体实施架构</p>
-<p><img src="VAE_GAN/image-20200218140217148.png" alt="image-20200218140217148" style="zoom: 50%;"></p>
-
-            </div>
-            <hr />
-
-            
-
-            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-
-<div id="article-share">
-    
-    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
-    
+    </div>
 </div>
 
-<script src="/libs/share/js/social-share.min.js"></script>
+    
 
+    <article id="articles" class="container articles">
+        <div class="row tags-posts">
             
-
-    <div class="reprint" id="reprint-statement">
-        <p class="reprint-tip">
-            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
-            <span>转载规则</span>
-        </p>
-        
-            <div class="center-align">
-                <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
-                    <img alt=""
-                         style="border-width:0"
-                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
-                </a>
-            </div>
-            <br/>
-            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
-                  property="dct:title" rel="dct:type">
-                    《VAE-GAN的一些理解》
-                </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/02/02/vae-gan/" property="cc:attributionName"
-               rel="cc:attributionURL">
-                胡哲
-            </a> 采用
-            <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
-                知识共享署名 4.0 国际许可协议
-            </a>进行许可。
-        
-    </div>
-
-    <script async defer>
-      document.addEventListener("copy", function (e) {
-        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
-        M.toast({html: toastHTML})
-      });
-
-      function navToReprintStatement() {
-        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
-      }
-    </script>
-
-
-        </div>
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <a href="/2020/02/06/few-shot-image-generation-method/">
-                    <div class="card-image">
-                        
-                        <img src="/medias/featureimages/few-shot.jpg" class="responsive-img" alt="Few shot learning 少样本图像生成任务">
-                        
-                        <span class="card-title">Few shot learning 少样本图像生成任务</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            本项目结合meta-learning的方法reptiles使用GAN的框架解决few-shot learning问题.
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-06
-                        </span>
-                        <span class="publish-author">
+            
+            <div class="article tag-post col s12 m6 l4" data-tags="滑动窗口" data-aos="fade-up">
+                <div class="card">
+                    <a href="/2020/09/30/hua-dong-chuang-kou-suan-fa-kuang-jia/">
+                        <div class="card-image tag-image">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            <img src="/medias/featureimages/leetcode.jpg" class="responsive-img" alt="滑动窗口算法框架">
                             
-                            <a href="/categories/%E7%A7%91%E7%A0%94/" class="post-category" target="_blank">
-                                    科研
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/meta-learning/" target="_blank">
-                        <span class="chip bg-color">meta-learning</span>
+                            <span class="card-title">滑动窗口算法框架</span>
+                        </div>
                     </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/02/02/shen-ru-li-jie-vae/">
-                    <div class="card-image">
-                        
-                        <img src="/medias/featureimages/vae-deep.jpg" class="responsive-img" alt="VAE的一些理解">
-                        
-                        <span class="card-title">VAE的一些理解</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            本文对从贝叶斯概率图模型的角度出发, 重新对VAE做了深入的理解
-                        
-                    </div>
-                    <div class="publish-info">
+                    <div class="card-content article-content">
+                        <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-02
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-09-30
                             </span>
-                        <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E7%A7%91%E7%A0%94/" class="post-category" target="_blank">
-                                    科研
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/leetcode/" class="post-category" target="_blank">
+                                leetcode
                                 </a>
-                            
-                            
-                        </span>
+                                
+                                
+                            </span>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/representation-learning/" target="_blank">
-                        <span class="chip bg-color">representation-learning</span>
-                    </a>
-                    
-                </div>
-                
             </div>
+            
         </div>
-        
-    </div>
-</article>
-</div>
-
-
-<script>
-    $('#articleContent').on('copy', function (e) {
-        // IE8 or earlier browser is 'undefined'
-        if (typeof window.getSelection === 'undefined') return;
-
-        var selection = window.getSelection();
-        // if the selection is short let's not annoy our users.
-        if (('' + selection).length < Number.parseInt('50')) {
-            return;
-        }
-
-        // create a div outside of the visible area and fill it with the selected text.
-        var bodyElement = document.getElementsByTagName('body')[0];
-        var newdiv = document.createElement('div');
-        newdiv.style.position = 'absolute';
-        newdiv.style.left = '-99999px';
-        bodyElement.appendChild(newdiv);
-        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
-
-        // we need a <pre> tag workaround.
-        // otherwise the text inside "pre" loses all the line breaks!
-        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
-            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
-        }
-
-        var url = document.location.href;
-        newdiv.innerHTML += '<br />'
-            + '来源: Zhe Hu's Blog<br />'
-            + '作者: 胡哲<br />'
-            + '链接: <a href="' + url + '">' + url + '</a><br />'
-            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
-
-        selection.selectAllChildren(newdiv);
-        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
-    });
-</script>
-
-    
-
+    </article>
 </main>
-
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], }
-    });
-</script>
 
 
     <footer class="page-footer bg-color">

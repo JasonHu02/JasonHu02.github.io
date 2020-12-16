@@ -2,6 +2,7 @@ https://huzhe01.github.io/2020/11/25/leetcode-1/
 https://huzhe01.github.io/2020/11/25/backtracking/
 https://huzhe01.github.io/2020/10/25/bfs-suan-fa-kuang-jia/
 https://huzhe01.github.io/2020/09/30/dong-tai-gui-hua-kuang-jia/
+https://huzhe01.github.io/2020/09/30/hua-dong-chuang-kou-suan-fa-kuang-jia/
 https://huzhe01.github.io/2020/06/30/vim-chang-yong-ming-ling/
 https://huzhe01.github.io/2020/06/02/shell-yu-fa-zong-jie/
 https://huzhe01.github.io/2020/05/08/leetcode-283/
